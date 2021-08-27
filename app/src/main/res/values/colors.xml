@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Custom Colors-->
+    <color name="primary_red">#EC381C</color>
+    <color name="primary_cinder">#212529</color>
+    <color name="primary_raven">#6C757D</color>
+    <color name="primary_background">#FFFFFF</color>
+
+    <color name="neutral_heather">#ADB5BD</color>
+    <color name="neutral_zircon">#DEE2E6</color>
+    <color name="neutral_white">#FFFFFF</color>
+
+
+
+
 </resources>
