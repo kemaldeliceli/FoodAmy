@@ -1,13 +1,15 @@
 package com.lesson.foodamy
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lesson.foodamy.adapter.OnboardingItemsAdapter
+import com.lesson.foodamy.databinding.FragmentIntroBinding
 import com.lesson.foodamy.model.OnboardingItem
 
 
@@ -18,37 +20,68 @@ import com.lesson.foodamy.model.OnboardingItem
  */
 class IntroFragment : Fragment() {
 
-    lateinit var onboardingItemAdapter: OnboardingItemsAdapter
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setOnboardItems()
-    }
+    private lateinit var onboardingItemAdapter: OnboardingItemsAdapter
+    private lateinit var binding: FragmentIntroBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        binding = FragmentIntroBinding.inflate(inflater,container,false)
+
+        setOnboardItems()
+        setAdapter()
+        setListeners()
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_intro, container, false)
+        return binding.root
     }
+
+    private fun setListeners(){
+        // Close Icon Listener
+        binding.closeButton.setOnClickListener {
+            goToLoginPage()
+        }
+
+        // Next Button Listener
+        binding.nextButton.setOnClickListener {
+            if(binding.onboardingViewPager.currentItem<3)
+                binding.onboardingViewPager.currentItem += 1
+            else
+                goToLoginPage()
+        }
+
+        //ViewPager Page Changing Control
+        binding.onboardingViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position==3){
+                    binding.nextButton.text =getString( R.string.start_text)
+                }
+                else{
+                    binding.nextButton.text = getString(R.string.next_text)
+                }
+            }
+        })
+    }
+
     private fun setOnboardItems(){
         onboardingItemAdapter = OnboardingItemsAdapter(
             arrayListOf(
-                OnboardingItem(R.drawable.first_walkthrough_image_1,"Welcome to Fodamy Network!","Fodamy is the best place to find your favorite recipes in all around the word."),
-                OnboardingItem(R.drawable.first_walkthrough_image_2,"Finding recipes were not that easy.","Fodamy is the best place to find your favorite recipes in all around the word."),
-                OnboardingItem(R.drawable.first_walkthrough_image_3,"Add new recipe.","Fodamy is the best place to find your favorite recipes in all around the word."),
-                OnboardingItem(R.drawable.first_walkthrough_image_4,"Share recipes with others.","Fodamy is the best place to find your favorite recipes in all around the word.")
+                OnboardingItem(R.drawable.first_walkthrough_image_1,getString(R.string.title_1),getString(R.string.description_1)),
+                OnboardingItem(R.drawable.first_walkthrough_image_2,getString(R.string.title_2),getString(R.string.description_2)),
+                OnboardingItem(R.drawable.first_walkthrough_image_3,getString(R.string.title_3),getString(R.string.description_3)),
+                OnboardingItem(R.drawable.first_walkthrough_image_4,getString(R.string.title_4),getString(R.string.description_3))
             )
         )
-
-        println(onboardingItemAdapter.itemCount)
-        println(onboardingItemAdapter==null)
-
-        val onboardingViewPager = activity?.findViewById<ViewPager2>(R.id.onboardingViewPage)
-        val textView = activity?.findViewById<TextView>(R.id.textView)
-        textView?.text = "halo"
-        onboardingItemAdapter.let { onboardingViewPager?.adapter = it }
+    }
+    private fun setAdapter(){
+        binding.onboardingViewPager.adapter = onboardingItemAdapter
+        TabLayoutMediator(binding.tabLayout, binding.onboardingViewPager){ tab, position -> }.attach()
+    }
+    private fun goToLoginPage(){
+        startActivity(Intent(requireContext(), LoginFragment::class.java))
+        requireActivity().finish()
     }
 }
