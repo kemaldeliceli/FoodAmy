@@ -6,72 +6,75 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lesson.foodamy.adapter.OnboardingItemsAdapter
 import com.lesson.foodamy.model.OnboardingItem
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var onboardingItemAdapter: OnboardingItemsAdapter
+    lateinit var onboardingViewPager:ViewPager2
+    lateinit var nextButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setOnboardItems()
 
+        onboardingViewPager = findViewById(R.id.onboardingViewPage)
+        nextButton = findViewById(R.id.nextButton)
+
+        setOnboardItems()
+        setAdapter()
+        setListeners()
+
+    }
+
+    private fun setListeners(){
         val closeButton = findViewById<ImageView>(R.id.closeButton)
+
+        // Close Icon Listener
         closeButton.setOnClickListener {
             goToLoginPage()
         }
-    }
-    private fun setOnboardItems(){
 
-        val dot1 = findViewById<ImageView>(R.id.dot1)
-        val dot2 = findViewById<ImageView>(R.id.dot2)
-        val dot3 = findViewById<ImageView>(R.id.dot3)
-        val dot4 = findViewById<ImageView>(R.id.dot4)
-        val selectorDotList = arrayListOf<ImageView>(dot1,dot2,dot3,dot4)
-        val button = findViewById<Button>(R.id.nextButton)
+        // Next Button Listener
+        nextButton.setOnClickListener {
+            if(onboardingViewPager.currentItem<3)
+                onboardingViewPager.currentItem += 1
+            else
+                goToLoginPage()
+        }
 
-        onboardingItemAdapter = OnboardingItemsAdapter(
-            arrayListOf(
-                OnboardingItem(R.drawable.first_walkthrough_image_1,"Welcome to Fodamy Network!","Fodamy is the best place to find your favorite recipes in all around the word."),
-                OnboardingItem(R.drawable.first_walkthrough_image_2,"Finding recipes were not that easy.","Fodamy is the best place to find your favorite recipes in all around the word."),
-                OnboardingItem(R.drawable.first_walkthrough_image_3,"Add new recipe.","Fodamy is the best place to find your favorite recipes in all around the word."),
-                OnboardingItem(R.drawable.first_walkthrough_image_4,"Share recipes with others.","Fodamy is the best place to find your favorite recipes in all around the word.")
-            )
-        )
-
-        val onboardingViewPager = findViewById<ViewPager2>(R.id.onboardingViewPage)
-        onboardingViewPager.adapter = onboardingItemAdapter
-        var oldPosition = 1
-
+        //ViewPager Page Changing Control
         onboardingViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-
-
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                selectorDotList[position].setImageResource(R.drawable.selected)
-                selectorDotList[oldPosition].setImageResource(R.drawable.unselected)
-                oldPosition = position
                 if (position==3){
-                    button.text = "Start!"
+                    nextButton.text =getString( R.string.start_text)
                 }
                 else{
-                    button.text = "Next"
+                    nextButton.text = getString(R.string.next_text)
                 }
-                if(position<3) {
-                    button.setOnClickListener {
-                        onboardingViewPager.currentItem += 1
-                    }
-                }else{
-                    button.setOnClickListener {
-                        goToLoginPage()
-                    }
-                }
-
-
             }
         })
+
+    }
+
+    private fun setOnboardItems(){
+        onboardingItemAdapter = OnboardingItemsAdapter(
+            arrayListOf(
+                OnboardingItem(R.drawable.first_walkthrough_image_1,getString(R.string.title_1),getString(R.string.description_1)),
+                OnboardingItem(R.drawable.first_walkthrough_image_2,getString(R.string.title_2),getString(R.string.description_2)),
+                OnboardingItem(R.drawable.first_walkthrough_image_3,getString(R.string.title_3),getString(R.string.description_3)),
+                OnboardingItem(R.drawable.first_walkthrough_image_4,getString(R.string.title_4),getString(R.string.description_3))
+            )
+        )
+    }
+    private fun setAdapter(){
+        onboardingViewPager.adapter = onboardingItemAdapter
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        TabLayoutMediator(tabLayout, onboardingViewPager){ tab, position -> }.attach()
     }
     private fun goToLoginPage(){
         startActivity(Intent(applicationContext, LoginActivity::class.java))
