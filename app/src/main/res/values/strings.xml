@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">FoodAmy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_1">Welcome to Fodamy Network!</string>
+    <string name="title_2">Finding recipes were not that easy.</string>
+    <string name="title_3">Add new recipe.</string>
+    <string name="title_4">"Share recipes with others."</string>
+
+    <string name="description_1">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="description_2">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="description_3">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="description_4">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+
+    <string name="start_text">Start!</string>
+    <string name="next_text">Next</string>
 </resources>
