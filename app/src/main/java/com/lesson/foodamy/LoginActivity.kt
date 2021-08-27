@@ -1,4 +1,4 @@
-package com.lesson.foodamy.model
+package com.lesson.foodamy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

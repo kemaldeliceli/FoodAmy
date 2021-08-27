@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.viewpager2.widget.ViewPager2
 import com.lesson.foodamy.adapter.OnboardingItemsAdapter
-import com.lesson.foodamy.model.LoginActivity
 import com.lesson.foodamy.model.OnboardingItem
 
 class MainActivity : AppCompatActivity() {
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
     private fun goToLoginPage(){
-        startActivity(Intent(applicationContext,LoginActivity::class.java))
+        startActivity(Intent(applicationContext, LoginActivity::class.java))
         finish()
     }
 }
