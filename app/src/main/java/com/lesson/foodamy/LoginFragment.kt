@@ -55,17 +55,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun validateEmail(userAuth: AuthData): Boolean{
 
         if (userAuth.email.isEmpty()){
-            setSnackbar("E-mail field cannot be empty")
+            setSnackbar(getString(R.string.empty_email_blank))
             snackbar.show()
             return false
         }
         if (userAuth.password.isEmpty()){
-            setSnackbar("Password field cannot be empty")
+            setSnackbar(getString(R.string.empty_password_blank))
             snackbar.show()
             return false
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(userAuth.email).matches()){
-            setSnackbar("Wrong e-mail format")
+            setSnackbar(getString(R.string.wrong_format_email))
             snackbar.show()
             return false
         }
