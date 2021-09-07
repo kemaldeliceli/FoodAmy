@@ -1,11 +1,10 @@
 package com.lesson.foodamy
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -14,11 +13,6 @@ import com.lesson.foodamy.databinding.FragmentIntroBinding
 import com.lesson.foodamy.model.OnboardingItem
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [IntroFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class IntroFragment : Fragment() {
 
     private lateinit var onboardingItemAdapter: OnboardingItemsAdapter
@@ -28,7 +22,6 @@ class IntroFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentIntroBinding.inflate(inflater,container,false)
 
         setOnboardItems()

@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/food_amy_graph"
-    app:startDestination="@id/introFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/introFragment"
         android:name="com.lesson.foodamy.IntroFragment"
         android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro" >
+        tools:layout="@layout/fragment_intro"
+        app:startDestination="@id/action_introFragment_to_loginFragment">
         <action
             android:id="@+id/action_introFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -21,4 +22,14 @@
         android:name="com.lesson.foodamy.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.lesson.foodamy.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splashFragment_to_introFragment"
+            app:destination="@id/introFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
