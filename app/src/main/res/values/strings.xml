@@ -24,4 +24,6 @@
     <string name="empty_email_blank">E-mail field cannot be empty</string>
     <string name="empty_password_blank">Password field cannot be empty</string>
     <string name="wrong_format_email">Wrong e-mail format</string>
+
+    <string name="preferences_file_name">FoodAmyAppPreferences</string>
 </resources>

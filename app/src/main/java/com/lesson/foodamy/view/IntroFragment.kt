@@ -1,4 +1,4 @@
-package com.lesson.foodamy
+package com.lesson.foodamy.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.lesson.foodamy.LoginSharedPref
+import com.lesson.foodamy.R
 import com.lesson.foodamy.adapter.OnboardingItemsAdapter
 import com.lesson.foodamy.databinding.FragmentIntroBinding
 import com.lesson.foodamy.model.OnboardingItem
@@ -17,6 +19,7 @@ class IntroFragment : Fragment() {
 
     private lateinit var onboardingItemAdapter: OnboardingItemsAdapter
     private lateinit var binding: FragmentIntroBinding
+    private  val loginSharedPref = LoginSharedPref()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +30,8 @@ class IntroFragment : Fragment() {
         setOnboardItems()
         setAdapter()
         setListeners()
-
+        loginSharedPref.invoke(requireContext())
+        loginSharedPref.saveAppOpened()
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -51,7 +55,7 @@ class IntroFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (position==3){
-                    binding.nextButton.text =getString( R.string.start_text)
+                    binding.nextButton.text =getString(R.string.start_text)
                 }
                 else{
                     binding.nextButton.text = getString(R.string.next_text)
@@ -63,10 +67,22 @@ class IntroFragment : Fragment() {
     private fun setOnboardItems(){
         onboardingItemAdapter = OnboardingItemsAdapter(
             arrayListOf(
-                OnboardingItem(R.drawable.first_walkthrough_image_1,getString(R.string.title_1),getString(R.string.description_1)),
-                OnboardingItem(R.drawable.first_walkthrough_image_2,getString(R.string.title_2),getString(R.string.description_2)),
-                OnboardingItem(R.drawable.first_walkthrough_image_3,getString(R.string.title_3),getString(R.string.description_3)),
-                OnboardingItem(R.drawable.first_walkthrough_image_4,getString(R.string.title_4),getString(R.string.description_3))
+                OnboardingItem(
+                    R.drawable.first_walkthrough_image_1,getString(R.string.title_1),getString(
+                        R.string.description_1
+                    )),
+                OnboardingItem(
+                    R.drawable.first_walkthrough_image_2,getString(R.string.title_2),getString(
+                        R.string.description_2
+                    )),
+                OnboardingItem(
+                    R.drawable.first_walkthrough_image_3,getString(R.string.title_3),getString(
+                        R.string.description_3
+                    )),
+                OnboardingItem(
+                    R.drawable.first_walkthrough_image_4,getString(R.string.title_4),getString(
+                        R.string.description_3
+                    ))
             )
         )
     }

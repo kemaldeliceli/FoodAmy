@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.lesson.foodamy.IntroFragment"
+        android:name="com.lesson.foodamy.view.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro"
         app:startDestination="@id/action_introFragment_to_loginFragment">
@@ -19,16 +19,21 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.lesson.foodamy.LoginFragment"
+        android:name="com.lesson.foodamy.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.lesson.foodamy.SplashFragment"
+        android:name="com.lesson.foodamy.view.SplashFragment"
         android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_introFragment"
             app:destination="@id/introFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>

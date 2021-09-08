@@ -1,6 +1,5 @@
-package com.lesson.foodamy
+package com.lesson.foodamy.view
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -10,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.fragment.app.Fragment
 import com.androidadvance.topsnackbar.TSnackbar
+import com.lesson.foodamy.R
 import com.lesson.foodamy.databinding.FragmentLoginBinding
 import com.lesson.foodamy.model.AuthData
 import com.lesson.foodamy.services.AuthAPIService
@@ -36,11 +36,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         snackbar = TSnackbar.make(binding.snackbarCoord,message,TSnackbar.LENGTH_LONG)
 
         val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(getColor(resources,R.color.primary_red,null))
+        snackbarView.setBackgroundColor(getColor(resources, R.color.primary_red,null))
 
         val textView :TextView = snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text)
 
-        textView.setTextColor(getColor(resources,R.color.neutral_white,null))
+        textView.setTextColor(getColor(resources, R.color.neutral_white,null))
     }
     private fun setListeners(){
         binding.loginButton.setOnClickListener {
