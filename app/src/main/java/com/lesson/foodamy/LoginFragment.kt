@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.androidadvance.topsnackbar.TSnackbar
 import com.lesson.foodamy.databinding.FragmentLoginBinding
 import com.lesson.foodamy.model.AuthData
 import com.lesson.foodamy.services.AuthAPIService
+import com.lesson.foodamy.services.RegisterAPIService
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -32,6 +34,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         return binding.root
     }
+
     private fun setSnackbar(message: String){
         snackbar = TSnackbar.make(binding.snackbarCoord,message,TSnackbar.LENGTH_LONG)
 
@@ -50,6 +53,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (response==true){
                 AuthAPIService.requestAuth(userAuth)
             }
+        }
+        binding.signUpText.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
     private fun validateEmail(userAuth: AuthData): Boolean{
