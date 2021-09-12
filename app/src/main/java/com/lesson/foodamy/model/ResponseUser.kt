@@ -6,5 +6,4 @@ data class ResponseUser (
 
     @SerializedName("token") var token : String,
     @SerializedName("user") var user : UserInfo
-
 )
