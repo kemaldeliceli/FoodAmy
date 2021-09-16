@@ -1,48 +1,49 @@
 package com.lesson.foodamy.services
 
 import android.util.Log
+import com.google.gson.Gson
+import com.lesson.foodamy.RetrofitHelper
 import com.lesson.foodamy.model.AuthData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.lesson.foodamy.model.ErrorBody
+import com.lesson.foodamy.model.ResponseMessage
+import com.lesson.foodamy.model.ResponseUser
+import kotlinx.coroutines.*
+import java.lang.Exception
 
 object AuthAPIService {
-    private val BASE_URL= "https://fodamy.mobillium.com/"
+    private lateinit var api: AuthAPI
 
-    private lateinit var  api : AuthAPI
-
-    public fun requestAuth(authData: AuthData){
-        // Create Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        // Service
-        api = retrofit.create(AuthAPI::class.java)
+    private var responseUser: ResponseUser? = null
+    private var errorMessage: ErrorBody? = null
 
 
-        CoroutineScope(Dispatchers.IO).launch {
+    public fun requestAuth(authData: AuthData) : ResponseMessage{
+        // Create Retrofit // Service
+        RetrofitHelper()
+        api = RetrofitHelper.getAuthAPI()!!
 
-            val response = api.getAuth(authData.email,authData.password)
+        val job = GlobalScope.launch {
+            try {
+                val response = api.getAuth(authData.email, authData.password)
 
-            withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    println(response.message())
-                    Log.d("Pretty Printed JSON :","asdasd")
-
+                    responseUser = response.body()
                 } else {
-
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
+                    var errorResponse = response.errorBody()?.string()
+                    var errorBody = Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
+                    errorMessage = errorBody
                 }
+            } catch (e: Exception) {
+                errorMessage = ErrorBody("408","Timeout Error")
             }
 
         }
+        runBlocking {
+            job.join()
+        }
+
+        return ResponseMessage(responseUser, errorMessage)
     }
-
-
-
 }
+
+
