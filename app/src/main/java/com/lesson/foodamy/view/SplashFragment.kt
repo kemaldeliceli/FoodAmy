@@ -11,9 +11,11 @@ import com.lesson.foodamy.LoginSharedPref
 import com.lesson.foodamy.R
 
 class SplashFragment : Fragment() {
+
     private  val loginSharedPref = LoginSharedPref()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    companion object{
+        const val DELAY_MILLIS : Long = 3000
     }
 
     override fun onCreateView(
@@ -27,8 +29,12 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        startNavigationTimer()
+    }
+
+    private fun startNavigationTimer() {
         Handler(Looper.getMainLooper()).postDelayed({
-            /* Create an Intent that will start the Menu-Activity. */
             if(loginSharedPref.getAppOpened()!!) {
                 findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
             }else{
@@ -37,6 +43,6 @@ class SplashFragment : Fragment() {
 
             requireActivity().window.decorView.setBackgroundColor(ResourcesCompat.getColor(resources,
                 R.color.primary_background,null))
-        }, 3000)
+        }, DELAY_MILLIS)
     }
 }
