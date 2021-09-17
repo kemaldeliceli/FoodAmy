@@ -19,7 +19,7 @@ object AuthAPIService {
 
     public fun requestAuth(authData: AuthData) : ResponseMessage{
         // Create Retrofit // Service
-        RetrofitHelper()
+        RetrofitHelper.invoke()
         api = RetrofitHelper.getAuthAPI()!!
 
         val job = GlobalScope.launch {
