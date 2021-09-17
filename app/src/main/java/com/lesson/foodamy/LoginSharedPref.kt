@@ -20,5 +20,5 @@ class LoginSharedPref {
             putBoolean(firstTimeAppOpen,true)
         }
     }
-    fun getAppOpened() = sharedPreferences?.getBoolean(firstTimeAppOpen,false)
+    fun isAppFirstOpen() = sharedPreferences?.getBoolean(firstTimeAppOpen,false)
 }
