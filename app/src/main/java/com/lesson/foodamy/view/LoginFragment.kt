@@ -53,24 +53,25 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 binding.userPasswordEditText.text.toString()
             )
             if (isLoginFieldsValid(userAuth)) {
-                val responseMessage = AuthAPIService.requestAuth(userAuth)
-
-                responseMessage.responseUser?.user?.let {
-                            setSnackbar("Successful Login: " + it.email)
-                            snackbar.show()
-                            val action = LoginFragmentDirections.actionLoginFragmentToMainFragment(it)
-                            findNavController().navigate(action)
-                    }
-
-                responseMessage.errorBody?.let {
-                    setSnackbar(it.error!!)
-                    snackbar.show()
-                }
-
+                getResponseAndNavigate(userAuth)
             }
         }
     }
 
+    private fun getResponseAndNavigate(userAuth: AuthData){
+        val responseMessage = AuthAPIService.requestAuth(userAuth)
+
+        responseMessage.responseUser?.user?.let { response ->
+            snackbar.show()
+            val action = LoginFragmentDirections.actionLoginFragmentToMainFragment(response)
+            findNavController().navigate(action)
+        }
+
+        responseMessage.errorBody?.let { errorMessage ->
+            setSnackbar(errorMessage.error!!)
+            snackbar.show()
+        }
+    }
     private fun isLoginFieldsValid(userAuth: AuthData): Boolean {
 
         if (userAuth.email.isEmpty()) {
