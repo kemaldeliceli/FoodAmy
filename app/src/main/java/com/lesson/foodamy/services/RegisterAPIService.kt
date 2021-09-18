@@ -5,7 +5,10 @@ import com.lesson.foodamy.model.ErrorBody
 import com.lesson.foodamy.model.RegisterData
 import com.lesson.foodamy.model.ResponseMessage
 import com.lesson.foodamy.model.ResponseUser
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,7 +17,7 @@ object RegisterAPIService {
     private val BASE_URL = "https://fodamy.mobillium.com/"
     private lateinit var api: RegisterAPI
     private var responseUser: ResponseUser? = null
-    private var errorMessage: String? = null
+    private var errorMessage: ErrorBody? = null
 
     public fun requestRegister(registerData: RegisterData): ResponseMessage {
 
@@ -35,12 +38,12 @@ object RegisterAPIService {
                     responseUser = response.body()
                 } else {
                     val errorResponse = response.errorBody()?.string()
-                    val errorBody =
+                    errorMessage =
                         Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
-                    errorMessage = errorBody.error
+
                 }
             } catch (e: Exception) {
-                errorMessage = "Timeout Error"
+                errorMessage = ErrorBody("408", "Timeout Error")
             }
 
         }
