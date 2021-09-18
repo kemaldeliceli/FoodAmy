@@ -1,4 +1,4 @@
 package com.lesson.foodamy.model
 
-class ErrorBody(val code:String, val error: String) {
+class ErrorBody(var code:String? = null, var error: String? =null) {
 }
