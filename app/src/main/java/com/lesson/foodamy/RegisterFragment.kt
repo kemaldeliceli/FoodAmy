@@ -41,21 +41,25 @@ class RegisterFragment : Fragment() {
                 binding.usernameEditText.text.toString()
             )
 
-                if(validateEmail(userRegisterInfo)){
-                    val responseMessage = RegisterAPIService.requestRegister(userRegisterInfo)
-                    println(responseMessage.errorMessage)
+            if (isRegisterFieldsValid(userRegisterInfo)) {
 
-                    responseMessage.errorMessage?.let {
-                        setSnackbar(it)
-                        snackbar.show()
-                    }
-
-                }
+                getResponseAndNavigate(userRegisterInfo)
             }
         }
+    }
 
-    private fun setSnackbar(message: String){
-        snackbar = TSnackbar.make(binding.snackbarCoord,message, TSnackbar.LENGTH_LONG)
+    private fun getResponseAndNavigate(userRegisterInfo:RegisterData){
+        val responseMessage = RegisterAPIService.requestRegister(userRegisterInfo)
+
+        responseMessage.errorMessage?.let {
+            setSnackbar(it)
+            snackbar.show()
+        }
+    }
+
+
+    private fun setSnackbar(message: String) {
+        snackbar = TSnackbar.make(binding.snackbarCoord, message, TSnackbar.LENGTH_LONG)
 
         val snackbarView = snackbar.view
         snackbarView.setBackgroundColor(
@@ -66,29 +70,30 @@ class RegisterFragment : Fragment() {
             )
         )
 
-        val textView : TextView = snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text)
+        val textView: TextView =
+            snackbarView.findViewById(com.androidadvance.topsnackbar.R.id.snackbar_text)
 
         textView.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
     }
 
-    private fun validateEmail(registerData: RegisterData): Boolean{
+    private fun isRegisterFieldsValid(registerData: RegisterData): Boolean {
 
-        if (registerData.email.isEmpty()){
+        if (registerData.email.isEmpty()) {
             setSnackbar(getString(R.string.empty_email_blank))
             snackbar.show()
             return false
         }
-        if (registerData.password.isEmpty()){
+        if (registerData.password.isEmpty()) {
             setSnackbar(getString(R.string.empty_password_blank))
             snackbar.show()
             return false
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(registerData.email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(registerData.email).matches()) {
             setSnackbar(getString(R.string.wrong_format_email))
             snackbar.show()
             return false
         }
-        if (registerData.username.isEmpty()){
+        if (registerData.username.isEmpty()) {
             setSnackbar(getString(R.string.empty_username_blank))
             snackbar.show()
             return false
