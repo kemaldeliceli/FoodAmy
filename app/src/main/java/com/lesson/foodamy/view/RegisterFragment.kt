@@ -1,4 +1,4 @@
-package com.lesson.foodamy
+package com.lesson.foodamy.view
 
 import android.os.Bundle
 import android.util.Patterns
@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.androidadvance.topsnackbar.TSnackbar
+import com.lesson.foodamy.R
 import com.lesson.foodamy.databinding.FragmentRegisterBinding
 import com.lesson.foodamy.model.RegisterData
 import com.lesson.foodamy.services.RegisterAPIService
@@ -42,7 +43,6 @@ class RegisterFragment : Fragment() {
             )
 
             if (isRegisterFieldsValid(userRegisterInfo)) {
-
                 getResponseAndNavigate(userRegisterInfo)
             }
         }

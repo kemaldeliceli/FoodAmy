@@ -56,9 +56,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 getResponseAndNavigate(userAuth)
             }
         }
+        binding.signUpText.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
     }
 
-    private fun getResponseAndNavigate(userAuth: AuthData){
+    private fun getResponseAndNavigate(userAuth: AuthData) {
         val responseMessage = AuthAPIService.requestAuth(userAuth)
 
         responseMessage.responseUser?.user?.let { response ->
@@ -72,6 +75,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             snackbar.show()
         }
     }
+
     private fun isLoginFieldsValid(userAuth: AuthData): Boolean {
 
         if (userAuth.email.isEmpty()) {

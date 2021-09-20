@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".RegisterFragment">
+        tools:context=".view.RegisterFragment">
 
 
         <TextView
@@ -126,8 +126,9 @@
             android:layout_height="wrap_content"
             android:text="@string/login_text"
             android:textColor="@color/primary_red"
+            android:layout_marginStart="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/haveAccountText"
+            app:layout_constraintStart_toEndOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
