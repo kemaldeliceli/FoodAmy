@@ -14,6 +14,4 @@ class SharedPrefHelper private constructor(){
             sharedPref
         }
     }
-
-
 }

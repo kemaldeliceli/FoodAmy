@@ -1,6 +1,5 @@
 package com.lesson.foodamy.services
 
-import android.util.Log
 import com.google.gson.Gson
 import com.lesson.foodamy.RetrofitHelper
 import com.lesson.foodamy.model.AuthData
@@ -12,12 +11,10 @@ import java.lang.Exception
 
 object AuthAPIService {
     private lateinit var api: AuthAPI
-
     private var responseUser: ResponseUser? = null
     private var errorMessage: ErrorBody? = null
 
-
-    public fun requestAuth(authData: AuthData) : ResponseMessage{
+    fun requestAuth(authData: AuthData): ResponseMessage {
         // Create Retrofit // Service
         RetrofitHelper.invoke()
         api = RetrofitHelper.getAuthAPI()!!
@@ -29,14 +26,13 @@ object AuthAPIService {
                 if (response.isSuccessful) {
                     responseUser = response.body()
                 } else {
-                    var errorResponse = response.errorBody()?.string()
-                    var errorBody = Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
+                    val errorResponse = response.errorBody()?.string()
+                    val errorBody = Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
                     errorMessage = errorBody
                 }
             } catch (e: Exception) {
-                errorMessage = ErrorBody("408","Timeout Error")
+                errorMessage = ErrorBody("408", "Timeout Error")
             }
-
         }
         runBlocking {
             job.join()
