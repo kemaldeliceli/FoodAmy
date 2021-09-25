@@ -3,11 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="loginViewModel"
+            type="com.lesson.foodamy.viewmodel.LoginViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.LoginFragment">
-
 
         <TextView
             android:id="@+id/loginText"
@@ -42,7 +47,9 @@
                 android:id="@+id/userEmailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="@={loginViewModel._email}"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +74,9 @@
                 android:id="@+id/userPasswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@={loginViewModel._password}"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,6 +89,7 @@
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/primary_red"
             android:text="@string/login_text"
+            android:onClick="@{()->loginViewModel.login()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userPassword" />
