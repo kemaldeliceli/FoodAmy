@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
 import com.lesson.foodamy.R
-import com.lesson.foodamy.model.OnboardingItem
+import com.lesson.foodamy.model.dataclass.OnboardingItem
 
 class OnboardingItemsAdapter(private var onboardingItems: ArrayList<OnboardingItem>):
 RecyclerView.Adapter<OnboardingItemsAdapter.OnBoardingItemViewHolder>()
