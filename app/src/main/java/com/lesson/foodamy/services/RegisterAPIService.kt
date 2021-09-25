@@ -2,46 +2,37 @@ package com.lesson.foodamy.services
 
 import com.google.gson.Gson
 import com.lesson.foodamy.RetrofitHelper
-import com.lesson.foodamy.model.ErrorBody
-import com.lesson.foodamy.model.RegisterData
-import com.lesson.foodamy.model.ResponseMessage
-import com.lesson.foodamy.model.ResponseUser
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import com.lesson.foodamy.model.*
+import com.lesson.foodamy.model.dataclass.ErrorBody
+import com.lesson.foodamy.model.dataclass.RegisterData
+
 
 object RegisterAPIService {
     private lateinit var api: RegisterAPI
-    private var responseUser: ResponseUser? = null
-    private var errorMessage: ErrorBody? = null
 
-    fun requestRegister(registerData: RegisterData): ResponseMessage {
+    suspend fun requestRegister(registerData: RegisterData): BaseResponse<ResponseUser>? {
+        var responseRegister: BaseResponse<ResponseUser>? = null
+
         // Create Retrofit // Service
         RetrofitHelper.invoke()
         api = RetrofitHelper.getRegisterApi()!!
 
-        val job: Job = GlobalScope.launch {
+        try {
+            val response =
+                api.register(registerData.email, registerData.password, registerData.username)
 
-            try {
-                val response =
-                    api.register(registerData.email, registerData.password, registerData.username)
-
-                if (response.isSuccessful) {
-                    responseUser = response.body()
-                } else {
-                    val errorResponse = response.errorBody()?.string()
-                    errorMessage =
-                        Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
-                }
-            } catch (e: Exception) {
-                errorMessage = ErrorBody("408", "Timeout Error")
+            if (response.isSuccessful) {
+                responseRegister = BaseResponse.Success(response.body()!!)
+            } else {
+                val errorResponse = response.errorBody()?.string()
+                val errorBody = Gson().fromJson(errorResponse, ErrorBody::class.java)
+                responseRegister = BaseResponse.Error(errorBody)
             }
-        }
-        runBlocking {
-            job.join()
+        } catch (e: Exception) {
+            responseRegister = BaseResponse.Error(ErrorBody("408", "Timeout Error"))
         }
 
-        return ResponseMessage(responseUser, errorMessage)
+
+        return responseRegister
     }
 }
