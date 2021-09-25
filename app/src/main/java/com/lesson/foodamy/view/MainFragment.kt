@@ -12,6 +12,7 @@ class MainFragment : Fragment() {
 
     val args:MainFragmentArgs by navArgs()
     private lateinit var binding: FragmentMainBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

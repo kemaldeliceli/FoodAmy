@@ -12,7 +12,7 @@ import com.lesson.foodamy.LoginSharedPref
 import com.lesson.foodamy.R
 import com.lesson.foodamy.adapter.OnboardingItemsAdapter
 import com.lesson.foodamy.databinding.FragmentIntroBinding
-import com.lesson.foodamy.model.OnboardingItem
+import com.lesson.foodamy.model.dataclass.OnboardingItem
 
 
 class IntroFragment : Fragment() {
