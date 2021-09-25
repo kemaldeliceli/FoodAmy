@@ -1,4 +1,4 @@
-package com.lesson.foodamy.model
+package com.lesson.foodamy.model.dataclass
 
 data class OnboardingItem (
     var image:Int,
