@@ -18,7 +18,6 @@ class RegisterFragment : BaseFragment<RegisterViewModel,FragmentRegisterBinding>
         getResponseAndNavigate()
         setCoordinateSnackbar(binding.snackbarCoord)
         setListeners()
-        binding.registerViewModel = viewModel
     }
 
     private fun setListeners() {

@@ -16,8 +16,6 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
         getResponseAndNavigate()
         setListeners()
         setCoordinateSnackbar(binding.snackbarCoord)
-        binding.loginViewModel = viewModel
-
     }
 
     private fun setListeners() {

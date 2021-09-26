@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="loginViewModel"
+            name="viewModel"
             type="com.lesson.foodamy.viewmodel.LoginViewModel" />
     </data>
 
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="@={loginViewModel._email}"
+                android:text="@={viewModel._email}"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="@={loginViewModel._password}"
+                android:text="@={viewModel._password}"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +89,7 @@
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/primary_red"
             android:text="@string/login_text"
-            android:onClick="@{()->loginViewModel.login()}"
+            android:onClick="@{()->viewModel.login()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userPassword" />

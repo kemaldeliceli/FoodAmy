@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.androidadvance.topsnackbar.TSnackbar
+import com.lesson.foodamy.BR
 import com.lesson.foodamy.R
 import com.lesson.foodamy.viewmodel.BaseViewModel
 
@@ -27,20 +28,24 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
 
     abstract fun getViewModel(): Class<VM>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this).get(getViewModel())
+
+        observeErrorMessage()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
+        binding.setVariable(BR.viewModel,viewModel)
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(this).get(getViewModel())
-        observeErrorMessage()
-        super.onCreate(savedInstanceState)
-    }
+
 
 
     private fun observeErrorMessage() {

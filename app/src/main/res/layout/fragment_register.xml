@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="registerViewModel"
+            name="viewModel"
             type="com.lesson.foodamy.viewmodel.RegisterViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:text="@={registerViewModel._username}"
+                android:text="@={viewModel._username}"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="@={registerViewModel._email}"/>
+                android:text="@={viewModel._email}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="@={registerViewModel._password}"
+                android:text="@={viewModel._password}"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -117,7 +117,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/userPassword"
-            android:onClick="@{()->registerViewModel.register()}"
+            android:onClick="@{()->viewModel.register()}"
             />
 
 
