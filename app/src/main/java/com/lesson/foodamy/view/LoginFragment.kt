@@ -6,10 +6,12 @@ import androidx.navigation.fragment.findNavController
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import com.lesson.foodamy.databinding.FragmentLoginBinding as FragmentLoginBinding
 
-
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layout.fragment_login) {
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,6 +23,9 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
     private fun setListeners() {
         binding.signUpText.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+        binding.goToMain.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
         }
     }
 
@@ -41,7 +46,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
 
     }
 
-    override fun getViewModel(): Class<LoginViewModel> {
+    override fun getViewModelss(): Class<LoginViewModel> {
         return LoginViewModel::class.java
     }
 }
