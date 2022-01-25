@@ -71,5 +71,10 @@
             app:argType="com.lesson.foodamy.model.UserInfo"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
