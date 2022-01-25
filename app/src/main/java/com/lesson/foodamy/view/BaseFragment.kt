@@ -26,10 +26,10 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
     lateinit var binding: VDB
 
 
-    abstract fun getViewModel(): Class<VM>
+    abstract fun getViewModelss(): Class<VM>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(this).get(getViewModel())
+        viewModel = ViewModelProviders.of(this).get(getViewModelss())
 
         observeErrorMessage()
         super.onCreate(savedInstanceState)
@@ -44,8 +44,6 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
         binding.setVariable(BR.viewModel,viewModel)
         return binding.root
     }
-
-
 
 
     private fun observeErrorMessage() {
