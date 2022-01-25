@@ -7,10 +7,10 @@ import androidx.navigation.fragment.findNavController
 import com.lesson.foodamy.R
 import com.lesson.foodamy.databinding.FragmentRegisterBinding
 import com.lesson.foodamy.model.BaseResponse
-import com.lesson.foodamy.model.dataclass.RegisterData
 import com.lesson.foodamy.viewmodel.RegisterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegisterFragment : BaseFragment<RegisterViewModel,FragmentRegisterBinding>(R.layout.fragment_register) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class RegisterFragment : BaseFragment<RegisterViewModel,FragmentRegisterBinding>
         })
     }
 
-    override fun getViewModel(): Class<RegisterViewModel> {
+    override fun getViewModelss(): Class<RegisterViewModel> {
         return RegisterViewModel::class.java
     }
 
