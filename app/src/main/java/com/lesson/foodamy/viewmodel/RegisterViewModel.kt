@@ -3,16 +3,18 @@ package com.lesson.foodamy.viewmodel
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.ResponseUser
 import com.lesson.foodamy.model.dataclass.RegisterData
-import com.lesson.foodamy.services.RegisterAPIService
+import com.lesson.foodamy.repository.AuthAPIRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel : BaseViewModel(){
+@HiltViewModel
+class RegisterViewModel @Inject constructor(private val authAPIRepository: AuthAPIRepository) : BaseViewModel(){
     private var _responseMessage: MutableLiveData<BaseResponse<ResponseUser>> = MutableLiveData()
     val _username : MutableLiveData<String> = MutableLiveData("")
     val _email : MutableLiveData<String>  = MutableLiveData("")
@@ -24,7 +26,7 @@ class RegisterViewModel : BaseViewModel(){
     fun register() = viewModelScope.launch {
         val registerData = RegisterData(_email.value!!,_password.value!!,_username.value!!)
         if (isRegisterFieldsValid(registerData)) {
-            _responseMessage.value = RegisterAPIService.requestRegister(registerData)
+            _responseMessage.value = authAPIRepository.requestRegister(registerData)
         }
     }
 

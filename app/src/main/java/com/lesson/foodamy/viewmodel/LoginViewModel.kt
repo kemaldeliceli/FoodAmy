@@ -7,11 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.*
 import com.lesson.foodamy.model.dataclass.AuthData
-import com.lesson.foodamy.services.AuthAPIService
+import com.lesson.foodamy.repository.AuthAPIRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class LoginViewModel : BaseViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val authAPIRepository: AuthAPIRepository) : BaseViewModel() {
     private var _responseMessage: MutableLiveData<BaseResponse<ResponseUser>> = MutableLiveData()
     val _email: MutableLiveData<String> = MutableLiveData("")
     val _password: MutableLiveData<String> = MutableLiveData("")
@@ -21,9 +23,10 @@ class LoginViewModel : BaseViewModel() {
 
 
     fun login() = viewModelScope.launch {
+
         val authData = AuthData(_email.value!!,_password.value!!)
         if (isLoginFieldsValid(authData)){
-            _responseMessage.value = AuthAPIService.requestAuth(authData)
+            _responseMessage.value = authAPIRepository.requestLogin(authData)
         }
     }
 
