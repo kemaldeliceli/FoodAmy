@@ -34,7 +34,5 @@ class HomeFragment : Fragment() {
             }
         }.attach()
     }
-    companion object{
-        fun newInstance() = HomeFragment()
-    }
+
 }
