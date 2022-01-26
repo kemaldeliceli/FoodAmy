@@ -7,12 +7,14 @@ import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.lesson.foodamy.LoginSharedPref
+import com.lesson.foodamy.Preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
-
-    private  val loginSharedPref = LoginSharedPref()
+    @Inject  lateinit var loginSharedPref: IPrefDefaultManager
 
     companion object{
         const val DELAY_MILLIS : Long = 3000
@@ -22,7 +24,6 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        loginSharedPref.invoke(requireContext())
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
@@ -35,7 +36,7 @@ class SplashFragment : Fragment() {
 
     private fun startNavigationTimer() {
         Handler(Looper.getMainLooper()).postDelayed({
-            if(loginSharedPref.isAppFirstOpen()!!) {
+            if(loginSharedPref.isAppFirstOpen()) {
                 findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
             }else{
                 findNavController().navigate(R.id.action_splashFragment_to_introFragment)

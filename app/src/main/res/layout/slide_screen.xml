@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito_bold"
-        android:text="Welcome to Fodamy Network!"
+        android:text="@string/welcome_to_fodamy_network"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/guideline5" />
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:fontFamily="@font/nunito"
-        android:text="Fodamy is the best place to find your \n favorite recipes in all around the word."
+        android:text="@string/fodamy_is_the_best_place"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/descriptionHeader"
 

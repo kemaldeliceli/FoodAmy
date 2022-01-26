@@ -1,9 +1,11 @@
 package com.lesson.foodamy.model
 
+import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+@SuppressLint("ParcelCreator")
 data class UserInfo (
     @SerializedName("id") var id : Int?,
     @SerializedName("email") var email : String?,
