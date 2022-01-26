@@ -18,11 +18,11 @@ class MainPageAdapter(fragmentManager:  Fragment): FragmentStateAdapter(fragment
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0-> HomeFragment.newInstance()
-            1-> FavoruiteFragment.newInstance()
-            2-> UserFragment.newInstance()
-            3-> MenuFragment.newInstance()
-            else-> HomeFragment.newInstance()
+            0-> HomeFragment()
+            1-> FavoruiteFragment()
+            2-> UserFragment()
+            3-> MenuFragment()
+            else-> HomeFragment()
         }
     }
 
