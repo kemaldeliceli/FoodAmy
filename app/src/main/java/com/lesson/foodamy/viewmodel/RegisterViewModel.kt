@@ -16,39 +16,40 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val authAPIRepository: AuthAPIRepository) : BaseViewModel(){
     private var _responseMessage: MutableLiveData<BaseResponse<ResponseUser>> = MutableLiveData()
-    val _username : MutableLiveData<String> = MutableLiveData("")
-    val _email : MutableLiveData<String>  = MutableLiveData("")
-    val _password : MutableLiveData<String>  = MutableLiveData("")
+    val username : MutableLiveData<String> = MutableLiveData("")
+    val email : MutableLiveData<String>  = MutableLiveData("")
+    val password: MutableLiveData<String>  = MutableLiveData("")
 
     val responseMessage: LiveData<BaseResponse<ResponseUser>>
         get() = _responseMessage
 
     fun register() = viewModelScope.launch {
-        val registerData = RegisterData(_email.value!!,_password.value!!,_username.value!!)
+        val registerData = RegisterData(email.value!!,password.value!!,username.value!!)
         if (isRegisterFieldsValid(registerData)) {
             _responseMessage.value = authAPIRepository.requestRegister(registerData)
         }
     }
 
     fun isRegisterFieldsValid(registerData: RegisterData): Boolean {
+        return when{
+            registerData.email.isEmpty()-> {
+                showErrorMessage(R.string.empty_email_blank)
+                false
+            }
+            registerData.password.isEmpty()-> {
+                showErrorMessage(R.string.empty_password_blank)
+                false
+            }
+            registerData.username.isEmpty()-> {
+                showErrorMessage(R.string.empty_username_blank)
+                false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(registerData.email).matches()-> {
+                showErrorMessage(R.string.wrong_format_email)
+                false
+            }
+            else -> true
+        }
 
-        if (registerData.email.isEmpty()) {
-            showErrorMessage(R.string.empty_email_blank)
-            return false
-        }
-        if (registerData.password.isEmpty()) {
-            showErrorMessage(R.string.empty_password_blank)
-            return false
-        }
-        if (registerData.username.isEmpty()) {
-            showErrorMessage(R.string.empty_username_blank)
-            return false
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(registerData.email).matches()) {
-            showErrorMessage(R.string.wrong_format_email)
-            return false
-        }
-
-        return true
     }
 }
