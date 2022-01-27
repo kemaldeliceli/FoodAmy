@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_page_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.lesson.foodamy.view.mainpageviews.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_favoruiteFragment2"
+            app:destination="@id/favoruiteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.lesson.foodamy.view.mainpageviews.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/favoruiteFragment"
+        android:name="com.lesson.foodamy.view.mainpageviews.FavoruiteFragment"
+        android:label="fragment_favoruite"
+        tools:layout="@layout/fragment_favoruite" >
+        <action
+            android:id="@+id/action_favoruiteFragment_to_userFragment2"
+            app:destination="@id/userFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.lesson.foodamy.view.mainpageviews.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_userFragment_to_menuFragment2"
+            app:destination="@id/menuFragment" />
+    </fragment>
+</navigation>
