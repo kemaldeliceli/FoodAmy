@@ -6,4 +6,14 @@
     <dimen name="margin_2dp">2dp</dimen>
     <dimen name="padding_8dp">8dp</dimen>
     <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="size_16sp">16sp</dimen>
+    <dimen name="size_20sp">20sp</dimen>
+    <dimen name="elevation_2dp">2dp</dimen>
+    <dimen name="layout_width__120dp">120dp</dimen>
+    <dimen name="layout_height_120dp">120dp</dimen>
+    <dimen name="layout_height_1dp">1dp</dimen>
+    <dimen name="layout_height_200dp">200dp</dimen>
+    <dimen name="layout_height_140dp">140dp</dimen>
+    <dimen name="layout_width_1dp">1dp</dimen>
+    <dimen name="layout_height_50dp">50dp</dimen>
 </resources>

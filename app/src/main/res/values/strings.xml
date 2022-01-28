@@ -39,4 +39,10 @@
     <string name="fodamy_is_the_best_place">Fodamy is the best place to find your \n favorite recipes in all around the word.</string>
     <string name="ilerle">İlerle</string>
     <string name="user">User</string>
+    <string name="name">Name:  </string>
+    <string name="following">Following</string>
+    <string name="followed">Followed</string>
+    <string name="recipes">Recipes</string>
+    <string name="favourites">Favourites</string>
+    <string name="likes">Likes</string>
 </resources>
