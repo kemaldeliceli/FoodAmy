@@ -9,33 +9,29 @@ import com.lesson.foodamy.Preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.databinding.FragmentUserBinding
 import com.lesson.foodamy.model.UserInfo
+import com.lesson.foodamy.view.BaseFragment
+import com.lesson.foodamy.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 @AndroidEntryPoint
+class UserFragment : BaseFragment<UserViewModel,FragmentUserBinding>(R.layout.fragment_user) {
 
-class UserFragment : Fragment() {
-
-    @Inject
-    lateinit var loginSharedPref: IPrefDefaultManager
-    lateinit var binding: FragmentUserBinding
-    lateinit var userInfo: UserInfo
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getUserInfo()
+        setListeners()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentUserBinding.inflate(inflater,container,false)
+    private fun setListeners(){
+        viewModel.userInfo.observe(viewLifecycleOwner,{ userInfo->
+                binding.userInfo = userInfo
+            }
+        )
+    }
 
-        userInfo = loginSharedPref.getUserInfo()
-        binding.userInfo = this.userInfo
-        return binding.root
+    override fun getViewModelss(): Class<UserViewModel> {
+        return  UserViewModel::class.java
     }
 
 }
