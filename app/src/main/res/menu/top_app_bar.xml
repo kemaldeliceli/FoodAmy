@@ -3,19 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_home_icon"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/home_icon"
         app:showAsAction="always" />
     <item
-        android:id="@+id/nav_fav_icon"
+        android:id="@+id/favoruiteFragment"
         android:icon="@drawable/heart_icon"
         app:showAsAction="always" />
     <item
-        android:id="@+id/nav_user_icon"
+        android:id="@+id/userFragment"
         android:icon="@drawable/users_nav_icon"
         app:showAsAction="always" />
     <item
-        android:id="@+id/nav_menu_icon"
+        android:id="@+id/menuFragment"
         android:icon="@drawable/menu_icon"
         app:showAsAction="always" />
 </menu>

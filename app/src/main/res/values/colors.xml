@@ -10,6 +10,10 @@
 
     <!--Custom Colors-->
     <color name="primary_red">#EC381C</color>
+    <color name="comp_red">#EF5350</color>
+
+    <color name="weak_red">#E3765E</color>
+
     <color name="primary_cinder">#212529</color>
     <color name="primary_raven">#6C757D</color>
     <color name="primary_background">#FFFFFF</color>

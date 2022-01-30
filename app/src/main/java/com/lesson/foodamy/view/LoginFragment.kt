@@ -3,14 +3,19 @@ package com.lesson.foodamy.view
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.lesson.foodamy.Preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import com.lesson.foodamy.databinding.FragmentLoginBinding as FragmentLoginBinding
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layout.fragment_login) {
+
+    @Inject
+    lateinit var loginSharedPref: IPrefDefaultManager
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,6 +41,8 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
                     val action =
                         LoginFragmentDirections.actionLoginFragmentToMainFragment(responseMessage.data.user)
                     findNavController().navigate(action)
+                    loginSharedPref.setUserInfo(responseMessage.data.user!!)
+
                 }
                 is BaseResponse.Error -> {
                     setSnackbar(responseMessage.error.error.toString())

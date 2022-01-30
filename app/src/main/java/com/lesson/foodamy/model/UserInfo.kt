@@ -37,10 +37,9 @@ data class UserInfo (
     @SerializedName("cover_image") var coverImage : String?
 ) :Parcelable {
     override fun describeContents(): Int {
-        TODO("Not yet implemented")
+        return Parcelable.CONTENTS_FILE_DESCRIPTOR
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
-        TODO("Not yet implemented")
     }
 }
