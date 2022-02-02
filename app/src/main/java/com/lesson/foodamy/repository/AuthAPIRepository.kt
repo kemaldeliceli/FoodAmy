@@ -8,7 +8,7 @@ import com.lesson.foodamy.model.dataclass.RegisterData
 import com.lesson.foodamy.services.AuthService
 import java.lang.Exception
 
-class AuthAPIRepository(private val authService: AuthService) {
+class AuthApiRepository(private val authService: AuthService) {
 
     suspend fun requestLogin(authData: AuthData): BaseResponse<ResponseUser>? {
         // Create Retrofit // Service

@@ -1,4 +1,4 @@
-package com.lesson.foodamy.view
+package com.lesson.foodamy.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.androidadvance.topsnackbar.TSnackbar
 import com.lesson.foodamy.BR
 import com.lesson.foodamy.R
-import com.lesson.foodamy.viewmodel.BaseViewModel
 
 abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
     Fragment(layoutResId) {

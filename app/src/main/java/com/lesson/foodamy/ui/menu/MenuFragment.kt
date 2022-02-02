@@ -1,4 +1,4 @@
-package com.lesson.foodamy.view.mainpageviews
+package com.lesson.foodamy.ui.menu
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

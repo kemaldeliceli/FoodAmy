@@ -1,4 +1,4 @@
-package com.lesson.foodamy.view
+package com.lesson.foodamy.ui.intro
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lesson.foodamy.Preferences.IPrefDefaultManager
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.adapter.OnboardingItemsAdapter
 import com.lesson.foodamy.databinding.FragmentIntroBinding

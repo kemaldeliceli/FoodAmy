@@ -5,12 +5,12 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lesson.foodamy.viewmodel.RegisterViewModel" />
+            type="com.lesson.foodamy.ui.register.RegisterViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.RegisterFragment">
+        tools:context=".ui.register.RegisterFragment">
 
 
         <TextView

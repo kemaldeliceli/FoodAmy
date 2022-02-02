@@ -1,4 +1,4 @@
-package com.lesson.foodamy.view
+package com.lesson.foodamy.ui.splash
 
 import android.os.Bundle
 import android.os.Handler
@@ -7,7 +7,7 @@ import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.lesson.foodamy.Preferences.IPrefDefaultManager
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

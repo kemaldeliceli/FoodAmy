@@ -1,4 +1,4 @@
-package com.lesson.foodamy.view
+package com.lesson.foodamy.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val bottomNavigationView = binding.bottomNavigationView
-        val navController = childFragmentManager.findFragmentById(binding.fragmentContainerView .id) as NavHostFragment
+        val navController = childFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
         
         bottomNavigationView.setupWithNavController(navController.navController)
     }

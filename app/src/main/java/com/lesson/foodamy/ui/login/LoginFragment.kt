@@ -1,12 +1,12 @@
-package com.lesson.foodamy.view
+package com.lesson.foodamy.ui.login
 
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.lesson.foodamy.Preferences.IPrefDefaultManager
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.BaseResponse
-import com.lesson.foodamy.viewmodel.LoginViewModel
+import com.lesson.foodamy.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.lesson.foodamy.databinding.FragmentLoginBinding as FragmentLoginBinding

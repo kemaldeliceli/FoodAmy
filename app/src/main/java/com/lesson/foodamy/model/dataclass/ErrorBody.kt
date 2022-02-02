@@ -1,4 +1,3 @@
 package com.lesson.foodamy.model.dataclass
 
-class ErrorBody(var code:String? = null, var error: String? =null) {
-}
+data class ErrorBody(val code:String? = null, val error: String? =null)

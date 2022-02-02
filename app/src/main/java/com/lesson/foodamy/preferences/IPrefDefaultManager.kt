@@ -1,4 +1,4 @@
-package com.lesson.foodamy.Preferences
+package com.lesson.foodamy.preferences
 
 import com.lesson.foodamy.model.UserInfo
 

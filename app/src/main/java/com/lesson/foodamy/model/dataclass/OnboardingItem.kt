@@ -1,6 +1,3 @@
 package com.lesson.foodamy.model.dataclass
 
-data class OnboardingItem (
-    var image:Int,
-    var title:String,
-    var description:String)
+data class OnboardingItem (val image:Int, val title:String, val description:String)

@@ -1,10 +1,11 @@
-package com.lesson.foodamy.viewmodel
+package com.lesson.foodamy.ui.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.lesson.foodamy.Preferences.IPrefDefaultManager
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.model.UserInfo
+import com.lesson.foodamy.core.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

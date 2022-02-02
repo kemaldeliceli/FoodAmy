@@ -7,33 +7,25 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.lesson.foodamy.view.mainpageviews.HomeFragment"
-        android:label="HomeFragment" >
-        <action
-            android:id="@+id/action_homeFragment_to_favoruiteFragment2"
-            app:destination="@id/favoruiteFragment" />
-    </fragment>
+        android:name="com.lesson.foodamy.ui.home.HomeFragment"
+        android:label="HomeFragment" />
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.lesson.foodamy.view.mainpageviews.MenuFragment"
+        android:name="com.lesson.foodamy.ui.menu.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" />
     <fragment
         android:id="@+id/favoruiteFragment"
-        android:name="com.lesson.foodamy.view.mainpageviews.FavoruiteFragment"
+        android:name="com.lesson.foodamy.ui.favourite.FavoruiteFragment"
         android:label="fragment_favoruite"
-        tools:layout="@layout/fragment_favoruite" >
-        <action
-            android:id="@+id/action_favoruiteFragment_to_userFragment2"
-            app:destination="@id/userFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_favoruite" />
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.lesson.foodamy.view.mainpageviews.UserFragment"
+        android:name="com.lesson.foodamy.ui.user.UserFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" >
-        <action
-            android:id="@+id/action_userFragment_to_menuFragment2"
-            app:destination="@id/menuFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/recentlyAddedFragment"
+        android:name="com.lesson.foodamy.ui.recentlyadded.RecentlyAddedFragment"
+        android:label="RecentlyAddedFragment" />
 </navigation>

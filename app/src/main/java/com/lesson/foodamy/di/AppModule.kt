@@ -3,8 +3,8 @@ package com.lesson.foodamy.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.lesson.foodamy.Preferences.IPrefDefaultManager
-import com.lesson.foodamy.Preferences.SharedPrefManager
+import com.lesson.foodamy.preferences.IPrefDefaultManager
+import com.lesson.foodamy.preferences.SharedPrefManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

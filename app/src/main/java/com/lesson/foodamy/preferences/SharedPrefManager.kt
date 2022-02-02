@@ -1,4 +1,4 @@
-package com.lesson.foodamy.Preferences
+package com.lesson.foodamy.preferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit

@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.lesson.foodamy.viewmodel.LoginViewModel" />
+            type="com.lesson.foodamy.ui.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.LoginFragment">
+        tools:context=".ui.login.LoginFragment">
 
         <Button
             android:id="@+id/go_to_main"
