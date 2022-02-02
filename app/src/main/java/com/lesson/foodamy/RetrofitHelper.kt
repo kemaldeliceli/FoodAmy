@@ -1,6 +1,7 @@
 package com.lesson.foodamy
 
 import com.lesson.foodamy.services.AuthService
+import com.lesson.foodamy.services.RecipeService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -8,6 +9,7 @@ class RetrofitHelper private constructor() {
     companion object {
         private var retrofit: Retrofit? = null
         private var authApi: AuthService? = null
+        private var recipesApi: RecipeService?=null
 
         private const val BASE_URL = "https://fodamy.mobillium.com/"
 
@@ -27,6 +29,13 @@ class RetrofitHelper private constructor() {
             }
             authApi
         }
+        fun getRecipesAPI() = synchronized(this) {
+            recipesApi.let {
+                recipesApi = retrofit!!.create(RecipeService::class.java)
+            }
+            recipesApi
+        }
+
 
     }
 }
