@@ -6,7 +6,7 @@ import com.lesson.foodamy.ui.editorschoice.EditorsChoiceFragment
 import com.lesson.foodamy.ui.recentlyadded.RecentlyAddedFragment
 
 
-class FragmentAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
+class HomePageAdapter(val fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun getItemCount(): Int {
         return 2
     }

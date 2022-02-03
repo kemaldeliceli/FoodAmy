@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lesson.foodamy.adapter.FragmentAdapter
+import com.lesson.foodamy.adapter.HomePageAdapter
 import com.lesson.foodamy.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
     }
 
     fun setAdapter(){
-        binding.viewPager.adapter = FragmentAdapter(fragment = this)
+        binding.viewPager.adapter = HomePageAdapter(fragment = this)
 
         TabLayoutMediator(binding.topTab,binding.viewPager){tab,position ->
             when(position){
