@@ -14,21 +14,22 @@
             type="com.lesson.foodamy.model.recipe_dataclass.Data" />
     </data>
 <com.google.android.material.card.MaterialCardView
-    android:layout_width="match_parent"
-    android:layout_height="520dp"
-
+    android:layout_width="wrap_content"
+    android:layout_height="528dp"
     android:layout_marginHorizontal="0dp"
     android:id="@+id/doctor_card_view"
-
     android:foreground="?selectableItemBackground"
     app:cardElevation="0dp"
     android:clickable="true"
+    android:backgroundTint="@color/app_background"
 
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="520dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
         >
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -39,6 +40,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:scaleType="centerCrop"
             app:imageUrl="@{recipeInfo.user.image.url}"
+            app:placeHolder="@{@drawable/no_user_image}"
             app:layout_constraintBottom_toTopOf="@id/line"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -83,8 +85,8 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="@dimen/margin_4dp"
-
             android:layout_marginBottom="@dimen/padding_8dp"
+
             android:fontFamily="@font/nunito_semibold"
             android:text="@{String.valueOf(recipeInfo.user.recipeCount)}"
             android:textColor="@color/primary_raven"
@@ -101,8 +103,8 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="@dimen/margin_2dp"
-
             android:layout_marginBottom="@dimen/padding_8dp"
+
             android:fontFamily="@font/nunito_semibold"
             android:text="@string/follower"
             android:textColor="@color/primary_raven"
@@ -119,8 +121,8 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="@dimen/margin_2dp"
-
             android:layout_marginBottom="@dimen/padding_8dp"
+
             android:fontFamily="@font/nunito_semibold"
             android:text="@{String.valueOf(recipeInfo.user.followingCount)}"
             android:textColor="@color/primary_raven"
@@ -180,22 +182,20 @@
             app:layout_constraintTop_toBottomOf="@id/recipe_name" />
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/big_food_image"
-            android:layout_width="match_parent"
-            android:layout_height="345dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recipe_category"
             app:layout_constraintBottom_toTopOf="@id/comment_text"
-            android:src="@drawable/food_preview"
-            app:imageUrl="@{recipeInfo.images[0].url}"
             android:layout_marginHorizontal="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_16dp"
 
+            app:imageUrl="@{recipeInfo.images[0].url}"
+            app:placeHolder="@{@drawable/user_icon}"
             android:scaleType="centerCrop"
-
-                      />
-
+            />
 
 
 
@@ -208,6 +208,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_8dp"
             android:layout_marginBottom="@dimen/padding_8dp"
+
             android:fontFamily="@font/nunito_semibold"
             android:text="@{String.valueOf(recipeInfo.commentCount)}"
             android:textColor="@color/primary_raven"
@@ -225,8 +226,7 @@
 
             android:layout_marginStart="@dimen/margin_2dp"
             android:layout_marginTop="@dimen/margin_8dp"
-
-            android:layout_marginBottom="@dimen/padding_8dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
             android:fontFamily="@font/nunito_semibold"
             android:text="@string/comment"
 
@@ -243,6 +243,7 @@
             android:layout_marginStart="@dimen/margin_2dp"
 
             android:layout_marginBottom="@dimen/padding_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:fontFamily="@font/nunito_semibold"
             android:text="@{String.valueOf(recipeInfo.likeCount)}"
             android:textColor="@color/primary_raven"
@@ -251,6 +252,7 @@
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/comment_text"
+            app:layout_constraintTop_toBottomOf="@id/big_food_image"
             />
         <TextView
             android:id="@+id/like_text"
@@ -260,13 +262,17 @@
             android:layout_marginStart="@dimen/margin_2dp"
 
             android:layout_marginBottom="@dimen/padding_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+
             android:fontFamily="@font/nunito_semibold"
             android:text="@string/like"
             android:textColor="@color/primary_raven"
 
-            android:textSize="@dimen/size_13sp"
-            app:layout_constraintBottom_toBottomOf="parent"
 
+            android:textSize="@dimen/size_13sp"
+
+            app:layout_constraintTop_toBottomOf="@id/big_food_image"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/like_count"
             />
 
