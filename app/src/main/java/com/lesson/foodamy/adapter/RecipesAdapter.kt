@@ -1,16 +1,9 @@
 package com.lesson.foodamy.adapter
 
-import android.text.Layout
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.lesson.foodamy.R
-import com.lesson.foodamy.databinding.FragmentIntroBinding
 import com.lesson.foodamy.databinding.RecipeCardViewBinding
 import com.lesson.foodamy.model.recipe_dataclass.Data
 
