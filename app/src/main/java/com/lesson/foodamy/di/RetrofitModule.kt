@@ -1,7 +1,8 @@
 package com.lesson.foodamy.di
 
 import com.lesson.foodamy.RetrofitHelper
-import com.lesson.foodamy.repository.AuthAPIRepository
+import com.lesson.foodamy.repository.AuthApiRepository
+import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +14,12 @@ import javax.inject.Singleton
 class RetrofitModule {
     @Singleton
     @Provides
-    fun providesAuthApi() : AuthAPIRepository {
-        return AuthAPIRepository(RetrofitHelper.getAuthAPI()!!)
+    fun providesAuthApi() : AuthApiRepository {
+        return AuthApiRepository(RetrofitHelper.getAuthAPI()!!)
+    }
+    @Singleton
+    @Provides
+    fun providesRecipesApi(): RecipesAPIRepository{
+        return  RecipesAPIRepository(RetrofitHelper.getRecipesAPI()!!)
     }
 }
