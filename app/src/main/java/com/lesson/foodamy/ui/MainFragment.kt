@@ -1,10 +1,11 @@
 package com.lesson.foodamy.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lesson.foodamy.R
@@ -69,16 +70,22 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        binding.topConstraintLayout.fodamyLogo.isVisible = true
+        binding.topConstraintLayout.textViewTitle.isVisible = false
+        binding.topConstraintLayout.imageButtonExit.setOnClickListener {
+            exit()
+        }
         //val bottomNavigationView = binding.bottomNavigationView
         //val navController = childFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
         //bottomNavigationView.setupWithNavController(navController.navController)
     }
 
+    private fun exit() {
+        findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
+    }
+
     fun setListeners() {
-        binding.logoutIcon.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
-        }
+
     }
 
 }

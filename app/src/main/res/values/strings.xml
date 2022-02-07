@@ -54,4 +54,5 @@
     <string name="_0">0</string>
     <string name="recipe_name">recipe name</string>
     <string name="recipe_category">recipe category</string>
+    <string name="null">null</string>
 </resources>
