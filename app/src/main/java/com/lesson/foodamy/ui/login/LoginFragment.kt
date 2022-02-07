@@ -1,16 +1,17 @@
 package com.lesson.foodamy.ui.login
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ClickableSpan
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
-import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.core.BaseFragment
+import com.lesson.foodamy.databinding.FragmentLoginBinding
+import com.lesson.foodamy.model.BaseResponse
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
-import com.lesson.foodamy.databinding.FragmentLoginBinding as FragmentLoginBinding
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layout.fragment_login) {
@@ -27,8 +28,20 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
     }
 
     private fun setListeners() {
+        val text = "lets sign up";
+        val spannable = SpannableString(text)
+        spannable.setSpan(
+            object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+                }
+
+            }, 4, text.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+
+        )
+        binding.signUpText.text = spannable.toString()
         binding.signUpText.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+
         }
         binding.goToMain.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
