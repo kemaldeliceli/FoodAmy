@@ -8,6 +8,7 @@ import com.lesson.foodamy.R
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import com.lesson.foodamy.databinding.FragmentLoginBinding as FragmentLoginBinding
 
@@ -52,6 +53,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
         })
 
     }
+
 
     override fun getViewModelss(): Class<LoginViewModel> {
         return LoginViewModel::class.java

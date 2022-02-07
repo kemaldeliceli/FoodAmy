@@ -6,6 +6,9 @@
         <variable
             name="userInfo"
             type="com.lesson.foodamy.model.UserInfo" />
+        <variable
+            name="viewModel"
+            type="com.lesson.foodamy.ui.user.UserViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -48,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@={userInfo.name}"
+            android:text="@={viewModel.userInfo.name}"
             android:textSize="@dimen/size_24sp"
             app:layout_constraintTop_toBottomOf="@id/userImage" />
 

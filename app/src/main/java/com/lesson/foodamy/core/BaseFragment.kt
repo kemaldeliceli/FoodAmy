@@ -13,6 +13,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.androidadvance.topsnackbar.TSnackbar
 import com.lesson.foodamy.BR
 import com.lesson.foodamy.R
@@ -40,8 +41,36 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        binding.setVariable(BR.viewModel,viewModel)
+        binding.setVariable(BR.viewModel, viewModel)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        handleEvents()
+    }
+
+    private fun handleEvents() {
+//        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+//            when (viewModel.event.value) {
+//                is BaseViewEvent.Navigate -> {
+//
+//                }
+//                is BaseViewEvent.ShowError -> {
+//                    setSnackbar((viewModel.event.value as BaseViewEvent.ShowError).msg)
+//                }
+//            }
+//        }
+        viewModel.event.observe(viewLifecycleOwner) {
+            when (it) {
+                is BaseViewEvent.Navigate -> {
+                    findNavController().navigate(it.direction)
+                }
+                is BaseViewEvent.ShowError -> {
+                    setSnackbar(it.msg)
+                }
+            }
+        }
     }
 
 

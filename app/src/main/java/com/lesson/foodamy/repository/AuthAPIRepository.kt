@@ -1,12 +1,12 @@
 package com.lesson.foodamy.repository
 
 import com.google.gson.Gson
-import com.lesson.foodamy.model.*
+import com.lesson.foodamy.model.BaseResponse
+import com.lesson.foodamy.model.ResponseUser
 import com.lesson.foodamy.model.dataclass.AuthData
 import com.lesson.foodamy.model.dataclass.ErrorBody
 import com.lesson.foodamy.model.dataclass.RegisterData
 import com.lesson.foodamy.services.AuthService
-import java.lang.Exception
 
 class AuthApiRepository(private val authService: AuthService) {
 
@@ -19,6 +19,11 @@ class AuthApiRepository(private val authService: AuthService) {
 
             if (response.isSuccessful) {
                 responseLogin = BaseResponse.Success(response.body()!!)
+                when (responseLogin) {
+                    is BaseResponse.Success -> {
+                        val token = responseLogin.data.token
+                    }
+                }
             } else {
                 val errorResponse = response.errorBody()?.string()
                 val errorBody = Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
@@ -36,7 +41,11 @@ class AuthApiRepository(private val authService: AuthService) {
 
         try {
             val response =
-                authService.register(registerData.email, registerData.password, registerData.username)
+                authService.register(
+                    registerData.email,
+                    registerData.password,
+                    registerData.username
+                )
 
             if (response.isSuccessful) {
                 responseRegister = BaseResponse.Success(response.body()!!)
