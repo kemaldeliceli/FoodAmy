@@ -11,11 +11,8 @@ import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentEditorsChoiceBinding
 import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
-import com.lesson.foodamy.ui.MainFragment
-import com.lesson.foodamy.ui.MainFragmentDirections
-import com.lesson.foodamy.ui.home.HomeFragment
+import com.lesson.foodamy.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.FieldPosition
 
 
 @AndroidEntryPoint
@@ -49,6 +46,7 @@ class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEdito
         )
     }
     fun onClick(position: Int){
+
        findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipeList[position]))
     }
 

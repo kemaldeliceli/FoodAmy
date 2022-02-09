@@ -11,8 +11,7 @@ import com.lesson.foodamy.databinding.FragmentRecentlyAddedBinding
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
-import com.lesson.foodamy.ui.MainFragment
-import com.lesson.foodamy.ui.MainFragmentDirections
+import com.lesson.foodamy.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 

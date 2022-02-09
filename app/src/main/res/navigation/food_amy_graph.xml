@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.lesson.foodamy.ui.MainFragment"
+        android:name="com.lesson.foodamy.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <argument
