@@ -9,11 +9,10 @@
         android:id="@+id/introFragment"
         android:name="com.lesson.foodamy.ui.intro.IntroFragment"
         android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro"
-        app:startDestination="@id/action_introFragment_to_loginFragment">
+        tools:layout="@layout/fragment_intro">
         <action
-            android:id="@+id/action_introFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            android:id="@+id/action_introFragment_to_mainFragment2"
+            app:destination="@id/mainFragment"
             app:popUpTo="@id/introFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -42,8 +41,8 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            android:id="@+id/action_splashFragment_to_mainFragment2"
+            app:destination="@id/mainFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -76,5 +75,30 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment2"
+        android:name="com.lesson.foodamy.ui.recipedetail.RecipeDetailFragment"
+        android:label="RecipeDetailFragment" >
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_recentlyAddedFragment"
+            app:destination="@id/recentlyAddedFragment" />
+        <argument
+            android:name="recipeInfo"
+            app:argType="com.lesson.foodamy.model.recipe_dataclass.RecipeInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentlyAddedFragment"
+        android:name="com.lesson.foodamy.ui.recentlyadded.RecentlyAddedFragment"
+        android:label="RecentlyAddedFragment" >
+        <action
+            android:id="@+id/action_recentlyAddedFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
     </fragment>
 </navigation>
