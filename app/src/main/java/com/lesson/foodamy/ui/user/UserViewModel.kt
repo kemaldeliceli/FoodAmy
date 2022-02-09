@@ -18,7 +18,7 @@ class UserViewModel @Inject constructor(private val loginSharedPreferences: IPre
     val userInfo : LiveData<UserInfo>
         get() = _userInfo
 
-    fun getUserInfo() = viewModelScope.launch{
+    fun getUserInfoFromApi() = viewModelScope.launch{
         _userInfo.value = loginSharedPreferences.getUserInfo()
     }
 
