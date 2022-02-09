@@ -37,7 +37,7 @@ class SplashFragment : Fragment() {
     private fun startNavigationTimer() {
         Handler(Looper.getMainLooper()).postDelayed({
             if(loginSharedPref.isAppFirstOpen()) {
-                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_splashFragment_to_mainFragment2)
             }else{
                 findNavController().navigate(R.id.action_splashFragment_to_introFragment)
             }
