@@ -7,6 +7,7 @@ import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.core.BaseFragment
+import com.lesson.foodamy.model.toResult
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.lesson.foodamy.databinding.FragmentLoginBinding as FragmentLoginBinding
@@ -38,10 +39,10 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
         viewModel.responseMessage.observe(viewLifecycleOwner, { responseMessage ->
             when (responseMessage) {
                 is BaseResponse.Success -> {
-                    val action =
-                        LoginFragmentDirections.actionLoginFragmentToMainFragment(responseMessage.data.user)
-                    findNavController().navigate(action)
-                    loginSharedPref.setUserInfo(responseMessage.data.user!!)
+                    loginSharedPref.setUserInfo(responseMessage.data.user?.toResult()!!)
+                    loginSharedPref.saveLogin(isLogged = true)
+                    findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+
 
                 }
                 is BaseResponse.Error -> {
