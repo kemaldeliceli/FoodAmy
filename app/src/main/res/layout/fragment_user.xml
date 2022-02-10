@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
-            name="vm"
+            name="viewModel"
             type="com.lesson.foodamy.ui.user.UserViewModel" />
     </data>
 
@@ -19,7 +20,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/notLoginUserPage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="@{viewModel.isLogged ? View.INVISIBLE : View.VISIBLE}"
+        >
         <TextView
             android:id="@+id/loginText"
             android:layout_width="wrap_content"
@@ -47,7 +50,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/boxes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="@{ viewModel.isLogged ? View.VISIBLE : View.INVISIBLE}"
+
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/box1"
@@ -84,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{vm.userInfo.name}"
+            android:text="@{ viewModel.userInfo.name}"
             android:textSize="@dimen/size_24sp"
             app:layout_constraintTop_toBottomOf="@id/userImage" />
 
@@ -93,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{vm.userInfo.username}"
+            android:text="@{ viewModel.userInfo.username}"
             android:textSize="@dimen/size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -134,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(vm.userInfo.followingCount)}"
+            android:text="@{String.valueOf( viewModel.userInfo.followingCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -173,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(vm.userInfo.followedCount)}"
+            android:text="@{String.valueOf( viewModel.userInfo.followedCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -211,7 +217,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(vm.userInfo.recipeCount)}"
+            android:text="@{String.valueOf( viewModel.userInfo.recipeCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -238,7 +244,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(vm.userInfo.favoritesCount)}"
+            android:text="@{String.valueOf( viewModel.userInfo.favoritesCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -278,7 +284,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(vm.userInfo.likesCount)}"
+            android:text="@{String.valueOf( viewModel.userInfo.likesCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -347,7 +353,7 @@
             android:textSize="@dimen/size_20sp"
             app:layout_constraintTop_toBottomOf="@id/email"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@{vm.userInfo.email}"
+            android:text="@{ viewModel.userInfo.email}"
 
             android:paddingTop="@dimen/padding_8dp"
             android:paddingStart="@dimen/padding_16dp"
