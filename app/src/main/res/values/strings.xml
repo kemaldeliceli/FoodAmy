@@ -55,4 +55,5 @@
     <string name="recipe_name">recipe name</string>
     <string name="recipe_category">recipe category</string>
     <string name="not_logged_text">You are not logged in, you can go to the login page.</string>
+    <string name="success_register_process">Registration is successful</string>
 </resources>
