@@ -30,7 +30,10 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     private fun getResponseAndNavigate() {
         viewModel.responseMessage.observe(viewLifecycleOwner, Observer<BaseResponse<Any>>{responseMessage ->
             when(responseMessage){
-                is BaseResponse.Success -> {}
+                is BaseResponse.Success -> {
+                    setSnackbar(getString(R.string.success_register_process))
+                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                }
                 is BaseResponse.Error -> {
                     setSnackbar(responseMessage.error.error.toString())
                 }
