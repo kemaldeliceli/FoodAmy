@@ -7,12 +7,18 @@ import com.lesson.foodamy.R
 import com.lesson.foodamy.adapter.MainPageAdapter
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentMainBinding
+import com.lesson.foodamy.model.BaseResponse
+import com.lesson.foodamy.preferences.IPrefDefaultManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
-class MainFragment : BaseFragment<MainViewModel,FragmentMainBinding>(R.layout.fragment_main) {
-
+@AndroidEntryPoint
+class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(R.layout.fragment_main) {
+    @Inject
+    lateinit var loginSharedPreferences: IPrefDefaultManager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setCoordinateSnackbar(binding.snackbarCoord)
         setAdapter()
         setBottomNavigationBar()
         setListeners()
@@ -63,9 +69,15 @@ class MainFragment : BaseFragment<MainViewModel,FragmentMainBinding>(R.layout.fr
     }
 
     fun setListeners() {
-        binding.logoutIcon.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
-        }
+        viewModel.responseLogout.observe(viewLifecycleOwner, { logoutResponse ->
+            when (logoutResponse) {
+                is BaseResponse.Error -> {setSnackbar(logoutResponse.error.error.toString())}
+                is BaseResponse.Success -> {
+                    setSnackbar("Successfull Logout")
+                    loginSharedPreferences.saveLogin(isLogged = false)
+                    findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
+                }
+            }})
     }
 
     override fun getViewModelss(): Class<MainViewModel> {
