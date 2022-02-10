@@ -2,18 +2,23 @@ package com.lesson.foodamy.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeCardViewBinding
-import com.lesson.foodamy.model.recipe_dataclass.Data
+import com.lesson.foodamy.model.recipe_dataclass.Recipe
+import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
+import com.lesson.foodamy.model.recipe_dataclass.toResult
 
-class RecipesAdapter(private val recipes : ArrayList<Data>, private val context: Fragment):
+class RecipesAdapter(private val recipes : ArrayList<RecipeInfo>, val onClick: ((position: Int) -> Unit)?):
     RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() {
 
     inner  class RecipesViewHolder(val binding: RecipeCardViewBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(foodInfo: Data){
+        fun bind(foodInfo: Recipe){
             binding.recipeInfo = foodInfo
+
+            itemView.setOnClickListener {
+                onClick?.invoke(position)
+            }
         }
 
     }
@@ -26,10 +31,10 @@ class RecipesAdapter(private val recipes : ArrayList<Data>, private val context:
     }
 
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
-        holder.bind(recipes[position])
+        holder.bind(recipes[position].toResult())
     }
 
     override fun getItemCount(): Int {
         return recipes.size
     }
-}
+    }

@@ -17,16 +17,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
-
         setAdapter()
-
 
         return binding.root
     }
-
     fun setAdapter(){
         binding.viewPager.adapter = HomePageAdapter(fragment = this)
-
+        binding.viewPager.isUserInputEnabled = false
         TabLayoutMediator(binding.topTab,binding.viewPager){tab,position ->
             when(position){
                 0->tab.text = "EDITORS' CHOICE"

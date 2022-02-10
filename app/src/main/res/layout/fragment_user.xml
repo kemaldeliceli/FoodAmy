@@ -4,14 +4,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="userInfo"
-            type="com.lesson.foodamy.model.UserInfo" />
+            name="vm"
+            type="com.lesson.foodamy.ui.user.UserViewModel" />
     </data>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/userPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.user.UserFragment">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/notLoginUserPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/loginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_24sp"
+            android:text="@string/not_logged_text"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_text"
+            app:layout_constraintTop_toBottomOf="@id/loginText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_8dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/boxes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/box1"
@@ -48,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@={userInfo.name}"
+            android:text="@{vm.userInfo.name}"
             android:textSize="@dimen/size_24sp"
             app:layout_constraintTop_toBottomOf="@id/userImage" />
 
@@ -57,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@={userInfo.username}"
+            android:text="@{vm.userInfo.username}"
             android:textSize="@dimen/size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(userInfo.followingCount)}"
+            android:text="@{String.valueOf(vm.userInfo.followingCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -137,7 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(userInfo.followedCount)}"
+            android:text="@{String.valueOf(vm.userInfo.followedCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -175,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(userInfo.recipeCount)}"
+            android:text="@{String.valueOf(vm.userInfo.recipeCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -202,7 +238,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(userInfo.favoritesCount)}"
+            android:text="@{String.valueOf(vm.userInfo.favoritesCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -242,7 +278,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_20sp"
-            android:text="@{String.valueOf(userInfo.likesCount)}"
+            android:text="@{String.valueOf(vm.userInfo.likesCount)}"
 
             android:textColor="@color/neutral_heather"
             android:layout_marginBottom="@dimen/margin_2dp"
@@ -311,7 +347,7 @@
             android:textSize="@dimen/size_20sp"
             app:layout_constraintTop_toBottomOf="@id/email"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@={userInfo.email}"
+            android:text="@{vm.userInfo.email}"
 
             android:paddingTop="@dimen/padding_8dp"
             android:paddingStart="@dimen/padding_16dp"
@@ -322,6 +358,9 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,7 @@ class SharedPrefManager(private val sharedPreferences: SharedPreferences) : IPre
         sharedPreferences.edit().putString(userInfoObject, jsonString).apply()
     }
 
-    override fun getUserInfo(): UserInfo {
+    override fun getUserInfo(): UserInfo? {
         val value = sharedPreferences.getString(userInfoObject, null)
         //JSON String was found which means object can be read.
         //We convert this JSON String to model object. Parameter "c" (of

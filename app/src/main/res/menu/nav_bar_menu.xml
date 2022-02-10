@@ -18,4 +18,5 @@
         android:id="@+id/menuFragment"
         android:icon="@drawable/menu_icon"
         app:showAsAction="always" />
+
 </menu>

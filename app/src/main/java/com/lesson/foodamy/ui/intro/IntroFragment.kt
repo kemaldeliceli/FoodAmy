@@ -93,6 +93,6 @@ class IntroFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.onboardingViewPager){ tab, position -> }.attach()
     }
     private fun goToLoginPage(){
-        findNavController().navigate(R.id.action_introFragment_to_loginFragment)
+        findNavController().navigate(R.id.action_introFragment_to_mainFragment2)
     }
 }
