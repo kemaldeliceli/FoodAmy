@@ -1,14 +1,12 @@
 package com.lesson.foodamy.model.recipe_dataclass
 
-import android.annotation.SuppressLint
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 
-@kotlinx.android.parcel.Parcelize
+@Parcelize
 data class RecipeInfo(
 
     val id: Int? = null,
@@ -36,11 +34,11 @@ data class RecipeInfo(
 
 @Parcelize
 data class Recipe(
-    var id: Int?,
-    var title: String?,
-    var category: String?,
-    var image: @RawValue Image,
-    var user: @RawValue User?,
+    val id: Int?,
+    val title: String?,
+    val category: String?,
+    val image: @RawValue Image,
+    val user: @RawValue User?,
     val isEditorChoice: Boolean?,
     val commentCount: Int?,
     val likeCount: Int?
