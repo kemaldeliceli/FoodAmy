@@ -1,25 +1,18 @@
 package com.lesson.foodamy.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
+import com.lesson.foodamy.R
 import com.lesson.foodamy.adapter.HomePageAdapter
+import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+class HomeFragment : BaseFragment<HomeViewModel,FragmentHomeBinding>(R.layout.fragment_home) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater,container,false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setAdapter()
-
-        return binding.root
     }
     fun setAdapter(){
         binding.viewPager.adapter = HomePageAdapter(fragment = this)
@@ -30,6 +23,10 @@ class HomeFragment : Fragment() {
                 1->tab.text = "RECENTLY ADDED"
             }
         }.attach()
+    }
+
+    override fun getViewModelss(): Class<HomeViewModel> {
+        return HomeViewModel::class.java
     }
 
 }
