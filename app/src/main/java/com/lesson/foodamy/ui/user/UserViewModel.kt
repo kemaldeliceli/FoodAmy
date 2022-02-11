@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.core.BaseViewModel
 import com.lesson.foodamy.model.UserInformation
+import com.lesson.foodamy.ui.main.MainFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,5 +28,7 @@ class UserViewModel @Inject constructor(private val loginSharedPreferences: IPre
     fun checkLogin() = viewModelScope.launch {
         _isLogged.value = loginSharedPreferences.isLoggedIn()
     }
-
+    fun navigateToLogin(){
+        navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
+    }
 }

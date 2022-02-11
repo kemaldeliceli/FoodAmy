@@ -16,15 +16,7 @@ class UserFragment : BaseFragment<UserViewModel, FragmentUserBinding>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         viewModel.getUserInfoFromApi()
         viewModel.checkLogin()
-        setListeners()
     }
-
-    private fun setListeners() {
-        binding.loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
-        }
-    }
-
 
     override fun getViewModelss(): Class<UserViewModel> {
         return  UserViewModel::class.java
