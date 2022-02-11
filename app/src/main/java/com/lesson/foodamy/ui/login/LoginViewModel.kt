@@ -1,7 +1,6 @@
 package com.lesson.foodamy.ui.login
 
 import android.util.Patterns
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
@@ -9,43 +8,63 @@ import com.lesson.foodamy.model.*
 import com.lesson.foodamy.model.dataclass.AuthData
 import com.lesson.foodamy.repository.AuthApiRepository
 import com.lesson.foodamy.core.BaseViewModel
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val authAPIRepository: AuthApiRepository) : BaseViewModel() {
-    private var _responseMessage: MutableLiveData<BaseResponse<ResponseUser>> = MutableLiveData()
+class LoginViewModel @Inject constructor(
+    private val authAPIRepository: AuthApiRepository,
+    private val loginSharedPreferences: IPrefDefaultManager,
+) : BaseViewModel() {
+
     val email: MutableLiveData<String> = MutableLiveData("")
     val password: MutableLiveData<String> = MutableLiveData("")
 
-    val responseMessage: LiveData<BaseResponse<ResponseUser>>
-        get() = _responseMessage
-
-
     fun login() = viewModelScope.launch {
 
-        val authData = AuthData(email.value!!,password.value!!)
-        if (isLoginFieldsValid(authData)){
-            _responseMessage.value = authAPIRepository.requestLogin(authData)
+        val authData = AuthData(email.value!!, password.value!!)
+        if (isLoginFieldsValid(authData)) {
+            val response = authAPIRepository.requestLogin(authData)
+
+            when (response) {
+                is BaseResponse.Error -> {
+                    showMessage(response.error.error.toString())
+                }
+                is BaseResponse.Success -> {
+                    loginSharedPreferences.setUserInfo(response.data.user?.toResult()!!)
+                    loginSharedPreferences.saveLogin(isLogged = true)
+                    navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+                }
+            }
         }
+
     }
 
-    fun isLoginFieldsValid(userAuth: AuthData): Boolean {
-        return when{
+    fun navigateToSignUp() {
+        navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+    }
+
+    fun navigateToMain() {
+        navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+    }
+
+    private fun isLoginFieldsValid(userAuth: AuthData): Boolean {
+        return when {
             userAuth.email.isEmpty() -> {
-                showErrorMessage(R.string.empty_email_blank)
+                showMessage(R.string.empty_email_blank)
                 false
             }
             userAuth.password.isEmpty() -> {
-                showErrorMessage(R.string.empty_password_blank)
+                showMessage(R.string.empty_password_blank)
                 false
             }
             !Patterns.EMAIL_ADDRESS.matcher(userAuth.email).matches() -> {
-                showErrorMessage(R.string.wrong_format_email)
+                showMessage(R.string.wrong_format_email)
                 false
             }
-            else->true
+            else -> true
         }
     }
 }
