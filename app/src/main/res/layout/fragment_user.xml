@@ -44,6 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/margin_8dp"
+            android:onClick="@{() -> viewModel.navigateToLogin()}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
