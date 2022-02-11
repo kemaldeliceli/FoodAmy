@@ -1,6 +1,8 @@
 package com.lesson.foodamy.core
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +13,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.androidadvance.topsnackbar.TSnackbar
 import com.lesson.foodamy.BR
 import com.lesson.foodamy.R
@@ -24,14 +28,35 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
     lateinit var viewModel: VM
     lateinit var binding: VDB
 
-
     abstract fun getViewModelss(): Class<VM>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this).get(getViewModelss())
-
-        observeErrorMessage()
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        handleEvent()
+    }
+
+    private fun handleEvent() {
+        viewModel.event.observe(viewLifecycleOwner,{
+            when(it){
+                is BaseViewEvent.Navigate -> {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        navigate(it.directions)}, 300)
+                }
+                is BaseViewEvent.ShowMessage -> {
+                    when(it.msg){
+                        is Int -> {setSnackbar(getString(it.msg))}
+                        is String -> { setSnackbar(it.msg) }
+                    }
+
+                }
+            }
+
+        })
     }
 
     override fun onCreateView(
@@ -42,14 +67,6 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding.setVariable(BR.viewModel,viewModel)
         return binding.root
-    }
-
-
-    private fun observeErrorMessage() {
-        viewModel.errorMessage.observe(this, Observer<Int> { errorMessage ->
-            setSnackbar(getString(errorMessage))
-            println(getString(errorMessage))
-        })
     }
 
     fun setCoordinateSnackbar(coordinate: CoordinatorLayout) {
@@ -75,5 +92,9 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
         textView.setTextColor(ResourcesCompat.getColor(resources, R.color.neutral_white, null))
 
         snackbar.show()
+    }
+
+    fun navigate(directions:NavDirections){
+        findNavController().navigate(directions)
     }
 }
