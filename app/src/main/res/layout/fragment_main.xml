@@ -15,6 +15,7 @@
     android:background="@color/neutral_zircon"
     tools:context=".ui.main.MainFragment">
 
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_half"
         android:layout_width="wrap_content"
@@ -32,7 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
-
         <ImageView
             android:id="@+id/fodamy_logo"
             android:layout_width="wrap_content"
@@ -59,17 +59,19 @@
             android:paddingEnd="@dimen/padding_16dp"
             />
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/snackbarCoord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/fodamy_logo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/snackbarCoord"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="@id/top_constraint_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
