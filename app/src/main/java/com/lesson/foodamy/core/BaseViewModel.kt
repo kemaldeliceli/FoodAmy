@@ -8,17 +8,20 @@ open class BaseViewModel : ViewModel() {
 
     val event = SingleLiveEvent<BaseViewEvent>()
 
-    fun sendEvent(ev: BaseViewEvent){
+    fun sendEvent(ev: BaseViewEvent) {
         event.postValue(ev)
     }
 
-    fun navigate(directions: NavDirections){
+    fun navigate(directions: NavDirections) {
         sendEvent(BaseViewEvent.Navigate(directions))
     }
 
-    fun showMessage(msg: Any){
+    fun showMessage(msg: Any) {
         sendEvent(BaseViewEvent.ShowMessage(msg))
     }
 
+    fun popBackStack() {
+        sendEvent(BaseViewEvent.PopBackStack)
+    }
 
 }

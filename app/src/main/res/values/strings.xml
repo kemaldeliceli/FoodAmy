@@ -57,4 +57,5 @@
     <string name="not_logged_text">You are not logged in, you can go to the login page.</string>
     <string name="success_register_process">Registration is successful</string>
     <string name="successfull_logout">Successfull Logout</string>
+    <string name="add_comment">Yorum Ekle</string>
 </resources>

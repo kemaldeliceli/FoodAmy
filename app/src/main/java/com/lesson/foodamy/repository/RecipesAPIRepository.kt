@@ -21,12 +21,12 @@ class RecipesAPIRepository(private val recipeService: RecipeService) {
                 RecipeType.RECENTLY_LAST_ADDED -> recipeService.getLastAdded()
             }
 
-            if (response.isSuccessful){
-                responseRecipes = BaseResponse.Success(response.body()!!)
+            responseRecipes = if (response.isSuccessful){
+                BaseResponse.Success(response.body()!!)
             }else{
                 val errorResponse = response.errorBody()?.string()
                 val errorBody = Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
-                responseRecipes = BaseResponse.Error(errorBody)
+                BaseResponse.Error(errorBody)
             }
 
         }catch (e:Exception){

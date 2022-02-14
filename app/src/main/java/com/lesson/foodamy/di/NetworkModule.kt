@@ -1,6 +1,5 @@
 package com.lesson.foodamy.di
 
-import androidx.core.content.PermissionChecker
 import com.lesson.foodamy.repository.AuthApiRepository
 import com.lesson.foodamy.repository.CommentApiRepository
 import com.lesson.foodamy.repository.RecipesAPIRepository
@@ -19,30 +18,35 @@ import javax.inject.Inject
 @Module
 class NetworkModule {
 
-    private val BASE_URL = "https://fodamy.mobillium.com/"
 
     @Provides
-    fun providesRetrofit(): Retrofit{
+    fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
     @Provides
     @Inject
-    fun providesAuthApi(retrofit: Retrofit) : AuthApiRepository {
+    fun providesAuthApi(retrofit: Retrofit): AuthApiRepository {
         return AuthApiRepository(retrofit.create(AuthService::class.java))
     }
+
     @Provides
     @Inject
-    fun providesRecipesApi(retrofit: Retrofit): RecipesAPIRepository{
-        return  RecipesAPIRepository(retrofit.create(RecipeService::class.java))
+    fun providesRecipesApi(retrofit: Retrofit): RecipesAPIRepository {
+        return RecipesAPIRepository(retrofit.create(RecipeService::class.java))
     }
+
     @Provides
     @Inject
-    fun providesCommentsApi(retrofit: Retrofit):CommentApiRepository{
+    fun providesCommentsApi(retrofit: Retrofit): CommentApiRepository {
         return CommentApiRepository(retrofit.create(CommentService::class.java))
     }
 
+    companion object {
+        const val BASE_URL = "https://fodamy.mobillium.com/"
+    }
 
 }

@@ -1,8 +1,6 @@
 package com.lesson.foodamy.core
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +30,10 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this).get(getViewModelss())
+      //  viewModel = ViewModelProvider(this).get(getViewModel())
         super.onCreate(savedInstanceState)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,22 +41,28 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
     }
 
     private fun handleEvent() {
-        viewModel.event.observe(viewLifecycleOwner,{
-            when(it){
+        viewModel.event.observe(viewLifecycleOwner) {
+            when (it) {
                 is BaseViewEvent.Navigate -> {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        navigate(it.directions)}, 300)
+                    navigate(it.directions)
                 }
                 is BaseViewEvent.ShowMessage -> {
-                    when(it.msg){
-                        is Int -> {setSnackbar(getString(it.msg))}
-                        is String -> { setSnackbar(it.msg) }
+                    when (it.msg) {
+                        is Int -> {
+                            setSnackbar(getString(it.msg))
+                        }
+                        is String -> {
+                            setSnackbar(it.msg)
+                        }
                     }
 
                 }
+                BaseViewEvent.PopBackStack -> {
+                    findNavController().popBackStack()
+                }
             }
 
-        })
+        }
     }
 
     override fun onCreateView(
@@ -65,7 +71,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        binding.setVariable(BR.viewModel,viewModel)
+        binding.setVariable(BR.viewModel, viewModel)
         return binding.root
     }
 
@@ -94,7 +100,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
         snackbar.show()
     }
 
-    fun navigate(directions:NavDirections){
+    fun navigate(directions: NavDirections) {
         findNavController().navigate(directions)
     }
 }

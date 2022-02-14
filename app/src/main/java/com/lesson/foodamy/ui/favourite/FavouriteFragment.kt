@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentFavouriteBinding
-import com.lesson.foodamy.databinding.FragmentFavouriteBindingImpl
+
 
 class FavouriteFragment : BaseFragment<FavouriteViewModel,FragmentFavouriteBinding>(R.layout.fragment_favourite) {
     private var count: Int = 0
