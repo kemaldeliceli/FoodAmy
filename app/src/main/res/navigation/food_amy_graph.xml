@@ -65,11 +65,6 @@
         android:name="com.lesson.foodamy.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
-        <argument
-            android:name="responseUserInfo"
-            app:argType="com.lesson.foodamy.model.UserInfo"
-            app:nullable="true"
-            android:defaultValue="@null" />
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment"

@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.preferences.IPrefDefaultManager
-import com.lesson.foodamy.model.UserInfo
 import com.lesson.foodamy.core.BaseViewModel
+import com.lesson.foodamy.model.UserInformation
+import com.lesson.foodamy.ui.main.MainFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,13 +14,21 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(private val loginSharedPreferences: IPrefDefaultManager): BaseViewModel() {
 
-    private  var _userInfo:MutableLiveData<UserInfo> = MutableLiveData()
+    private  var _userInfo:MutableLiveData<UserInformation> = MutableLiveData()
+    private var _isLogged: MutableLiveData<Boolean> = MutableLiveData()
 
-    val userInfo : LiveData<UserInfo>
+    val userInfo : LiveData<UserInformation>
         get() = _userInfo
+    val isLogged: LiveData<Boolean>
+        get() = _isLogged
 
     fun getUserInfoFromApi() = viewModelScope.launch{
         _userInfo.value = loginSharedPreferences.getUserInfo()
     }
-
+    fun checkLogin() = viewModelScope.launch {
+        _isLogged.value = loginSharedPreferences.isLoggedIn()
+    }
+    fun navigateToLogin(){
+        navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
+    }
 }

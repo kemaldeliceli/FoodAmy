@@ -14,29 +14,8 @@ class UserFragment : BaseFragment<UserViewModel, FragmentUserBinding>(R.layout.f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = viewModel
         viewModel.getUserInfoFromApi()
-        checkLogin()
-        setListeners()
-    }
-
-    private fun setListeners() {
-        binding.loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
-        }
-    }
-
-    private fun checkLogin() {
-        when(viewModel.userInfo.value){
-            null -> {
-                binding.notLoginUserPage.isVisible = true
-                binding.boxes.isVisible = false
-            }
-            else -> {
-                binding.notLoginUserPage.isVisible = false
-                binding.boxes.isVisible = true
-            }
-        }
+        viewModel.checkLogin()
     }
 
     override fun getViewModelss(): Class<UserViewModel> {

@@ -1,41 +1,32 @@
 package com.lesson.foodamy.ui.intro
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.adapter.OnboardingItemsAdapter
+import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentIntroBinding
 import com.lesson.foodamy.model.dataclass.OnboardingItem
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class IntroFragment : Fragment() {
+class IntroFragment : BaseFragment<IntroViewModel,FragmentIntroBinding>(R.layout.fragment_intro) {
 
     private lateinit var onboardingItemAdapter: OnboardingItemsAdapter
-    private lateinit var binding: FragmentIntroBinding
     @Inject lateinit var loginSharedPref: IPrefDefaultManager
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentIntroBinding.inflate(inflater,container,false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setOnboardItems()
         setAdapter()
         setListeners()
 
         loginSharedPref.saveAppOpened()
-        // Inflate the layout for this fragment
-        return binding.root
     }
 
     private fun setListeners(){
@@ -94,5 +85,9 @@ class IntroFragment : Fragment() {
     }
     private fun goToLoginPage(){
         findNavController().navigate(R.id.action_introFragment_to_mainFragment2)
+    }
+
+    override fun getViewModelss(): Class<IntroViewModel> {
+            return IntroViewModel::class.java
     }
 }

@@ -46,8 +46,7 @@ class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEdito
         )
     }
     fun onClick(position: Int){
-
-       findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipeList[position]))
+      navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipeList[position]))
     }
 
     override fun getViewModelss(): Class<EditorsChoiceViewModel> {

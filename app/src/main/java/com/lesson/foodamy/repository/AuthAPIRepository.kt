@@ -51,6 +51,24 @@ class AuthApiRepository(private val authService: AuthService) {
 
         return responseRegister
     }
+    suspend fun requestLogout(): BaseResponse<ResponseLogout>?{
+        var responseLogout: BaseResponse<ResponseLogout>? = null
+
+        try {
+            val response = authService.logOut()
+            if (response.isSuccessful) {
+                responseLogout = BaseResponse.Success(response.body()!!)
+            } else {
+                val errorResponse = response.errorBody()?.string()
+                val errorBody = Gson().fromJson(errorResponse, ErrorBody::class.java)
+                responseLogout = BaseResponse.Error(errorBody)
+            }
+        } catch (e: Exception) {
+            responseLogout = BaseResponse.Error(ErrorBody("408", "Timeout Error"))
+        }
+
+        return responseLogout
+    }
 }
 
 

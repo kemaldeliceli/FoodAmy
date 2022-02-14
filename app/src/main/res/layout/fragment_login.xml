@@ -22,6 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBaseline_toTopOf="parent"
             android:visibility="invisible"
+            android:onClick="@{()->viewModel.navigateToMain()}"
             />
 
         <TextView
@@ -144,7 +145,9 @@
             android:layout_marginStart="@dimen/margin_2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline4"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            android:onClick="@{() -> viewModel.navigateToSignUp()}"
+            />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/snackbar_coord"
