@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="recipeName"
+            type="String" />
+        <variable
+            name="viewModel"
+            type="com.lesson.foodamy.ui.main.MainViewModel" />
+        <variable
+            name="isDetail"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary_red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{isDetail? View.INVISIBLE : View.VISIBLE }"
+            >
+            <ImageView
+                android:id="@+id/fodamy_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/padding_8dp"
+                android:paddingEnd="@dimen/padding_8dp"
+                android:paddingBottom="@dimen/padding_8dp"
+                android:src="@drawable/fodamy_logo"
+                app:layout_constraintEnd_toStartOf="@id/logout_icon"
+                app:layout_constraintHorizontal_bias="0.606"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp"
+                />
+
+            <ImageButton
+                android:id="@+id/logout_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:src="@drawable/logout_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@android:color/transparent"
+                android:onClick="@{()->viewModel.logOut()}"
+                android:paddingEnd="@dimen/padding_16dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{isDetail? View.VISIBLE : View.INVISIBLE}"
+            >
+            <ImageButton
+                android:id="@+id/back_icon"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:background="@android:color/transparent"
+                app:tint="@color/neutral_white"
+
+                android:layout_marginStart="@dimen/margin_16dp"
+
+                android:src="@drawable/heart_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <ImageButton
+                android:id="@+id/share_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:src="@drawable/close_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@android:color/transparent"
+                app:tint="@color/neutral_white"
+                android:backgroundTintMode="src_in"
+                android:backgroundTint="@color/neutral_white"
+                android:onClick="@{()->viewModel.logOut()}"
+                android:paddingEnd="@dimen/padding_16dp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="@dimen/size_20sp"
+                android:text="@{recipeName}"
+
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="@color/neutral_white"
+                android:textAllCaps="true"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="user"
+            type="com.lesson.foodamy.model.recipe_dataclass.User" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:cardElevation="0dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/userImage"
+                android:layout_width="@dimen/layout_width_40dp"
+                android:layout_height="@dimen/layout_height_40dp"
+
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{user.image.url}"
+                app:placeHolder="@{@drawable/no_user_image}"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:shapeAppearanceOverlay="@style/CircularImage" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_4dp"
+
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@{user.username}"
+                android:textColor="@color/primary_cinder"
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintBottom_toTopOf="@id/recipe_count"
+                app:layout_constraintStart_toEndOf="@id/userImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recipes_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_2dp"
+
+                android:layout_marginBottom="@dimen/padding_8dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@string/recipes"
+
+                android:textColor="@color/primary_raven"
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/recipe_count"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <TextView
+                android:id="@+id/recipe_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_marginBottom="@dimen/padding_8dp"
+
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@{String.valueOf(user.recipeCount)}"
+                android:textColor="@color/primary_raven"
+
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/userImage"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <TextView
+                android:id="@+id/follower_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_2dp"
+                android:layout_marginBottom="@dimen/padding_8dp"
+
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@string/follower"
+                android:textColor="@color/primary_raven"
+
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/follower_count"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <TextView
+                android:id="@+id/follower_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_2dp"
+                android:layout_marginBottom="@dimen/padding_8dp"
+
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@{String.valueOf(user.followingCount)}"
+                android:textColor="@color/primary_raven"
+
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/recipes_text"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="0dp"
+
+                android:background="@drawable/stroke_rectangle"
+
+                android:text="Takip Et"
+                android:textSize="@dimen/size_13sp"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="@color/primary_red"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:layout_marginEnd="@dimen/margin_16dp"
+                android:layout_marginVertical="@dimen/margin_16dp"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>
