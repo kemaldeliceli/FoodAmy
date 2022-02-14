@@ -29,7 +29,7 @@
             android:id="@+id/constraint_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isDetail? View.INVISIBLE : View.VISIBLE }"
+            android:visibility="@{isDetail? View.INVISIBLE : View.GONE }"
             >
             <ImageView
                 android:id="@+id/fodamy_logo"
@@ -63,40 +63,50 @@
             android:id="@+id/constraint_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isDetail? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{isDetail? View.VISIBLE : View.GONE}"
             >
             <ImageButton
                 android:id="@+id/back_icon"
-
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
+                android:scaleType="fitCenter"
+                android:layout_width="11dp"
+                android:layout_height="18dp"
                 android:background="@android:color/transparent"
                 app:tint="@color/neutral_white"
-
                 android:layout_marginStart="@dimen/margin_16dp"
-
-                android:src="@drawable/heart_icon"
+                android:src="@drawable/back_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:textSize="14sp"
+                android:text="Geri"
+                android:textColor="@color/neutral_white"
+                app:layout_constraintStart_toEndOf="@id/back_icon"
+                app:layout_constraintTop_toTopOf="@id/back_icon"
+                app:layout_constraintBottom_toBottomOf="@id/back_icon"
+                android:layout_marginStart="@dimen/margin_8dp"
+                />
 
             <ImageButton
                 android:id="@+id/share_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:src="@drawable/close_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/share_icon"
+                android:scaleType="fitCenter"
+
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBaseline_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:background="@android:color/transparent"
                 app:tint="@color/neutral_white"
                 android:backgroundTintMode="src_in"
                 android:backgroundTint="@color/neutral_white"
                 android:onClick="@{()->viewModel.logOut()}"
-                android:paddingEnd="@dimen/padding_16dp"
-
+                android:layout_marginEnd="@dimen/margin_16dp"
                 />
 
             <TextView

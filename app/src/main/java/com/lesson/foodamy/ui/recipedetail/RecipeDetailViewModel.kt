@@ -17,28 +17,15 @@ class RecipeDetailViewModel @Inject constructor(private val commentApiRepository
 
     var _responseMessage: MutableLiveData<BaseResponse<ResponseComments>> = MutableLiveData()
 
-    private  var _firstComment:MutableLiveData<Comment> = MutableLiveData()
-
-    val firstComment : MutableLiveData<Comment>
-        get() = _firstComment
-
 
     val responseComments: LiveData<BaseResponse<ResponseComments>>
         get() = _responseMessage
 
     fun getCommentsOfRecipe(recipeID: Int) = viewModelScope.launch {
-        val response = commentApiRepository.requestComments(recipeID)
-        _responseMessage.value = response
-        when(response){
-            is BaseResponse.Error -> showMessage(response.error.error.toString())
-            is BaseResponse.Success -> {
-                val comments = response.data.data
-                if (comments.isNotEmpty()) {
-                    _firstComment.value = comments[0]
-                }
-            }
-            null -> {}
-        }
+        _responseMessage.value = commentApiRepository.requestComments(recipeID)
+    }
+    fun getBack(){
+        navigate(RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToMainFragment())
     }
 
 }
