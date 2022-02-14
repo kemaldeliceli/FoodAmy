@@ -29,7 +29,7 @@
             android:id="@+id/constraint_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isDetail? View.INVISIBLE : View.GONE }"
+            android:visibility="@{isDetail? View.INVISIBLE : View.VISIBLE }"
             >
             <ImageView
                 android:id="@+id/fodamy_logo"
@@ -63,7 +63,7 @@
             android:id="@+id/constraint_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isDetail? View.VISIBLE : View.GONE}"
+            android:visibility="@{isDetail? View.VISIBLE : View.INVISIBLE}"
             >
             <ImageButton
                 android:id="@+id/back_icon"
