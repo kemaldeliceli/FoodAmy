@@ -1,11 +1,12 @@
 package com.lesson.foodamy.di
 
-import androidx.core.content.PermissionChecker
 import com.lesson.foodamy.repository.AuthApiRepository
 import com.lesson.foodamy.repository.CommentApiRepository
+import com.lesson.foodamy.repository.LikeApiRepository
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import com.lesson.foodamy.services.AuthService
 import com.lesson.foodamy.services.CommentService
+import com.lesson.foodamy.services.LikeService
 import com.lesson.foodamy.services.RecipeService
 import dagger.Module
 import dagger.Provides
@@ -44,5 +45,10 @@ class NetworkModule {
         return CommentApiRepository(retrofit.create(CommentService::class.java))
     }
 
+    @Provides
+    @Inject
+    fun providesLikeApi(retrofit: Retrofit):LikeApiRepository{
+        return LikeApiRepository(retrofit.create(LikeService::class.java))
+    }
 
 }
