@@ -3,7 +3,6 @@ package com.lesson.foodamy.ui.main
 import android.os.Bundle
 import android.view.View
 import com.lesson.foodamy.R
-import com.lesson.foodamy.adapter.MainPageAdapter
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint

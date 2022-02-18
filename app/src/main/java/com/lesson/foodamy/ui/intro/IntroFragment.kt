@@ -7,7 +7,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.R
-import com.lesson.foodamy.adapter.OnboardingItemsAdapter
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentIntroBinding
 import com.lesson.foodamy.model.dataclass.OnboardingItem

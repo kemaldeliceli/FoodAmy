@@ -2,10 +2,9 @@ package com.lesson.foodamy.ui.editorschoice
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lesson.foodamy.adapter.RecipesAdapter
+import com.lesson.foodamy.ui.main.RecipesAdapter
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.core.BaseFragment

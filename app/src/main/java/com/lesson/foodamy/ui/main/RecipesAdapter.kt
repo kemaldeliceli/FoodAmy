@@ -1,4 +1,4 @@
-package com.lesson.foodamy.adapter
+package com.lesson.foodamy.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

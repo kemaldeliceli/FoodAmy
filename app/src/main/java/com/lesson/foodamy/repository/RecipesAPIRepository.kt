@@ -4,9 +4,9 @@ import com.lesson.foodamy.model.recipe_dataclass.ResponseRecipes
 import com.google.gson.Gson
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.RecipeType
+import com.lesson.foodamy.model.ResponseLike
 import com.lesson.foodamy.model.dataclass.ErrorBody
 import com.lesson.foodamy.services.RecipeService
-import retrofit2.Response
 import java.lang.Exception
 
 class RecipesAPIRepository(private val recipeService: RecipeService) {
@@ -37,6 +37,4 @@ class RecipesAPIRepository(private val recipeService: RecipeService) {
 
         return  responseRecipes
     }
-
-
 }

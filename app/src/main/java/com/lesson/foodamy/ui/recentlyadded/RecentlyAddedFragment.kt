@@ -5,7 +5,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lesson.foodamy.adapter.RecipesAdapter
+import com.lesson.foodamy.ui.main.RecipesAdapter
 import com.lesson.foodamy.R
 import com.lesson.foodamy.databinding.FragmentRecentlyAddedBinding
 import com.lesson.foodamy.model.BaseResponse
@@ -54,7 +54,8 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
     }
 
     fun onClick(position: Int){
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipeList[position]))
+        findNavController().
+        navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipeList[position]))
     }
 
 }
