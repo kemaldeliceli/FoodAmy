@@ -11,6 +11,7 @@ class SharedPrefManager(private val sharedPreferences: SharedPreferences) : IPre
         private const val firstTimeAppOpen = "firstTimeAppOpen"
         private const val isLoggedIn="isLoggedIn"
         private const val userInfoObject = "userInfoObject"
+        private const val userToken = "userToken"
     }
 
     override fun saveAppOpened(){
@@ -41,6 +42,16 @@ class SharedPrefManager(private val sharedPreferences: SharedPreferences) : IPre
         //We convert this JSON String to model object. Parameter "c" (of
         //type Class < T >" is used to cast.
         return GsonBuilder().create().fromJson(value, UserInformation::class.java)
+    }
+
+    override fun setToken(token: String) {
+        sharedPreferences.edit(commit = true){
+            putString(userToken,token)
+        }
+    }
+
+    override fun getToken(): String {
+        return sharedPreferences.getString(userToken,"")!!
     }
 
 
