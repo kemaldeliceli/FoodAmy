@@ -18,10 +18,10 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel,FragmentRecipeDe
         arguments?.let {
             val args = RecipeDetailFragmentArgs.fromBundle(it)
             binding.recipeInfo = args.recipeInfo
-            viewModel.getCommentsOfRecipe(recipeID = args.recipeInfo.id!!)
-            println(args.recipeInfo.id)
+            viewModel.recipeID = args.recipeInfo.id!!
+            viewModel.getCommentsOfRecipe()
         }
-
+        setCoordinateSnackbar(binding.snackbarCoord)
         setListeners()
     }
 
@@ -38,10 +38,8 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel,FragmentRecipeDe
                     }
                 }
             }
-
-
-
         })
+
     }
 
 
