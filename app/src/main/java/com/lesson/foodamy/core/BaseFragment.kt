@@ -1,11 +1,15 @@
 package com.lesson.foodamy.core
 
+
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -54,10 +58,34 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
                     }
 
                 }
+                is BaseViewEvent.ShowAlertDialog -> {
+                    when(it.msg){
+                        is Int -> {showAlertDialog(getString(it.msg), it.directions)}
+                        is String -> { showAlertDialog(it.msg, it.directions) }
+                    }
+                }
             }
 
         })
     }
+
+    private fun showAlertDialog(msg: String, directions: NavDirections) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialog_layout)
+        val body = dialog.findViewById(R.id.warningText) as TextView
+        body.text = msg
+        val yesBtn = dialog.findViewById(R.id.dialog_login_button) as Button
+        val noBtn = dialog.findViewById(R.id.dialog_cancel_button) as Button
+        yesBtn.setOnClickListener {
+            navigate(directions)
+            dialog.dismiss()
+        }
+        noBtn.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+        }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
