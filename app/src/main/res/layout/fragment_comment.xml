@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<data>
+     <variable
+         name="viewModel"
+         type="com.lesson.foodamy.ui.comments.CommentViewModel" />
+
+</data>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/neutral_zircon"
+    tools:context=".ui.comments.CommentFragment">
+
+     <androidx.coordinatorlayout.widget.CoordinatorLayout
+         android:id="@+id/snackbarCoord"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         android:elevation="@dimen/elevation_2dp"
+         />
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/commentRecycleView"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintBottom_toTopOf="@id/sendCommentConstraint"
+         />
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:id="@+id/sendCommentConstraint"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/layout_height_50dp"
+         android:background="@color/neutral_white"
+         app:layout_constraintBottom_toBottomOf="parent"
+         >
+          <com.google.android.material.textfield.TextInputEditText
+         android:id="@+id/userComment"
+         android:layout_width="0dp"
+         android:layout_height="@dimen/layout_height_40dp"
+         android:foregroundTint="@color/neutral_white"
+         android:background="@drawable/stroke_rectangle"
+         android:backgroundTint="@color/neutral_zircon"
+         android:text="@={viewModel.commentText}"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintEnd_toStartOf="@id/sendIcon"
+          android:layout_marginHorizontal="@dimen/margin_8dp"
+         />
+     <ImageButton
+         android:id="@+id/sendIcon"
+         android:layout_width="@dimen/layout_width_40dp"
+         android:layout_height="@dimen/layout_height_40dp"
+         android:scaleType="fitCenter"
+
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toEndOf="@id/userComment"
+         app:layout_constraintTop_toTopOf="parent"
+
+         android:src="@drawable/send_icon"
+          android:layout_marginEnd="@dimen/margin_8dp"
+         android:background="@android:color/transparent"
+         android:onClick="@{()-> viewModel.addComment()}"
+         />
+     </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
