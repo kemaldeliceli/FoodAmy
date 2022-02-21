@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_mainFragment_to_recipeDetailFragment2"
             app:destination="@id/recipeDetailFragment2" />
+        <action
+            android:id="@+id/action_mainFragment_to_categoryRecipesFragment"
+            app:destination="@id/categoryRecipesFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment2"
@@ -116,5 +119,16 @@
         <action
             android:id="@+id/action_commentFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryRecipesFragment"
+        android:name="com.lesson.foodamy.ui.category_recipes.CategoryRecipesFragment"
+        android:label="CategoryRecipesFragment" >
+        <argument
+            android:name="recipeID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
     </fragment>
 </navigation>
