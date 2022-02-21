@@ -22,6 +22,8 @@ open class BaseViewModel : ViewModel() {
     fun showAlertDialog(msg: Any, directions: NavDirections){
         sendEvent(BaseViewEvent.ShowAlertDialog(msg, directions))
     }
-
+    fun popBackStack(){
+        sendEvent(BaseViewEvent.PopBackStack)
+    }
 
 }

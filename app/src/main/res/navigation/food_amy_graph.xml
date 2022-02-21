@@ -125,10 +125,13 @@
         android:name="com.lesson.foodamy.ui.category_recipes.CategoryRecipesFragment"
         android:label="CategoryRecipesFragment" >
         <argument
-            android:name="recipeID"
+            android:name="categoryID"
             app:argType="integer" />
         <action
             android:id="@+id/action_categoryRecipesFragment_to_recipeDetailFragment2"
             app:destination="@id/recipeDetailFragment2" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
 </navigation>

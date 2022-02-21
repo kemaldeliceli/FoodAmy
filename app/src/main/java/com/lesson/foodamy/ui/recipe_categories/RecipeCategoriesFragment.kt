@@ -37,7 +37,7 @@ class RecipeCategoriesFragment :
 
     fun onClick(position: Int) {
         navigate(MainFragmentDirections.actionMainFragmentToCategoryRecipesFragment(
-            categoryRecipesList[position].id!!))
+            categoryRecipesList[position].id!!,categoryRecipesList[position].name!!))
     }
 
     override fun getViewModelss(): Class<RecipeCategoriesViewModel> {

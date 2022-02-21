@@ -65,7 +65,14 @@
             android:layout_height="match_parent"
             android:visibility="@{isDetail? View.VISIBLE : View.INVISIBLE}"
             >
-            <ImageButton
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/backConstraint"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageButton
                 android:id="@+id/back_icon"
                 android:scaleType="fitCenter"
                 android:layout_width="11dp"
@@ -90,6 +97,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/back_icon"
                 android:layout_marginStart="@dimen/margin_8dp"
                 />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <ImageButton
                 android:id="@+id/share_icon"
@@ -105,7 +114,7 @@
                 app:tint="@color/neutral_white"
                 android:backgroundTintMode="src_in"
                 android:backgroundTint="@color/neutral_white"
-                android:onClick="@{()->viewModel.logOut()}"
+                android:onClick="@{()->viewModel.popBackStack()}"
                 android:layout_marginEnd="@dimen/margin_16dp"
                 />
 

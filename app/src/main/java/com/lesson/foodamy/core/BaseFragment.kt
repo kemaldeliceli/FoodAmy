@@ -64,6 +64,9 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
                         is String -> { showAlertDialog(it.msg, it.directions) }
                     }
                 }
+                BaseViewEvent.PopBackStack -> {
+                    findNavController().popBackStack()
+                }
             }
 
         })

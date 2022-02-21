@@ -3,6 +3,7 @@ package com.lesson.foodamy.ui.category_recipes
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseFragment
@@ -21,7 +22,8 @@ class CategoryRecipesFragment : BaseFragment<CategoryRecipesViewModel,CategoryRe
 
         arguments?.let {
             val args = CategoryRecipesFragmentArgs.fromBundle(it)
-            val recipeID = args.recipeID
+            val recipeID = args.categoryID
+            viewModel.categoryName.postValue(args.categoryName)
             viewModel.getCategoryRecipes(recipeID)
         }
         setCoordinateSnackbar(binding.snackbarCoord)
@@ -35,6 +37,9 @@ class CategoryRecipesFragment : BaseFragment<CategoryRecipesViewModel,CategoryRe
             binding.categoryRecipesRecycleview.layoutManager =  LinearLayoutManager(this.context)
             }
         )
+        binding.topLayout.backConstraint.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     fun onClick(position: Int, recipeInfo:RecipeInfo){
