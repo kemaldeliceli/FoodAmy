@@ -21,7 +21,7 @@ class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEdito
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setCoordinateSnackbar(binding.snackbarCoord)
-        viewModel.getRecipesLastAdded()
+        viewModel.getRecipesEditorsChoice()
         getRecipesResponse()
     }
 
@@ -30,7 +30,7 @@ class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEdito
             when(response){
                 is BaseResponse.Success -> {
                     recipeList = response.data.data
-                    val recipesAdapter = RecipesAdapter(recipeList, {position ->  onClick(position) } )
+                    val recipesAdapter = RecipesAdapter(recipeList) { position,_ -> onClick(position) }
                     recipesAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                     binding.recipesRecycleView.adapter = recipesAdapter
                     binding.recipesRecycleView.layoutManager =  LinearLayoutManager(this.context)
