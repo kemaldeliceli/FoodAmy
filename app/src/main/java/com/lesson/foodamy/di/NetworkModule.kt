@@ -1,12 +1,8 @@
 package com.lesson.foodamy.di
 
 import com.lesson.foodamy.repository.AuthApiRepository
-import com.lesson.foodamy.repository.CommentApiRepository
-import com.lesson.foodamy.repository.LikeApiRepository
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import com.lesson.foodamy.services.AuthService
-import com.lesson.foodamy.services.CommentService
-import com.lesson.foodamy.services.LikeService
 import com.lesson.foodamy.services.RecipeService
 import dagger.Module
 import dagger.Provides
@@ -39,16 +35,4 @@ class NetworkModule {
     fun providesRecipesApi(retrofit: Retrofit): RecipesAPIRepository{
         return  RecipesAPIRepository(retrofit.create(RecipeService::class.java))
     }
-    @Provides
-    @Inject
-    fun providesCommentsApi(retrofit: Retrofit):CommentApiRepository{
-        return CommentApiRepository(retrofit.create(CommentService::class.java))
-    }
-
-    @Provides
-    @Inject
-    fun providesLikeApi(retrofit: Retrofit):LikeApiRepository{
-        return LikeApiRepository(retrofit.create(LikeService::class.java))
-    }
-
 }
