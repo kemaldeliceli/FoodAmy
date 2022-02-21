@@ -20,28 +20,27 @@ class SharedPrefManager(private val sharedPreferences: SharedPreferences) : IPre
             }
     }
 
+
+
+    override fun isAppFirstOpen() = sharedPreferences.getBoolean(firstTimeAppOpen,false)
+
+    override fun setUserInfo(user: UserInformation) {
+        val jsonString = GsonBuilder().create().toJson(user)
+
+        sharedPreferences.edit().putString(userInfoObject, jsonString).apply()
+    }
+
+    override fun getUserInfo(): UserInformation? {
+        val value = sharedPreferences.getString(userInfoObject, null)
+        return GsonBuilder().create().fromJson(value, UserInformation::class.java)
+    }
+
     override fun isLoggedIn() = sharedPreferences.getBoolean(isLoggedIn,false)
 
     override fun saveLogin(isLogged:Boolean){
         sharedPreferences.edit(commit = true){
             putBoolean(isLoggedIn,isLogged)
         }
-    }
-
-    override fun isAppFirstOpen() = sharedPreferences.getBoolean(firstTimeAppOpen,false)
-
-    override fun setUserInfo(user: UserInformation) {
-        val jsonString = GsonBuilder().create().toJson(user)
-        //Save that String in SharedPreferences
-        sharedPreferences.edit().putString(userInfoObject, jsonString).apply()
-    }
-
-    override fun getUserInfo(): UserInformation? {
-        val value = sharedPreferences.getString(userInfoObject, null)
-        //JSON String was found which means object can be read.
-        //We convert this JSON String to model object. Parameter "c" (of
-        //type Class < T >" is used to cast.
-        return GsonBuilder().create().fromJson(value, UserInformation::class.java)
     }
 
     override fun setToken(token: String) {
