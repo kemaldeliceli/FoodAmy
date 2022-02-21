@@ -8,7 +8,7 @@ import com.lesson.foodamy.model.recipe_dataclass.Recipe
 import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
 import com.lesson.foodamy.model.recipe_dataclass.toResult
 
-class RecipesAdapter(private val recipes : ArrayList<RecipeInfo>, val onClick: ((position: Int) -> Unit)?):
+class RecipesAdapter(private val recipes: ArrayList<RecipeInfo>, val onClick: (position: Int, recipeInfo: RecipeInfo) -> Unit):
     RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() {
 
     inner  class RecipesViewHolder(val binding: RecipeCardViewBinding) : RecyclerView.ViewHolder(binding.root){
@@ -17,7 +17,7 @@ class RecipesAdapter(private val recipes : ArrayList<RecipeInfo>, val onClick: (
             binding.recipeInfo = foodInfo
 
             itemView.setOnClickListener {
-                onClick?.invoke(position)
+                onClick?.invoke(position,recipes[position])
             }
         }
 
