@@ -8,14 +8,14 @@ import com.lesson.foodamy.core.BaseViewModel
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.comment_dataclass.ResponseComments
 import com.lesson.foodamy.preferences.IPrefDefaultManager
-import com.lesson.foodamy.repository.CommentApiRepository
+import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CommentViewModel @Inject constructor(
-    private val commentApiRepository: CommentApiRepository,
+    private val recipesAPIRepository: RecipesAPIRepository,
     private val sharedPreferences: IPrefDefaultManager
     ) : BaseViewModel() {
 
@@ -33,7 +33,7 @@ class CommentViewModel @Inject constructor(
         if (token==""){
             showAlertDialog(R.string.need_login_text,CommentFragmentDirections.actionCommentFragmentToLoginFragment())
         }else{
-            val response = commentApiRepository.requestAddComments(recipeID,sharedPreferences.getToken(),commentText.value.toString().replace("\"", ""))
+            val response = recipesAPIRepository.requestAddComments(recipeID,sharedPreferences.getToken(),commentText.value.toString().replace("\"", ""))
             when(response){
                 is BaseResponse.Error -> {
                     showMessage(response.error.error.toString())
@@ -50,6 +50,6 @@ class CommentViewModel @Inject constructor(
 
 
     fun getCommentsOfRecipe() = viewModelScope.launch {
-        _responseComments.value  = commentApiRepository.requestComments(recipeID)
+        _responseComments.value  = recipesAPIRepository.requestComments(recipeID)
     }
 }
