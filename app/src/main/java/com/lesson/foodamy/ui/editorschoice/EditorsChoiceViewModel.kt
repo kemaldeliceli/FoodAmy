@@ -20,7 +20,7 @@ class EditorsChoiceViewModel @Inject constructor(private val recipeAPIRepository
     val responseRecipes: LiveData<BaseResponse<ResponseRecipes>>
         get() = _responseMessage
 
-    fun getRecipesLastAdded() = viewModelScope.launch {
+    fun getRecipesEditorsChoice() = viewModelScope.launch {
         _responseMessage.value = recipeAPIRepository.requestRecipes(RecipeType.EDITORS_CHOICE)
     }
 

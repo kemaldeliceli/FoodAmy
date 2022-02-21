@@ -29,9 +29,7 @@ class CommentFragment : BaseFragment<CommentViewModel,FragmentCommentBinding>(R.
     private fun setListeners() {
         viewModel.responseComments.observe(viewLifecycleOwner,{response->
             when(response){
-                is BaseResponse.Error -> {
-                    println(response.error.error.toString())
-                }
+                is BaseResponse.Error -> {}
                 is BaseResponse.Success -> {
                     val comments = response.data.data
                     if (comments.isNotEmpty()) {
