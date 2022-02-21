@@ -1,27 +1,49 @@
 package com.lesson.foodamy.ui.editorschoice
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.lesson.foodamy.model.recipe_dataclass.ResponseRecipes
-import com.lesson.foodamy.model.BaseResponse
-import com.lesson.foodamy.repository.RecipesAPIRepository
+import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
+import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.RecipeType
+import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
+import com.lesson.foodamy.repository.RecipesAPIRepository
+import com.lesson.foodamy.ui.main.MainFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditorsChoiceViewModel @Inject constructor(private val recipeAPIRepository: RecipesAPIRepository ) : BaseViewModel(){
+class EditorsChoiceViewModel @Inject
+constructor(private val recipeAPIRepository: RecipesAPIRepository) : BaseViewModel() {
 
-    private var _responseMessage: MutableLiveData<BaseResponse<ResponseRecipes>> = MutableLiveData()
+    val recipeList = MutableLiveData<List<RecipeInfo>>()
 
-    val responseRecipes: LiveData<BaseResponse<ResponseRecipes>>
-        get() = _responseMessage
+    init {
+        getRecipesEditorsChoice()
+    }
 
-    fun getRecipesEditorsChoice() = viewModelScope.launch {
-        _responseMessage.value = recipeAPIRepository.requestRecipes(RecipeType.EDITORS_CHOICE)
+    private fun getRecipesEditorsChoice() = viewModelScope.launch {
+        when (val response = recipeAPIRepository.requestRecipes(RecipeType.EDITORS_CHOICE)) {
+            is BaseResponse.Success -> {
+                response.data.data.let {
+                    recipeList.postValue(it)
+                }
+            }
+
+            is BaseResponse.Error -> {
+                response.error.error?.let { showMessage(it) }
+            }
+
+            null -> {
+                showMessage(R.string.null_error)
+            }
+        }
+
+    }
+
+    fun goDetails(recipe: RecipeInfo) {
+        navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipe))
     }
 
 }

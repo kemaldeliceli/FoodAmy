@@ -13,8 +13,10 @@ import com.lesson.foodamy.ui.main.RecipesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoryRecipesFragment : BaseFragment<CategoryRecipesViewModel,CategoryRecipesFragmentBinding>(
-    R.layout.category_recipes_fragment) {
+class CategoryRecipesFragment :
+    BaseFragment<CategoryRecipesViewModel, CategoryRecipesFragmentBinding>(
+        R.layout.category_recipes_fragment
+    ) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,20 +33,26 @@ class CategoryRecipesFragment : BaseFragment<CategoryRecipesViewModel,CategoryRe
     }
 
     private fun setObserver() {
-        viewModel.responseCategoryRecipes.observe(viewLifecycleOwner,{ recipes->
-                binding.categoryRecipesRecycleview.adapter = RecipesAdapter(recipes
-                ) { position, recipeInfo -> onClick(position, recipeInfo) }
-            binding.categoryRecipesRecycleview.layoutManager =  LinearLayoutManager(this.context)
-            }
-        )
+        viewModel.responseCategoryRecipes.observe(
+            viewLifecycleOwner
+        ) { recipes ->
+            binding.categoryRecipesRecycleview.adapter = RecipesAdapter(
+                recipes
+            ) { position, recipeInfo -> onClick(position, recipeInfo) }
+            binding.categoryRecipesRecycleview.layoutManager = LinearLayoutManager(this.context)
+        }
         binding.topLayout.backConstraint.setOnClickListener {
             findNavController().popBackStack()
         }
     }
 
-    fun onClick(position: Int, recipeInfo:RecipeInfo){
-        navigate(CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToRecipeDetailFragment2(recipeInfo))
+    fun onClick(position: Int, recipeInfo: RecipeInfo) {
+        navigate(
+            CategoryRecipesFragmentDirections
+                .actionCategoryRecipesFragmentToRecipeDetailFragment2(recipeInfo)
+        )
     }
+
     override fun getViewModelss(): Class<CategoryRecipesViewModel> {
         return CategoryRecipesViewModel::class.java
     }

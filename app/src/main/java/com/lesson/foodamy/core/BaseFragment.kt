@@ -45,23 +45,32 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
     }
 
     private fun handleEvent() {
-        viewModel.event.observe(viewLifecycleOwner,{
-            when(it){
+        viewModel.event.observe(viewLifecycleOwner) {
+            when (it) {
                 is BaseViewEvent.Navigate -> {
                     Handler(Looper.getMainLooper()).postDelayed({
-                        navigate(it.directions)}, 300)
+                        navigate(it.directions)
+                    }, 300)
                 }
                 is BaseViewEvent.ShowMessage -> {
-                    when(it.msg){
-                        is Int -> {setSnackbar(getString(it.msg))}
-                        is String -> { setSnackbar(it.msg) }
+                    when (it.msg) {
+                        is Int -> {
+                            setSnackbar(getString(it.msg))
+                        }
+                        is String -> {
+                            setSnackbar(it.msg)
+                        }
                     }
 
                 }
                 is BaseViewEvent.ShowAlertDialog -> {
-                    when(it.msg){
-                        is Int -> {showAlertDialog(getString(it.msg), it.directions)}
-                        is String -> { showAlertDialog(it.msg, it.directions) }
+                    when (it.msg) {
+                        is Int -> {
+                            showAlertDialog(getString(it.msg), it.directions)
+                        }
+                        is String -> {
+                            showAlertDialog(it.msg, it.directions)
+                        }
                     }
                 }
                 BaseViewEvent.PopBackStack -> {
@@ -69,7 +78,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
                 }
             }
 
-        })
+        }
     }
 
     private fun showAlertDialog(msg: String, directions: NavDirections) {
