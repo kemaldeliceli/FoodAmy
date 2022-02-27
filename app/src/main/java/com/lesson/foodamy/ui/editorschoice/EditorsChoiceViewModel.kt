@@ -18,13 +18,13 @@ class EditorsChoiceViewModel @Inject
 constructor(private val recipeAPIRepository: RecipesAPIRepository) : BaseViewModel() {
 
     val recipeList = MutableLiveData<List<RecipeInfo>>()
-
+    var nextPage : Int = 1
     init {
         getRecipesEditorsChoice()
     }
 
     private fun getRecipesEditorsChoice() = viewModelScope.launch {
-        when (val response = recipeAPIRepository.requestRecipes(RecipeType.EDITORS_CHOICE)) {
+        when (val response = recipeAPIRepository.requestRecipes(RecipeType.EDITORS_CHOICE,nextPage)) {
             is BaseResponse.Success -> {
                 response.data.data.let {
                     recipeList.postValue(it)
@@ -42,8 +42,8 @@ constructor(private val recipeAPIRepository: RecipesAPIRepository) : BaseViewMod
 
     }
 
-    fun goDetails(recipe: RecipeInfo) {
-        navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipe))
+    fun goDetails(id :Int) {
+        navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(id))
     }
 
 }
