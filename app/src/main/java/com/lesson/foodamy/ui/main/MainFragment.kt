@@ -35,11 +35,6 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(R.layout.f
                     binding.viewPager.setCurrentItem(2, false)
                     true
                 }
-                R.id.menuFragment -> {
-                    binding.viewPager.setCurrentItem(3, false)
-
-                    true
-                }
 
                 else -> {
                     binding.viewPager.setCurrentItem(0, false)
