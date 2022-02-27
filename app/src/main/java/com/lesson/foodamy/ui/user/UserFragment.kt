@@ -14,10 +14,7 @@ class UserFragment : BaseFragment<UserViewModel, FragmentUserBinding>(R.layout.f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getUserInfoFromApi()
-        viewModel.checkLogin()
     }
-
     override fun getViewModelss(): Class<UserViewModel> {
         return  UserViewModel::class.java
     }
