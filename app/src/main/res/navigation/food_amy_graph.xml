@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_mainFragment_to_recipeDetailFragment2"
             app:destination="@id/recipeDetailFragment2" />
+        <action
+            android:id="@+id/action_mainFragment_to_categoryRecipesFragment"
+            app:destination="@id/categoryRecipesFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment2"
@@ -87,6 +90,9 @@
         <argument
             android:name="recipeInfo"
             app:argType="com.lesson.foodamy.model.recipe_dataclass.RecipeInfo" />
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_commentFragment"
+            app:destination="@id/commentFragment" />
     </fragment>
     <fragment
         android:id="@+id/recentlyAddedFragment"
@@ -95,5 +101,37 @@
         <action
             android:id="@+id/action_recentlyAddedFragment_to_recipeDetailFragment2"
             app:destination="@id/recipeDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentFragment"
+        android:name="com.lesson.foodamy.ui.comments.CommentFragment"
+        android:label="CommentFragment" >
+        <action
+            android:id="@+id/action_commentFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+        <argument
+            android:name="comments"
+            app:argType="com.lesson.foodamy.model.comment_dataclass.Comments" />
+        <argument
+            android:name="recipeID"
+            app:argType="integer"
+            />
+        <action
+            android:id="@+id/action_commentFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryRecipesFragment"
+        android:name="com.lesson.foodamy.ui.category_recipes.CategoryRecipesFragment"
+        android:label="CategoryRecipesFragment" >
+        <argument
+            android:name="categoryID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
 </navigation>

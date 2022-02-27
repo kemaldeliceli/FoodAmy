@@ -19,7 +19,6 @@ object BindingUtils {
     @JvmStatic
     @BindingAdapter("app:imageUrl","app:placeHolder")
     fun loadImage(view: ImageView, url: String?,placeholder: Drawable) {
-        println(url)
         when {
             url.isNullOrEmpty() -> {
                 view.setImageDrawable(placeholder)

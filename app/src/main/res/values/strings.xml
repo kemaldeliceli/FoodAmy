@@ -57,4 +57,7 @@
     <string name="not_logged_text">You are not logged in, you can go to the login page.</string>
     <string name="success_register_process">Registration is successful</string>
     <string name="successfull_logout">Successfull Logout</string>
+    <string name="need_login_text">Giriş Yapmanız Gereklidir</string>
+    <string name="see_all_text">TÜMÜNÜ GÖR</string>
+    <string name="null_error">Null Error</string>
 </resources>

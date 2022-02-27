@@ -11,12 +11,28 @@ class SharedPrefManager(private val sharedPreferences: SharedPreferences) : IPre
         private const val firstTimeAppOpen = "firstTimeAppOpen"
         private const val isLoggedIn="isLoggedIn"
         private const val userInfoObject = "userInfoObject"
+        private const val userToken = "userToken"
     }
 
     override fun saveAppOpened(){
             sharedPreferences.edit(commit = true){
                 putBoolean(firstTimeAppOpen,true)
             }
+    }
+
+
+
+    override fun isAppFirstOpen() = sharedPreferences.getBoolean(firstTimeAppOpen,false)
+
+    override fun setUserInfo(user: UserInformation) {
+        val jsonString = GsonBuilder().create().toJson(user)
+
+        sharedPreferences.edit().putString(userInfoObject, jsonString).apply()
+    }
+
+    override fun getUserInfo(): UserInformation? {
+        val value = sharedPreferences.getString(userInfoObject, null)
+        return GsonBuilder().create().fromJson(value, UserInformation::class.java)
     }
 
     override fun isLoggedIn() = sharedPreferences.getBoolean(isLoggedIn,false)
@@ -27,20 +43,14 @@ class SharedPrefManager(private val sharedPreferences: SharedPreferences) : IPre
         }
     }
 
-    override fun isAppFirstOpen() = sharedPreferences.getBoolean(firstTimeAppOpen,false)
-
-    override fun setUserInfo(user: UserInformation) {
-        val jsonString = GsonBuilder().create().toJson(user)
-        //Save that String in SharedPreferences
-        sharedPreferences.edit().putString(userInfoObject, jsonString).apply()
+    override fun setToken(token: String) {
+        sharedPreferences.edit(commit = true){
+            putString(userToken,token)
+        }
     }
 
-    override fun getUserInfo(): UserInformation? {
-        val value = sharedPreferences.getString(userInfoObject, null)
-        //JSON String was found which means object can be read.
-        //We convert this JSON String to model object. Parameter "c" (of
-        //type Class < T >" is used to cast.
-        return GsonBuilder().create().fromJson(value, UserInformation::class.java)
+    override fun getToken(): String {
+        return sharedPreferences.getString(userToken,"")!!
     }
 
 

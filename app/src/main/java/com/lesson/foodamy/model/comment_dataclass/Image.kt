@@ -1,6 +1,6 @@
 package com.lesson.foodamy.model.comment_dataclass
 
-data class İmage(
+data class Image(
     val height: Int,
     val key: String,
     val order: Int,

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lesson.foodamy.R
-import com.lesson.foodamy.adapter.HomePageAdapter
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentHomeBinding
 

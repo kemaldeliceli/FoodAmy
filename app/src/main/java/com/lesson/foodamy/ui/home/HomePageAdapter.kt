@@ -1,4 +1,4 @@
-package com.lesson.foodamy.adapter
+package com.lesson.foodamy.ui.home
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

@@ -12,4 +12,6 @@ interface IPrefDefaultManager {
     fun setUserInfo(userInfo: UserInformation)
     fun getUserInfo():UserInformation?
 
+    fun setToken(token: String)
+    fun getToken():String
 }

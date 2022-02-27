@@ -5,7 +5,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lesson.foodamy.adapter.RecipesAdapter
+import com.lesson.foodamy.ui.main.RecipesAdapter
 import com.lesson.foodamy.R
 import com.lesson.foodamy.databinding.FragmentRecentlyAddedBinding
 import com.lesson.foodamy.model.BaseResponse
@@ -33,7 +33,7 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
             when(response){
                 is BaseResponse.Success -> {
                     recipeList = response.data.data
-                    val recipesAdapter = RecipesAdapter(recipeList, { position -> onClick(position)  })
+                    val recipesAdapter = RecipesAdapter(recipeList) { position,_ -> onClick(position) }
                     recipesAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                     binding.recipesRecycleView.adapter = recipesAdapter
                     binding.recipesRecycleView.layoutManager = LinearLayoutManager(this.context)
@@ -41,20 +41,17 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
                 }
                 is BaseResponse.Error -> {
                     setSnackbar(response.error.error.toString())
-                }
-            }
-
-            }
-        )
-    }
-
-
-    override fun getViewModelss(): Class<RecentlyAddedViewModel> {
-        return  RecentlyAddedViewModel::class.java
+                } }
+        })
     }
 
     fun onClick(position: Int){
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipeList[position]))
+        findNavController().
+        navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(recipeList[position]))
+    }
+
+    override fun getViewModelss(): Class<RecentlyAddedViewModel> {
+        return  RecentlyAddedViewModel::class.java
     }
 
 }

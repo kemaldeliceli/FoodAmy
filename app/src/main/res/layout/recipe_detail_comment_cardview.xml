@@ -10,36 +10,28 @@
     </data>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        app:strokeColor="@android:color/transparent"
+        android:shadowColor="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="0dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:background="@color/neutral_white"
+            android:layout_marginBottom="@dimen/margin_16dp"
             >
 
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/neutral_zircon"
-                android:layout_marginTop="40dp"
+                android:visibility="invisible"
                 app:layout_constraintTop_toTopOf="parent"
                 />
-            <TextView
-                android:id="@+id/header_of_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_bold"
-                android:textSize="@dimen/size_15sp"
-                android:text="Yorumlar"
-                android:textColor="@color/primary_cinder"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/line"
-                android:layout_marginStart="@dimen/margin_16dp"
-                />
-
-
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/userImage"
@@ -54,7 +46,7 @@
                 app:placeHolder="@{@drawable/no_user_image}"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line"
+                app:layout_constraintTop_toTopOf="parent"
 
                 app:shapeAppearanceOverlay="@style/CircularImage" />
 
@@ -73,7 +65,7 @@
 
                 app:layout_constraintBottom_toTopOf="@id/recipe_count"
                 app:layout_constraintStart_toEndOf="@id/userImage"
-                app:layout_constraintTop_toBottomOf="@id/line" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/recipes_text"

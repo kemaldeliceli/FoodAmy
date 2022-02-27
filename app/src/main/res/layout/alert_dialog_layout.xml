@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="325dp"
+    android:layout_height="180dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/alertDialog"
+    >
+
+    <ImageView
+        android:id="@+id/warn_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/warning_icon"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/warningText"
+        android:layout_marginVertical="@dimen/margin_16dp"
+        />
+
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warn_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dialog_cancel_button"
+        android:text="@string/need_login_text"
+        android:textSize="14sp"
+        android:fontFamily="@font/nunito_semibold"
+        android:textColor="@color/primary_cinder"
+        android:id="@+id/warningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog_cancel_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dialog_login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Vazgeç"
+        android:textColor="@color/primary_cinder"
+        app:backgroundTint="@color/neutral_zircon"
+        app:cornerRadius="0dp"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog_login_button"
+
+        app:layout_constraintStart_toEndOf="@id/dialog_cancel_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Giriş Yap"
+        app:cornerRadius="0dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,6 +35,7 @@ class LoginViewModel @Inject constructor(
                 is BaseResponse.Success -> {
                     loginSharedPreferences.setUserInfo(response.data.user?.toResult()!!)
                     loginSharedPreferences.saveLogin(isLogged = true)
+                    loginSharedPreferences.setToken(response.data.token!!)
                     navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                 }
             }

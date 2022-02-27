@@ -18,19 +18,17 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel,FragmentRecipeDe
         arguments?.let {
             val args = RecipeDetailFragmentArgs.fromBundle(it)
             binding.recipeInfo = args.recipeInfo
-            viewModel.getCommentsOfRecipe(recipeID = args.recipeInfo.id!!)
-            println(args.recipeInfo.id)
+            viewModel.recipeID = args.recipeInfo.id!!
+            viewModel.getCommentsOfRecipe()
         }
-
+        setCoordinateSnackbar(binding.snackbarCoord)
         setListeners()
     }
 
     private fun setListeners() {
         viewModel.responseComments.observe(viewLifecycleOwner,{response->
             when(response){
-                is BaseResponse.Error -> {
-                   println(response.error.error.toString())
-                }
+                is BaseResponse.Error -> { }
                 is BaseResponse.Success -> {
                     val comments = response.data.data
                     if (comments.isNotEmpty()) {
@@ -38,10 +36,11 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel,FragmentRecipeDe
                     }
                 }
             }
-
-
-
         })
+        binding.topLayout.backConstraint.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
     }
 
 
