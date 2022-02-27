@@ -77,6 +77,9 @@
             android:layout_height="@dimen/layout_height_120dp"
             android:layout_marginTop="@dimen/margin_16dp"
 
+            app:imageUrl="@{viewModel.userInfo.image}"
+            app:placeHolder="@{@drawable/no_user_image}"
+
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/example_user"

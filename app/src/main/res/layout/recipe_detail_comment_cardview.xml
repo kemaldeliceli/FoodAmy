@@ -4,9 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="comment"
             type="com.lesson.foodamy.model.comment_dataclass.Comment" />
+        <variable
+            name="currentUserID"
+            type="Integer" />
+
     </data>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
@@ -168,6 +173,36 @@
                 android:textColor="@color/primary_cinder"
                 android:fontFamily="@font/nunito_semibold"
 
+                />
+
+            <ImageButton
+                android:id="@+id/image_button_edit_comment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="@{comment.user.id==currentUserID ? View.VISIBLE : View.INVISIBLE}"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_button_delete_comment"
+                app:tint="@color/primary_raven"
+
+                android:backgroundTint="@color/white"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                />
+
+            <ImageButton
+                android:id="@+id/image_button_delete_comment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="@{comment.user.id==currentUserID ? View.VISIBLE : View.INVISIBLE}"
+                android:src="@drawable/ic_baseline_delete_outline_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/primary_red"
+
+                android:backgroundTint="@color/white"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

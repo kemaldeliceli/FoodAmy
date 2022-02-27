@@ -87,12 +87,15 @@
         <action
             android:id="@+id/action_recipeDetailFragment2_to_recentlyAddedFragment"
             app:destination="@id/recentlyAddedFragment" />
-        <argument
-            android:name="recipeInfo"
-            app:argType="com.lesson.foodamy.model.recipe_dataclass.RecipeInfo" />
         <action
             android:id="@+id/action_recipeDetailFragment2_to_commentFragment"
             app:destination="@id/commentFragment" />
+        <argument
+            android:name="recipeID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/recentlyAddedFragment"
@@ -119,6 +122,9 @@
         <action
             android:id="@+id/action_commentFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_commentFragment_to_editCommentFragment"
+            app:destination="@id/editCommentFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryRecipesFragment"
@@ -133,5 +139,19 @@
         <argument
             android:name="categoryName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCommentFragment"
+        android:name="com.lesson.foodamy.ui.comments.editcomment.EditCommentFragment"
+        android:label="EditCommentFragment" >
+        <argument
+            android:name="recipeID"
+            app:argType="integer" />
+        <argument
+            android:name="comment"
+            app:argType="com.lesson.foodamy.model.comment_dataclass.Comment" />
+        <action
+            android:id="@+id/action_editCommentFragment_to_commentFragment"
+            app:destination="@id/commentFragment" />
     </fragment>
 </navigation>
