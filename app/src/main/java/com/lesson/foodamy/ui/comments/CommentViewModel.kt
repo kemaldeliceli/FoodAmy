@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
 import com.lesson.foodamy.model.BaseResponse
-import com.lesson.foodamy.model.comment_dataclass.ResponseComments
+import com.lesson.foodamy.model.comment_dataclass.*
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,26 +19,55 @@ class CommentViewModel @Inject constructor(
     private val sharedPreferences: IPrefDefaultManager
     ) : BaseViewModel() {
 
-    private val _responseComments: MutableLiveData<BaseResponse<ResponseComments>> =
-        MutableLiveData()
+    private var token: String = ""
 
-    val responseComments: LiveData<BaseResponse<ResponseComments>>
-        get() = _responseComments
+    init {
+        token = sharedPreferences.getToken()
+    }
 
-    val commentText: MutableLiveData<String> = MutableLiveData("")
+    var comments: MutableLiveData<ArrayList<Comment>> = MutableLiveData()
     var recipeID = -1
 
+    var commentText =  MutableLiveData<String>()
+
     fun addComment() = viewModelScope.launch {
-        val token = sharedPreferences.getToken()
         if (token==""){
-            showAlertDialog(R.string.need_login_text,CommentFragmentDirections.actionCommentFragmentToLoginFragment())
+            showAlertDialog(R.string.need_login_text,
+                CommentFragmentDirections.actionCommentFragmentToLoginFragment())
         }else{
-            val response = recipesAPIRepository.requestAddComments(recipeID,sharedPreferences.getToken(),commentText.value.toString().replace("\"", ""))
-            when(response){
+/*            print(commentText.value)
+            comments.postValue(arrayListOf(Comment("1sn",5,commentText.value.toString(),User(
+                "",
+                "",
+                "",
+            0,
+           0,
+            0,
+           0,
+            null,
+            "",
+            false,
+                false,
+            0,
+            "tr",
+            0,
+            "kemalaki",
+           0,
+           "ivj",
+            "",
+            "kemalaki",
+            ""
+            ))))*/
+            when(val response = recipesAPIRepository.requestAddComments(recipeID,
+                token,
+                commentText.value.toString()))
+                {
+
                 is BaseResponse.Error -> {
                     showMessage(response.error.error.toString())
                 }
                 is BaseResponse.Success -> {
+                    commentText.value = ""
                     getCommentsOfRecipe()
                     showMessage("Success Comment Process")
                 }
@@ -50,6 +79,39 @@ class CommentViewModel @Inject constructor(
 
 
     fun getCommentsOfRecipe() = viewModelScope.launch {
-        _responseComments.value  = recipesAPIRepository.requestComments(recipeID)
+          when(val response = recipesAPIRepository.requestComments(recipeID)){
+              is BaseResponse.Error -> {
+                  response.error.error?.let {
+                      showMessage(it)
+                  }
+              }
+              is BaseResponse.Success -> {
+                  response.data.data.let {
+                      comments.value = it
+                  }
+              }
+              null -> {
+                  showMessage(R.string.null_error)
+              }
+          }
+    }
+
+    fun deleteComment(commentID: Int) = viewModelScope.launch {
+        when(val response = recipesAPIRepository.requestDeleteComment(recipeID,commentID,token)){
+            is BaseResponse.Error -> {
+                showMessage(response.error.error.toString())
+            }
+            is BaseResponse.Success -> {
+                getCommentsOfRecipe()
+                showMessage(response.data.message)
+            }
+            null -> {
+                showMessage(R.string.null_error)
+            }
+        }
+    }
+
+    fun editComment(comment: Comment) {
+        navigate(CommentFragmentDirections.actionCommentFragmentToEditCommentFragment(recipeID,comment))
     }
 }
