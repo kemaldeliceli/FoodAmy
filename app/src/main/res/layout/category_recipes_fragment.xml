@@ -32,6 +32,88 @@
         app:layout_constraintBottom_toTopOf="@id/category_recipes_recycleview"
         android:elevation="@dimen/margin_16dp"
         />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary_red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="@dimen/elevation_2dp"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/backConstraint"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.popBackStack()}"
+            >
+            <ImageButton
+                android:id="@+id/back_icon"
+                android:scaleType="fitCenter"
+                android:layout_width="11dp"
+                android:layout_height="18dp"
+                android:background="@android:color/transparent"
+                app:tint="@color/neutral_white"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:src="@drawable/back_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:textSize="14sp"
+                android:text="Geri"
+                android:textColor="@color/neutral_white"
+                app:layout_constraintStart_toEndOf="@id/back_icon"
+                app:layout_constraintTop_toTopOf="@id/back_icon"
+                app:layout_constraintBottom_toBottomOf="@id/back_icon"
+                android:layout_marginStart="@dimen/margin_8dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ImageButton
+            android:id="@+id/share_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/share_icon"
+            android:scaleType="fitCenter"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@android:color/transparent"
+            app:tint="@color/neutral_white"
+            android:backgroundTintMode="src_in"
+            android:backgroundTint="@color/neutral_white"
+            android:onClick="@{()->viewModel.popBackStack()}"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="@dimen/size_20sp"
+            android:text="@{viewModel.categoryName}"
+
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@color/neutral_white"
+            android:textAllCaps="true"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_recipes_recycleview"
@@ -40,7 +122,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_layout"
+        app:layout_constraintTop_toBottomOf="@id/constraint_2"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

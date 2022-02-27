@@ -19,11 +19,11 @@ class CategoryRecipesViewModel @Inject constructor(private val recipesAPIReposit
 
     val responseCategoryRecipes: LiveData<ArrayList<RecipeInfo>>
         get() = _responseCategoryRecipes
+
     val categoryName: MutableLiveData<String> = MutableLiveData("Kategori Adı")
 
     fun getCategoryRecipes(recipeID: Int) = viewModelScope.launch {
-        val response = recipesAPIRepository.requestCategoryRecipes(recipeID = recipeID)
-        when (response) {
+        when (val response = recipesAPIRepository.requestCategoryRecipes(recipeID = recipeID)) {
             is BaseResponse.Error -> {
                 showMessage(response.error.error.toString())
             }
@@ -34,4 +34,10 @@ class CategoryRecipesViewModel @Inject constructor(private val recipesAPIReposit
             }
         }
     }
+
+    fun goToDetails(id: Int) {
+        navigate(CategoryRecipesFragmentDirections.
+        actionCategoryRecipesFragmentToRecipeDetailFragment2(id))
+    }
+
 }
