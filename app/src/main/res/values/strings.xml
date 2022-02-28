@@ -70,5 +70,6 @@
     <string name="comments_text">Yorumlar</string>
     <string name="add_comment_text">Yorum Ekle</string>
     <string name="save_text">Kaydet</string>
+    <string name="yorumlar">YORUMLAR</string>
 
 </resources>

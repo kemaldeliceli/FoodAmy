@@ -18,6 +18,7 @@ class EditCommentFragment : BaseFragment<EditCommentViewModel,FragmentEditCommen
             val args = EditCommentFragmentArgs.fromBundle(it)
             viewModel.comment = args.comment
             viewModel.recipeID = args.recipeID
+            viewModel.commentText.value = args.comment.text
         }
         setCoordinateSnackbar(binding.snackbarCoord)
     }
