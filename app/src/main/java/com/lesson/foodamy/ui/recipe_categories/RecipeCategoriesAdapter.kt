@@ -2,40 +2,63 @@ package com.lesson.foodamy.ui.recipe_categories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeCategoryCardviewBinding
 import com.lesson.foodamy.model.recipe_category.CategoryInfo
 
-class RecipeCategoriesAdapter (private val categories : ArrayList<CategoryInfo>, val onClick: ((position: Int) -> Unit)?):
-    RecyclerView.Adapter<RecipeCategoriesAdapter.CategoryViewHolder>() {
+class RecipeCategoriesAdapter() : ListAdapter<CategoryInfo, RecipeCategoriesAdapter.
+RecipeCategoriesViewHolder>(
+    object : DiffUtil.ItemCallback<CategoryInfo>(){
+        override fun areItemsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean =
+            oldItem.id == newItem.id
 
-    inner  class CategoryViewHolder(val binding: RecipeCategoryCardviewBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(category: CategoryInfo){
+        override fun areContentsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean =
+            oldItem == newItem
+    }
+
+){
+    var onClickListener: ((id: Int) -> Unit)? = null
+    var recipeImageClickListener: ((id: Int) -> Unit)? = null
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeCategoriesAdapter.
+    RecipeCategoriesViewHolder {
+        val binding =
+            RecipeCategoryCardviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return RecipeCategoriesViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(
+        holder: RecipeCategoriesAdapter.
+        RecipeCategoriesViewHolder,
+        position: Int,
+    ) {
+        holder.bind(position,getItem(position))
+    }
+
+    inner class RecipeCategoriesViewHolder(val binding: RecipeCategoryCardviewBinding):
+    RecyclerView.ViewHolder(binding.root)
+    {
+        fun bind(position: Int, category: CategoryInfo){
+
             binding.recipeCategory = category
 
-            binding.imageRecycleView.adapter = RecipeImagesAdapter(category.recipes)
+            val recipeImagesAdapter = RecipeImagesAdapter(category.recipes)
+            recipeImagesAdapter.onClickListener = recipeImageClickListener
+
+            binding.imageRecycleView.adapter = recipeImagesAdapter
 
             binding.seeAllText.setOnClickListener {
-                onClick?.invoke(position)
+                onClickListener?.invoke(position)
             }
-
         }
-
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = RecipeCategoryCardviewBinding.inflate(inflater)
-        return CategoryViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bind(categories[position])
-    }
-
-    override fun getItemCount(): Int {
-        return categories.size
-    }
 }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentEditorsChoiceBinding
-import com.lesson.foodamy.ui.main.NewRecipeAdapter
+import com.lesson.foodamy.ui.main.RecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -14,23 +14,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEditorsChoiceBinding>
     (R.layout.fragment_editors_choice) {
 
-    private var recipeAdapter: NewRecipeAdapter? = null
+    private var recipeAdapter: RecipeAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setCoordinateSnackbar(binding.coordinatorMessage)
         setupRecyclerView()
-        setupObserves()
+        setupObservers()
     }
 
-    private fun setupObserves() {
+    private fun setupObservers() {
         viewModel.recipeList.observe(viewLifecycleOwner) {
             recipeAdapter?.submitList(it)
         }
     }
 
     private fun setupRecyclerView() {
-        recipeAdapter = NewRecipeAdapter()
+        recipeAdapter = RecipeAdapter()
         recipeAdapter?.onClickListener={
             viewModel.goDetails(it)
         }

@@ -6,8 +6,8 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class Comment(
-    val difference: String,
-    val id: Int,
-    val text: String,
+    val difference: String?=null,
+    val id: Int?=null,
+    val text: String?=null,
     val user: @RawValue User
 ):Parcelable

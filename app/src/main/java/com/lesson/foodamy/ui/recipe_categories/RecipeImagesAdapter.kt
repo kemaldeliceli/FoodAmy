@@ -9,10 +9,15 @@ import com.lesson.foodamy.model.recipe_category.Recipes
 class RecipeImagesAdapter (private val recipes : ArrayList<Recipes>/*, val onClick: ((position: Int) -> Unit)?*/):
     RecyclerView.Adapter<RecipeImagesAdapter.RecipeImagesViewHolder>() {
 
+    var onClickListener: ((id: Int) -> Unit)? = null
+
     inner  class RecipeImagesViewHolder(val binding: MiniRecipeCardviewBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(recipe: Recipes){
             binding.recipe = recipe
+            binding.root.setOnClickListener {
+                onClickListener?.invoke(recipe.id!!)
+            }
         }
 
     }

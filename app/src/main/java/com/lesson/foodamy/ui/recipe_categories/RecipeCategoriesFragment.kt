@@ -7,7 +7,6 @@ import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentRecipeCategoriesBinding
 import com.lesson.foodamy.model.recipe_category.CategoryInfo
-import com.lesson.foodamy.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,29 +14,34 @@ class RecipeCategoriesFragment :
     BaseFragment<RecipeCategoriesViewModel, FragmentRecipeCategoriesBinding>(
         R.layout.fragment_recipe_categories) {
 
-    lateinit var categoryRecipesList: ArrayList<CategoryInfo>
+    private var recipeCategoriesAdapter: RecipeCategoriesAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
-        viewModel.getRecipeCategories()
+        setupRecyclerView()
+        setObservers()
     }
 
-    private fun setListeners() {
+    private fun setupRecyclerView() {
+        recipeCategoriesAdapter = RecipeCategoriesAdapter()
+        recipeCategoriesAdapter?.onClickListener = {
+            viewModel.goToCategoryRecipes(it)
+        }
+        recipeCategoriesAdapter?.recipeImageClickListener = {
+            viewModel.goToRecipeDetail(it)
+        }
+        binding.apply {
+            categoryRecycleView.layoutManager = LinearLayoutManager(requireContext())
+            categoryRecycleView.adapter = recipeCategoriesAdapter
+        }
+    }
+
+
+    private fun setObservers() {
         viewModel.responseRecipeCategory.observe(viewLifecycleOwner, { categoryList ->
             if (categoryList.isNotEmpty()) {
-                categoryRecipesList = categoryList
-                binding.categoryRecycleView.adapter =
-                    RecipeCategoriesAdapter(categoryList, { position -> onClick(position) })
-                binding.categoryRecycleView.layoutManager = LinearLayoutManager(this.context)
-            }
-        }
-        )
-    }
-
-    fun onClick(position: Int) {
-        navigate(MainFragmentDirections.actionMainFragmentToCategoryRecipesFragment(
-            categoryRecipesList[position].id!!,categoryRecipesList[position].name!!))
+                recipeCategoriesAdapter?.submitList(categoryList)
+            }})
     }
 
     override fun getViewModelss(): Class<RecipeCategoriesViewModel> {

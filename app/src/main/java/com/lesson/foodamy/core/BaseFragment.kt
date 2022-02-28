@@ -25,10 +25,13 @@ import com.androidadvance.topsnackbar.TSnackbar
 import com.lesson.foodamy.BR
 import com.lesson.foodamy.R
 
-abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
+abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
+    @LayoutRes private val layoutResId: Int) :
+
     Fragment(layoutResId) {
     private lateinit var snackbar: TSnackbar
     private lateinit var coordinate: CoordinatorLayout
+
     lateinit var viewModel: VM
     lateinit var binding: VDB
 
@@ -106,6 +109,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(@LayoutRe
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding.setVariable(BR.viewModel,viewModel)
+        binding.lifecycleOwner = this
         return binding.root
     }
 

@@ -126,7 +126,7 @@
             android:layout_marginBottom="@dimen/padding_8dp"
 
             android:fontFamily="@font/nunito_semibold"
-            android:text="@{String.valueOf(recipeInfo.user.followingCount)}"
+            android:text="@{String.valueOf(recipeInfo.user.followedCount)}"
             android:textColor="@color/primary_raven"
 
             android:textSize="@dimen/size_13sp"

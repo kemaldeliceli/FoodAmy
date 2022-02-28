@@ -30,6 +30,61 @@
 android:layout_width="150dp"
 android:layout_height="@dimen/layout_height_200dp">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/border_image"
+            android:elevation="@dimen/elevation_2dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+
+            />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:elevation="3dp"
+
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+
+            android:scaleType="centerCrop"
+            app:imageUrl="@{recipe.user.image.url}"
+            app:placeHolder="@{@drawable/no_user_image}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircularImage"
+            />
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:background="@drawable/background_rectangle"
+        android:backgroundTint="@color/primary_red"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="33dp"
+        android:elevation="1dp"
+        android:text="@{recipe.user.username}"
+        android:textColor="@color/neutral_zircon"
+        android:textSize="11sp"
+        android:fontFamily="@font/nunito_bold"
+
+        android:textAlignment="center"
+        />
+
     <ImageView
         app:imageUrl="@{recipe.images[0].url}"
         app:placeHolder="@{@drawable/food_preview}"
@@ -41,6 +96,7 @@ android:layout_height="@dimen/layout_height_200dp">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/recipe_name"
         android:layout_width="wrap_content"
@@ -51,7 +107,7 @@ android:layout_height="@dimen/layout_height_200dp">
         android:textColor="@color/primary_cinder"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recipe_image"
+        app:layout_constraintTop_toBottomOf="@id/constraint_1"
 
         android:layout_marginStart="@dimen/margin_8dp"
 

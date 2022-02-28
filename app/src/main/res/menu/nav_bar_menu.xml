@@ -8,15 +8,12 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/favoruiteFragment"
-        android:icon="@drawable/heart_icon"
+        android:icon="@drawable/heart_vector"
         app:showAsAction="always" />
     <item
         android:id="@+id/userFragment"
         android:icon="@drawable/users_nav_icon"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/menuFragment"
-        android:icon="@drawable/menu_icon"
-        app:showAsAction="always" />
+
 
 </menu>

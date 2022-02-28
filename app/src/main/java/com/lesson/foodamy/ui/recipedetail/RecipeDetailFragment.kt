@@ -2,11 +2,9 @@ package com.lesson.foodamy.ui.recipedetail
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentRecipeDetailBinding
-import com.lesson.foodamy.model.BaseResponse
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,33 +14,14 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel,FragmentRecipeDe
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            val args = RecipeDetailFragmentArgs.fromBundle(it)
-            binding.recipeInfo = args.recipeInfo
-            viewModel.recipeID = args.recipeInfo.id!!
-            viewModel.getCommentsOfRecipe()
+            viewModel.recipeID.value = RecipeDetailFragmentArgs.fromBundle(it).recipeID
+
         }
+        viewModel.getRecipeInfoByID()
+        viewModel.getCommentsOfRecipe()
+
         setCoordinateSnackbar(binding.snackbarCoord)
-        setListeners()
     }
-
-    private fun setListeners() {
-        viewModel.responseComments.observe(viewLifecycleOwner,{response->
-            when(response){
-                is BaseResponse.Error -> { }
-                is BaseResponse.Success -> {
-                    val comments = response.data.data
-                    if (comments.isNotEmpty()) {
-                        binding.comment = comments[0]
-                    }
-                }
-            }
-        })
-        binding.topLayout.backConstraint.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-    }
-
 
     override fun getViewModelss(): Class<RecipeDetailViewModel> {
         return  RecipeDetailViewModel::class.java
