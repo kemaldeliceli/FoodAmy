@@ -24,13 +24,20 @@ class CategoryRecipesFragment :
 
         arguments?.let {
             val args = CategoryRecipesFragmentArgs.fromBundle(it)
-            val recipeID = args.categoryID
-            viewModel.categoryName.postValue(args.categoryName)
-            viewModel.getCategoryRecipes(recipeID)
+            viewModel.categoryID = args.categoryID
+            viewModel.categoryName= args.categoryName
+            viewModel.getListData()
         }
         setCoordinateSnackbar(binding.snackbarCoord)
         setupRecyclerView()
-        setObserver()
+        submitLastData()
+    }
+
+    private fun submitLastData(){
+
+        viewModel.responseCategoryRecipes.observe(viewLifecycleOwner) {
+            recipeAdapter?.submitData(viewLifecycleOwner.lifecycle, it)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -43,14 +50,6 @@ class CategoryRecipesFragment :
             categoryRecipesRecycleview.adapter = recipeAdapter
         }
     }
-
-    private fun setObserver() {
-        viewModel.responseCategoryRecipes.observe(viewLifecycleOwner) { recipes ->
-            recipeAdapter?.submitList(recipes)
-        }
-    }
-
-
     override fun getViewModelss(): Class<CategoryRecipesViewModel> {
         return CategoryRecipesViewModel::class.java
     }

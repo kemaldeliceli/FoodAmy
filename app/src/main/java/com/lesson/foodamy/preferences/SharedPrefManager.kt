@@ -24,7 +24,7 @@ class SharedPrefManager(private val sharedPreferences: SharedPreferences) : IPre
 
     override fun isAppFirstOpen() = sharedPreferences.getBoolean(firstTimeAppOpen,false)
 
-    override fun setUserInfo(user: UserInformation) {
+    override fun setUserInfo(user: UserInformation?) {
         val jsonString = GsonBuilder().create().toJson(user)
 
         sharedPreferences.edit().putString(userInfoObject, jsonString).apply()

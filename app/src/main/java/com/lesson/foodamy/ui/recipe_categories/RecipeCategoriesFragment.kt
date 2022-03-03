@@ -2,12 +2,14 @@ package com.lesson.foodamy.ui.recipe_categories
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentRecipeCategoriesBinding
 import com.lesson.foodamy.model.recipe_category.CategoryInfo
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class RecipeCategoriesFragment :
@@ -19,13 +21,22 @@ class RecipeCategoriesFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        setObservers()
+        //setObservers()
+        viewModel.getListData()
+        submitLastData()
+    }
+
+    private fun submitLastData() {
+        viewModel.responseRecipeCategory.observe(viewLifecycleOwner) {
+            recipeCategoriesAdapter?.submitData(viewLifecycleOwner.lifecycle, it)
+        }
     }
 
     private fun setupRecyclerView() {
         recipeCategoriesAdapter = RecipeCategoriesAdapter()
-        recipeCategoriesAdapter?.onClickListener = {
-            viewModel.goToCategoryRecipes(it)
+
+        recipeCategoriesAdapter?.onClickListener ={id,name->
+            viewModel.goToCategoryRecipes(id,name)
         }
         recipeCategoriesAdapter?.recipeImageClickListener = {
             viewModel.goToRecipeDetail(it)
@@ -37,12 +48,12 @@ class RecipeCategoriesFragment :
     }
 
 
-    private fun setObservers() {
+   /* private fun setObservers() {
         viewModel.responseRecipeCategory.observe(viewLifecycleOwner, { categoryList ->
             if (categoryList.isNotEmpty()) {
                 recipeCategoriesAdapter?.submitList(categoryList)
             }})
-    }
+    }*/
 
     override fun getViewModelss(): Class<RecipeCategoriesViewModel> {
         return RecipeCategoriesViewModel::class.java

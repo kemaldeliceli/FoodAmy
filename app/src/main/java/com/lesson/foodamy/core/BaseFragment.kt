@@ -86,18 +86,20 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
 
     private fun showAlertDialog(msg: String, directions: NavDirections) {
         val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.alert_dialog_layout)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.alert_dialog_layout)
+
         val body = dialog.findViewById(R.id.warningText) as TextView
-        body.text = msg
-        val yesBtn = dialog.findViewById(R.id.dialog_login_button) as Button
-        val noBtn = dialog.findViewById(R.id.dialog_cancel_button) as Button
-        yesBtn.setOnClickListener {
+            body.text = msg
+
+        val loginButton = dialog.findViewById(R.id.dialog_login_button) as Button
+        val cancelButton = dialog.findViewById(R.id.dialog_cancel_button) as Button
+        loginButton.setOnClickListener {
             navigate(directions)
             dialog.dismiss()
         }
-        noBtn.setOnClickListener { dialog.dismiss() }
+        cancelButton.setOnClickListener { dialog.dismiss() }
         dialog.show()
         }
 

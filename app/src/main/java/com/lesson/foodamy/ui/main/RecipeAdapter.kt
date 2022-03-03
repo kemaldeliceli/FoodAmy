@@ -2,8 +2,8 @@ package com.lesson.foodamy.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeCardViewBinding
 import com.lesson.foodamy.model.recipe_dataclass.Recipe
@@ -11,7 +11,7 @@ import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
 import com.lesson.foodamy.model.recipe_dataclass.toResult
 
 
-class RecipeAdapter() : ListAdapter<RecipeInfo, RecipeAdapter.RecipesViewHolder>(
+class RecipeAdapter() : PagingDataAdapter<RecipeInfo, RecipeAdapter.RecipesViewHolder>(
     object : DiffUtil.ItemCallback<RecipeInfo>() {
         override fun areItemsTheSame(oldItem: RecipeInfo, newItem: RecipeInfo) =
             oldItem.id == newItem.id
@@ -37,7 +37,7 @@ class RecipeAdapter() : ListAdapter<RecipeInfo, RecipeAdapter.RecipesViewHolder>
 
 
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
-        holder.bind(getItem(position).toResult(), position)
+        getItem(position)?.let { holder.bind(it.toResult(), position) }
     }
 
     inner class RecipesViewHolder(val binding: RecipeCardViewBinding) :
@@ -46,7 +46,7 @@ class RecipeAdapter() : ListAdapter<RecipeInfo, RecipeAdapter.RecipesViewHolder>
         fun bind(foodInfo: Recipe, position: Int) {
             binding.recipeInfo = foodInfo
             binding.root.setOnClickListener {
-                onClickListener?.invoke(getItem(position).id!!)
+                onClickListener?.invoke(getItem(position)?.id!!)
             }
         }
     }

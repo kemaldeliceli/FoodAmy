@@ -30,5 +30,12 @@ object BindingUtils {
             }
         }
     }
+    @JvmStatic
+    @BindingAdapter("app:toolBarTitle")
+    fun setToolbarTitle(toolbar:CustomViewTopBar,title: String?){
+        title?.let {
+            toolbar.setTitle(it)
+        }
+    }
 
 }

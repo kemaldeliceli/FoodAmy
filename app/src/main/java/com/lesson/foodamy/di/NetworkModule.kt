@@ -1,5 +1,6 @@
 package com.lesson.foodamy.di
 
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.AuthApiRepository
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import com.lesson.foodamy.services.AuthService
@@ -32,7 +33,14 @@ class NetworkModule {
     }
     @Provides
     @Inject
-    fun providesRecipesApi(retrofit: Retrofit): RecipesAPIRepository{
-        return  RecipesAPIRepository(retrofit.create(RecipeService::class.java))
+    fun providesRecipesApi(retrofit: Retrofit,sharedPref:IPrefDefaultManager): RecipesAPIRepository{
+        return  RecipesAPIRepository(
+            retrofit.create(RecipeService::class.java),sharedPref.getToken()
+        )
+    }
+    @Provides
+    @Inject
+    fun providesRecipeService(retrofit: Retrofit) : RecipeService{
+        return retrofit.create(RecipeService::class.java)
     }
 }

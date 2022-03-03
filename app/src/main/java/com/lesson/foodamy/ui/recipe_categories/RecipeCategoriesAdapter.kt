@@ -2,13 +2,13 @@ package com.lesson.foodamy.ui.recipe_categories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeCategoryCardviewBinding
 import com.lesson.foodamy.model.recipe_category.CategoryInfo
 
-class RecipeCategoriesAdapter() : ListAdapter<CategoryInfo, RecipeCategoriesAdapter.
+class RecipeCategoriesAdapter() : PagingDataAdapter<CategoryInfo, RecipeCategoriesAdapter.
 RecipeCategoriesViewHolder>(
     object : DiffUtil.ItemCallback<CategoryInfo>(){
         override fun areItemsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean =
@@ -20,7 +20,7 @@ RecipeCategoriesViewHolder>(
     }
 
 ){
-    var onClickListener: ((id: Int) -> Unit)? = null
+    var onClickListener: ((id: Int,name:String) -> Unit)? = null
     var recipeImageClickListener: ((id: Int) -> Unit)? = null
 
 
@@ -40,7 +40,7 @@ RecipeCategoriesViewHolder>(
         RecipeCategoriesViewHolder,
         position: Int,
     ) {
-        holder.bind(position,getItem(position))
+        holder.bind(position,getItem(position)!!)
     }
 
     inner class RecipeCategoriesViewHolder(val binding: RecipeCategoryCardviewBinding):
@@ -56,7 +56,7 @@ RecipeCategoriesViewHolder>(
             binding.imageRecycleView.adapter = recipeImagesAdapter
 
             binding.seeAllText.setOnClickListener {
-                onClickListener?.invoke(position)
+                onClickListener?.invoke(getItem(position)?.id!!,getItem(position)?.name!!)
             }
         }
     }

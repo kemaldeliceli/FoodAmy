@@ -15,7 +15,7 @@ class CommentFragment:
     BaseFragment<CommentViewModel,FragmentCommentBinding>
     (R.layout.fragment_comment) {
 
-    private var commentAdapter: NewCommentAdapter?=null
+    private var commentAdapter: CommentAdapter?=null
     @Inject lateinit var sharedPreferences: IPrefDefaultManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -23,16 +23,23 @@ class CommentFragment:
         arguments?.let {
             val args = CommentFragmentArgs.fromBundle(it)
             viewModel.recipeID = args.recipeID
-            viewModel.comments.value = args.comments
+            viewModel.getListData()
+
         }
         setupRecycleView()
         setCoordinateSnackbar(binding.snackbarCoord)
-        setObservers()
+        submitLastData()
     }
+    private fun submitLastData(){
 
+        viewModel.comments.observe(viewLifecycleOwner) {
+            commentAdapter?.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+    }
     private fun setupRecycleView() {
-        commentAdapter = NewCommentAdapter()
-        commentAdapter!!.userID = sharedPreferences.getUserInfo()!!.id!!
+        commentAdapter = CommentAdapter()
+        println()
+        commentAdapter!!.userID = if (sharedPreferences.getUserInfo()==null)  -1 else sharedPreferences.getUserInfo()!!.id!!
         commentAdapter?.deleteClickListener = {
             viewModel.deleteComment(it)
         }
@@ -43,13 +50,6 @@ class CommentFragment:
             commentRecycleView.layoutManager = LinearLayoutManager(requireContext())
             commentRecycleView.adapter = commentAdapter
         }
-    }
-
-    private fun setObservers() {
-        viewModel.comments.observe(viewLifecycleOwner,{
-            commentAdapter?.submitList(it)
-            }
-        )
     }
 
     override fun getViewModelss(): Class<CommentViewModel> {

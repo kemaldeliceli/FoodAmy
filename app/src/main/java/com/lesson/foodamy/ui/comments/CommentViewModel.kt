@@ -1,109 +1,86 @@
 package com.lesson.foodamy.ui.comments
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
 import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.comment_dataclass.*
-import com.lesson.foodamy.preferences.IPrefDefaultManager
+import com.lesson.foodamy.repository.CommentPagingSource
 import com.lesson.foodamy.repository.RecipesAPIRepository
+import com.lesson.foodamy.services.RecipeService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CommentViewModel @Inject constructor(
     private val recipesAPIRepository: RecipesAPIRepository,
-    private val sharedPreferences: IPrefDefaultManager
+    private val recipeService: RecipeService
     ) : BaseViewModel() {
 
-    private var token: String = ""
 
-    init {
-        token = sharedPreferences.getToken()
-    }
-
-    var comments: MutableLiveData<ArrayList<Comment>> = MutableLiveData()
+    var comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
     var recipeID = -1
 
     var commentText =  MutableLiveData<String>()
 
     fun addComment() = viewModelScope.launch {
-        if (token==""){
-            showAlertDialog(R.string.need_login_text,
-                CommentFragmentDirections.actionCommentFragmentToLoginFragment())
-        }else{
-/*            print(commentText.value)
-            comments.postValue(arrayListOf(Comment("1sn",5,commentText.value.toString(),User(
-                "",
-                "",
-                "",
-            0,
-           0,
-            0,
-           0,
-            null,
-            "",
-            false,
-                false,
-            0,
-            "tr",
-            0,
-            "kemalaki",
-           0,
-           "ivj",
-            "",
-            "kemalaki",
-            ""
-            ))))*/
-            when(val response = recipesAPIRepository.requestAddComments(recipeID,
-                token,
+        when(val response = recipesAPIRepository.requestAddComments(recipeID,
                 commentText.value.toString()))
                 {
 
                 is BaseResponse.Error -> {
-                    showMessage(response.error.error.toString())
+                    if (response.error.code.equals("auth.token")){
+                        showLoginDialog()
+                    }
                 }
                 is BaseResponse.Success -> {
                     commentText.value = ""
-                    getCommentsOfRecipe()
-                    showMessage("Success Comment Process")
+                    getListData()
                 }
                 null -> {
                 }
             }
         }
-    }
 
 
-    fun getCommentsOfRecipe() = viewModelScope.launch {
-          when(val response = recipesAPIRepository.requestComments(recipeID)){
-              is BaseResponse.Error -> {
-                  response.error.error?.let {
-                      showMessage(it)
-                  }
-              }
-              is BaseResponse.Success -> {
-                  response.data.data.let {
-                      comments.value = it
-                  }
-              }
-              null -> {
-                  showMessage(R.string.null_error)
-              }
-          }
+    private fun showLoginDialog() {
+        showAlertDialog(R.string.need_login_text,
+            CommentFragmentDirections.actionCommentFragmentToLoginFragment())
     }
+
+    fun getListData() {
+        Pager(config = PagingConfig(pageSize = 24, maxSize = 200),
+            pagingSourceFactory = {
+                CommentPagingSource(
+                    recipeService,
+                    recipeID
+                )
+            }).flow.let {
+            viewModelScope.launch {
+                it.cachedIn(viewModelScope).collect {
+                    comments.postValue(it)
+                }
+            }
+        }
+
+
+    }
+
 
     fun deleteComment(commentID: Int) = viewModelScope.launch {
-        when(val response = recipesAPIRepository.requestDeleteComment(recipeID,commentID,token)){
+        when(val response = recipesAPIRepository.requestDeleteComment(recipeID,commentID)){
             is BaseResponse.Error -> {
                 showMessage(response.error.error.toString())
             }
             is BaseResponse.Success -> {
-                getCommentsOfRecipe()
-                showMessage(response.data.message)
+                getListData()
             }
             null -> {
                 showMessage(R.string.null_error)

@@ -9,7 +9,7 @@ interface IPrefDefaultManager {
     fun isLoggedIn():Boolean
     fun saveLogin(isLogged:Boolean)
 
-    fun setUserInfo(userInfo: UserInformation)
+    fun setUserInfo(userInfo: UserInformation?)
     fun getUserInfo():UserInformation?
 
     fun setToken(token: String)

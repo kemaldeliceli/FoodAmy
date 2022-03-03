@@ -1,5 +1,7 @@
 package com.lesson.foodamy.ui.recipedetail
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
@@ -8,7 +10,6 @@ import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.comment_dataclass.Comment
 import com.lesson.foodamy.model.comment_dataclass.Comments
 import com.lesson.foodamy.model.recipe_detail_info.RecipeDetailInfo
-import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,11 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeDetailViewModel @Inject constructor(
     private val recipesAPIRepository: RecipesAPIRepository,
-    private val sharedPreferences: IPrefDefaultManager
     ) : BaseViewModel() {
 
     private var comments: MutableLiveData<Comments> = MutableLiveData()
-    private var token = ""
+
     var recipeID: MutableLiveData<Int> = MutableLiveData(5)
     val firstComment: MutableLiveData<Comment> = MutableLiveData()
     var recipeInfo: MutableLiveData<RecipeDetailInfo> = MutableLiveData()
@@ -33,13 +33,10 @@ class RecipeDetailViewModel @Inject constructor(
     val followedCount: MutableLiveData<Int> = MutableLiveData(0)
 
 
-    init {
-        token = sharedPreferences.getToken()
-    }
 
     fun getRecipeInfoByID() = viewModelScope.launch {
 
-        when(val response = recipesAPIRepository.requestRecipeByID(recipeID.value!!,token)){
+        when(val response = recipesAPIRepository.requestRecipeByID(recipeID.value!!)){
             is BaseResponse.Error -> {
                 showMessage(response.error.error.toString())
             }
@@ -82,35 +79,34 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
     fun likeRecipe() = viewModelScope.launch {
-        if (token==""){
-            showAlertDialog(R.string.need_login_text,
-                RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment())
-        }else {
+
             if (isLiked.value==false) {
                 when (val response =
-                    recipesAPIRepository.requestLikeRecipe(recipeID.value!!, token)) {
+                    recipesAPIRepository.requestLikeRecipe(recipeID.value!!)) {
                     is BaseResponse.Error -> {
-                        showMessage(response.error.error.toString())
+                        if (response.error.code=="auth.token"){
+                            showAlertDialog(R.string.need_login_text,
+                                RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment())
+                        }
                     }
                     is BaseResponse.Success -> {
                         isLiked.postValue(true)
                         likeCount.postValue(likeCount.value?.plus(1))
-                        println(response.data.message)
-                        showMessage(response.data.message)
                     }
                     null -> {
                         showMessage(R.string.null_error)
                     }
                 }
             }else{
-                when(val response = recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!,token)){
+                when(val response = recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!)){
                     is BaseResponse.Error -> {
-                        showMessage(response.error.error.toString())
+                        if (response.error.code.equals("auth.token")){
+                            showLoginDialog()
+                        }
                     }
                     is BaseResponse.Success -> {
                         isLiked.value = false
                         likeCount.postValue(likeCount.value?.minus(1))
-                        showMessage(response.data.message)
                     }
                     null -> {
                         showMessage(R.string.null_error)
@@ -119,23 +115,26 @@ class RecipeDetailViewModel @Inject constructor(
 
             }
         }
+
+    private fun showLoginDialog() {
+        showAlertDialog(R.string.need_login_text,
+            RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment())
     }
 
+
     fun followUser()=viewModelScope.launch {
-        if (token==""){
-            showAlertDialog(R.string.need_login_text,
-                RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment())
-        }else{
+
             if (isFollowing.value==false){
                 when (val response =
-                    recipesAPIRepository.requestFollowUser(recipeInfo.value?.user?.id!!, token)) {
+                    recipesAPIRepository.requestFollowUser(recipeInfo.value?.user?.id!!)) {
                     is BaseResponse.Error -> {
-                        showMessage(response.error.error.toString())
+                        if (response.error.code=="auth.token"){
+                            showLoginDialog()
+                        }
                     }
                     is BaseResponse.Success -> {
                         isFollowing.postValue(true)
                         followedCount.postValue(followedCount.value?.plus(1))
-                        showMessage("Success Follow")
                     }
                     null -> {
                         showMessage(R.string.null_error)
@@ -143,14 +142,15 @@ class RecipeDetailViewModel @Inject constructor(
                 }
             }else{
                 when (val response =
-                recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!, token)) {
+                recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!)) {
                     is BaseResponse.Error -> {
-                        showMessage(response.error.error.toString())
+                        if (response.error.code=="auth.token"){
+                            showLoginDialog()
+                        }
                     }
                     is BaseResponse.Success -> {
                         isFollowing.postValue(false)
                         followedCount.postValue(followedCount.value?.minus(1))
-                        showMessage("Success Unfollow")
                     }
                     null -> {
                         showMessage(R.string.null_error)
@@ -163,4 +163,3 @@ class RecipeDetailViewModel @Inject constructor(
     }
 
 
-}

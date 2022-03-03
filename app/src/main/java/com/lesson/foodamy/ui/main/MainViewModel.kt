@@ -22,6 +22,7 @@ class MainViewModel @Inject constructor(private val loginSharedPreferences: IPre
                 showMessage(R.string.successfull_logout)
                 loginSharedPreferences.saveLogin(isLogged = false)
                 loginSharedPreferences.setToken("")
+                loginSharedPreferences.setUserInfo(null)
                 navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
             }
             is BaseResponse.Error->{

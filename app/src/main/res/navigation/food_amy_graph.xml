@@ -139,6 +139,9 @@
         <argument
             android:name="categoryName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/editCommentFragment"

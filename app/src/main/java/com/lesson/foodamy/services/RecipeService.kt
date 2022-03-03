@@ -26,7 +26,7 @@ interface RecipeService {
         ) : Response<RecipeDetailInfo>
 
     @GET("/api/recipe/{recipe_id}/comment")
-    suspend fun getComments(@Path("recipe_id") recipeId:Int) : Response<ResponseComments>
+    suspend fun getComments(@Path("recipe_id") recipeId:Int,@Query("page") page: Int) : Response<ResponseComments>
 
     @Multipart
     @POST("/api/recipe/{recipe_id}/comment")
@@ -79,8 +79,8 @@ interface RecipeService {
     ) : Response<ResponseFollow>
 
     @GET("/api/category-recipes")
-    suspend fun getRecipeCategories(): Response<ResponseRecipeCategory>
+    suspend fun getRecipeCategories(@Query("page") page: Int): Response<ResponseRecipeCategory>
 
     @GET("/api/category/{category_id}/recipe")
-    suspend fun getCategoryRecipes(@Path("category_id") recipeID: Int) : Response<ResponseRecipes>
+    suspend fun getCategoryRecipes(@Path("category_id") categoryID: Int) : Response<ResponseRecipes>
 }

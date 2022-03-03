@@ -23,15 +23,10 @@ private val sharedPreferences: IPrefDefaultManager
 
     var commentText = MutableLiveData<String>()
 
-    private var token: String = ""
-
-    init {
-        token = sharedPreferences.getToken()
-    }
 
     fun editComment() = viewModelScope.launch {
         when(val response = recipesAPIRepository.
-            requestEditComment(recipeID,comment?.id!!,commentText.value.toString(),token)){
+            requestEditComment(recipeID,comment?.id!!,commentText.value.toString())){
             is BaseResponse.Error -> {
                 showMessage(response.error.error.toString())
             }

@@ -23,19 +23,27 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <include layout="@layout/top_constrait_layout"
+    <com.lesson.foodamy.utils.CustomViewTopBar
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:viewModel="@{viewModel}"
-        app:isDetail="@{false}"
-        />
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/padding_8dp"
+        app:backButtonVisibility="false"
+        app:fodamyLogoVisibility="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:logOutIconVisibility="true"
+        app:logoutListener="@{()->viewModel.logOut()}"
+        app:pageTitleVisibility="false"
+        app:shareIconVisibility="false" />
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/snackbarCoord"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="@id/top_constraint_layout"
+        app:layout_constraintTop_toTopOf="@id/top_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
@@ -62,7 +70,7 @@
             android:id="@+id/viewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/top_constraint_layout"
+            app:layout_constraintTop_toBottomOf="@id/top_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
