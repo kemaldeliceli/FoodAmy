@@ -4,7 +4,6 @@ import com.lesson.foodamy.preferences.IPrefDefaultManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * @author Mert Gölcü

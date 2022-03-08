@@ -31,7 +31,7 @@ interface RecipeService {
     @GET("api/recipe/{recipe_id}")
     suspend fun getRecipeByID(
         @Path("recipe_id") recipeId: Int,
-        @Header("X-Fodamy-Token") token: String
+       
     ): RecipeDetailInfo
 
     @GET("/api/recipe/{recipe_id}/comment")
@@ -41,7 +41,7 @@ interface RecipeService {
     @POST("/api/recipe/{recipe_id}/comment")
     suspend fun addComments(
         @Path("recipe_id") recipeId: Int,
-        @Header("X-Fodamy-Token") token: String,
+        
         @Part("text") text: String,
     ): Comment
 
@@ -49,7 +49,7 @@ interface RecipeService {
     suspend fun deleteComment(
         @Path("recipe_id") recipeId: Int,
         @Path("comment_id") commentId: Int,
-        @Header("X-Fodamy-Token") token: String,
+        
     ): ResponseComment
 
     @FormUrlEncoded
@@ -58,32 +58,32 @@ interface RecipeService {
         @Path("recipe_id") recipeId: Int,
         @Path("comment_id") commentId: Int,
         @Field("text") text: String,
-        @Header("X-Fodamy-Token") token: String,
+        
 
     ): ResponseComment
 
     @POST("/api/recipe/{recipe_id}/like")
     suspend fun likeRecipe(
         @Path("recipe_id") recipeId: Int,
-        @Header("X-Fodamy-Token") token: String
+       
     ): ResponseLike
 
     @DELETE("/api/recipe/{recipe_id}/like")
     suspend fun deleteLikeRecipe(
         @Path("recipe_id") recipeId: Int,
-        @Header("X-Fodamy-Token") token: String
+       
     ): ResponseLike
 
     @POST("/api/user/{followedId}/following")
     suspend fun followUser(
         @Path("followedId") followedId: Int,
-        @Header("X-Fodamy-Token") token: String
+       
     ): ResponseFollow
 
     @DELETE("/api/user/{followedId}/following")
     suspend fun deleteFollowUser(
         @Path("followedId") followedId: Int,
-        @Header("X-Fodamy-Token") token: String
+       
     ): ResponseFollow
 
     @GET("/api/category-recipes")

@@ -1,5 +1,6 @@
 package com.lesson.foodamy.di
 
+import com.lesson.foodamy.di.utils.AuthInterceptor
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.AuthAPIRepository
 import com.lesson.foodamy.repository.RecipesAPIRepository
@@ -9,6 +10,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
@@ -20,24 +22,30 @@ class NetworkModule {
     private val BASE_URL = "https://fodamy.mobillium.com/"
 
     @Provides
-    fun providesRetrofit(): Retrofit {
+    fun providesRetrofit(authInterceptor: AuthInterceptor): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(OkHttpClient.Builder().addInterceptor(authInterceptor).build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
     @Provides
     @Inject
-    fun providesAuthApi(retrofit: Retrofit): AuthAPIRepository {
-        return AuthAPIRepository(retrofit.create(AuthService::class.java))
+    fun providesAuthApi(retrofit: Retrofit, sharedPref: IPrefDefaultManager): AuthAPIRepository {
+        return AuthAPIRepository(retrofit.create(AuthService::class.java), sharedPref)
     }
+
     @Provides
     @Inject
-    fun providesRecipesApi(retrofit: Retrofit, sharedPref: IPrefDefaultManager): RecipesAPIRepository {
+    fun providesRecipesApi(
+        retrofit: Retrofit,
+    ): RecipesAPIRepository {
         return RecipesAPIRepository(
-            retrofit.create(RecipeService::class.java), sharedPref.getToken()
+            retrofit.create(RecipeService::class.java)
         )
     }
+
     @Provides
     @Inject
     fun providesRecipeService(retrofit: Retrofit): RecipeService {
