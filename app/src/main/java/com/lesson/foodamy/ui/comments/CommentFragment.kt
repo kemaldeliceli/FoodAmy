@@ -11,11 +11,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CommentFragment:
-    BaseFragment<CommentViewModel,FragmentCommentBinding>
+class CommentFragment :
+    BaseFragment<CommentViewModel, FragmentCommentBinding>
     (R.layout.fragment_comment) {
 
-    private var commentAdapter: CommentAdapter?=null
+    private var commentAdapter: CommentAdapter? = null
     @Inject lateinit var sharedPreferences: IPrefDefaultManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,13 +24,12 @@ class CommentFragment:
             val args = CommentFragmentArgs.fromBundle(it)
             viewModel.recipeID = args.recipeID
             viewModel.getListData()
-
         }
         setupRecycleView()
         setCoordinateSnackbar(binding.snackbarCoord)
         submitLastData()
     }
-    private fun submitLastData(){
+    private fun submitLastData() {
 
         viewModel.comments.observe(viewLifecycleOwner) {
             commentAdapter?.submitData(viewLifecycleOwner.lifecycle, it)
@@ -39,7 +38,7 @@ class CommentFragment:
     private fun setupRecycleView() {
         commentAdapter = CommentAdapter()
         println()
-        commentAdapter!!.userID = if (sharedPreferences.getUserInfo()==null)  -1 else sharedPreferences.getUserInfo()!!.id!!
+        commentAdapter!!.userID = if (sharedPreferences.getUserInfo() == null) -1 else sharedPreferences.getUserInfo()!!.id!!
         commentAdapter?.deleteClickListener = {
             viewModel.deleteComment(it)
         }
@@ -55,5 +54,4 @@ class CommentFragment:
     override fun getViewModelss(): Class<CommentViewModel> {
         return CommentViewModel::class.java
     }
-
 }

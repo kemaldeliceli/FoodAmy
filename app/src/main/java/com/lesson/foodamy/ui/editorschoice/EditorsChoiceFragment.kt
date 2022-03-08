@@ -11,10 +11,9 @@ import com.lesson.foodamy.ui.main.RecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
-
 @AndroidEntryPoint
 class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEditorsChoiceBinding>
-    (R.layout.fragment_editors_choice) {
+(R.layout.fragment_editors_choice) {
 
     private var recipeAdapter: RecipeAdapter? = null
 
@@ -33,10 +32,9 @@ class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEdito
         }
     }
 
-
     private fun setupRecyclerView() {
         recipeAdapter = RecipeAdapter()
-        recipeAdapter?.onClickListener={
+        recipeAdapter?.onClickListener = {
             viewModel.goDetails(it)
         }
         binding.apply {
@@ -44,7 +42,6 @@ class EditorsChoiceFragment : BaseFragment<EditorsChoiceViewModel, FragmentEdito
             recyclerViewRecipes.adapter = recipeAdapter
         }
     }
-
 
     override fun getViewModelss(): Class<EditorsChoiceViewModel> {
         return EditorsChoiceViewModel::class.java

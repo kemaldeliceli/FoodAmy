@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.R
 import com.lesson.foodamy.model.dataclass.OnboardingItem
 
-class OnboardingItemsAdapter(private var onboardingItems: ArrayList<OnboardingItem>):
-RecyclerView.Adapter<OnboardingItemsAdapter.OnBoardingItemViewHolder>()
-{
-    inner class OnBoardingItemViewHolder(view: View): RecyclerView.ViewHolder(view){
+class OnboardingItemsAdapter(private var onboardingItems: ArrayList<OnboardingItem>) :
+    RecyclerView.Adapter<OnboardingItemsAdapter.OnBoardingItemViewHolder>() {
+    inner class OnBoardingItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var imageOnboarding = view.findViewById<ImageView>(R.id.firstWalkthroughImage)
         private var descriptionHeader = view.findViewById<TextView>(R.id.descriptionHeader)
         private var description = view.findViewById<TextView>(R.id.description)
 
-        fun bind(onboardingItem: OnboardingItem){
+        fun bind(onboardingItem: OnboardingItem) {
             imageOnboarding.setImageResource(onboardingItem.image)
             descriptionHeader.text = onboardingItem.title
             description.text = onboardingItem.description
@@ -25,13 +24,13 @@ RecyclerView.Adapter<OnboardingItemsAdapter.OnBoardingItemViewHolder>()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBoardingItemViewHolder {
-            return OnBoardingItemViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.slide_screen,
-                    parent,
-                    false
-                )
+        return OnBoardingItemViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.slide_screen,
+                parent,
+                false
             )
+        )
     }
 
     override fun onBindViewHolder(holder: OnBoardingItemViewHolder, position: Int) {

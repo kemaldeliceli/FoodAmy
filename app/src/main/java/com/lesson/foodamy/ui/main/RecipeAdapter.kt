@@ -10,16 +10,13 @@ import com.lesson.foodamy.model.recipe_dataclass.Recipe
 import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
 import com.lesson.foodamy.model.recipe_dataclass.toResult
 
-
 class RecipeAdapter() : PagingDataAdapter<RecipeInfo, RecipeAdapter.RecipesViewHolder>(
     object : DiffUtil.ItemCallback<RecipeInfo>() {
         override fun areItemsTheSame(oldItem: RecipeInfo, newItem: RecipeInfo) =
             oldItem.id == newItem.id
 
-
         override fun areContentsTheSame(oldItem: RecipeInfo, newItem: RecipeInfo) =
             oldItem == newItem
-
     }
 ) {
 
@@ -34,7 +31,6 @@ class RecipeAdapter() : PagingDataAdapter<RecipeInfo, RecipeAdapter.RecipesViewH
             )
         return RecipesViewHolder(binding)
     }
-
 
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it.toResult(), position) }

@@ -8,24 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeCategoryCardviewBinding
 import com.lesson.foodamy.model.recipe_category.CategoryInfo
 
-class RecipeCategoriesAdapter() : PagingDataAdapter<CategoryInfo, RecipeCategoriesAdapter.
-RecipeCategoriesViewHolder>(
-    object : DiffUtil.ItemCallback<CategoryInfo>(){
+class RecipeCategoriesAdapter() : PagingDataAdapter<CategoryInfo, RecipeCategoriesAdapter
+    .RecipeCategoriesViewHolder>(
+    object : DiffUtil.ItemCallback<CategoryInfo>() {
         override fun areItemsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean =
             oldItem.id == newItem.id
-
 
         override fun areContentsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean =
             oldItem == newItem
     }
 
-){
-    var onClickListener: ((id: Int,name:String) -> Unit)? = null
+) {
+    var onClickListener: ((id: Int, name: String) -> Unit)? = null
     var recipeImageClickListener: ((id: Int) -> Unit)? = null
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeCategoriesAdapter.
-    RecipeCategoriesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeCategoriesAdapter
+    .RecipeCategoriesViewHolder {
         val binding =
             RecipeCategoryCardviewBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -36,17 +34,16 @@ RecipeCategoriesViewHolder>(
     }
 
     override fun onBindViewHolder(
-        holder: RecipeCategoriesAdapter.
-        RecipeCategoriesViewHolder,
+        holder: RecipeCategoriesAdapter
+        .RecipeCategoriesViewHolder,
         position: Int,
     ) {
-        holder.bind(position,getItem(position)!!)
+        holder.bind(position, getItem(position)!!)
     }
 
-    inner class RecipeCategoriesViewHolder(val binding: RecipeCategoryCardviewBinding):
-    RecyclerView.ViewHolder(binding.root)
-    {
-        fun bind(position: Int, category: CategoryInfo){
+    inner class RecipeCategoriesViewHolder(val binding: RecipeCategoryCardviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(position: Int, category: CategoryInfo) {
 
             binding.recipeCategory = category
 
@@ -56,9 +53,8 @@ RecipeCategoriesViewHolder>(
             binding.imageRecycleView.adapter = recipeImagesAdapter
 
             binding.seeAllText.setOnClickListener {
-                onClickListener?.invoke(getItem(position)?.id!!,getItem(position)?.name!!)
+                onClickListener?.invoke(getItem(position)?.id!!, getItem(position)?.name!!)
             }
         }
     }
-
 }

@@ -1,6 +1,5 @@
 package com.lesson.foodamy.ui.category_recipes
 
-
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,11 +20,10 @@ class CategoryRecipesFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         arguments?.let {
             val args = CategoryRecipesFragmentArgs.fromBundle(it)
             viewModel.categoryID = args.categoryID
-            viewModel.categoryName= args.categoryName
+            viewModel.categoryName = args.categoryName
             viewModel.getListData()
         }
         setCoordinateSnackbar(binding.snackbarCoord)
@@ -33,7 +31,7 @@ class CategoryRecipesFragment :
         submitLastData()
     }
 
-    private fun submitLastData(){
+    private fun submitLastData() {
 
         viewModel.responseCategoryRecipes.observe(viewLifecycleOwner) {
             recipeAdapter?.submitData(viewLifecycleOwner.lifecycle, it)

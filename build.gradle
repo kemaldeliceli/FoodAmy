@@ -18,7 +18,9 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
+plugins {
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+}
 allprojects {
     repositories {
         google()
@@ -28,6 +30,7 @@ allprojects {
             url 'https://jitpack.io'
         }
     }
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
 
 task clean(type: Delete) {

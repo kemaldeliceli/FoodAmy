@@ -5,20 +5,18 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lesson.foodamy.R
-import com.lesson.foodamy.databinding.FragmentRecentlyAddedBinding
 import com.lesson.foodamy.core.BaseFragment
+import com.lesson.foodamy.databinding.FragmentRecentlyAddedBinding
 import com.lesson.foodamy.ui.main.RecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
-
 @AndroidEntryPoint
 class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecentlyAddedBinding>(R.layout.fragment_recently_added) {
 
-    private var recipesAdapter: RecipeAdapter?=null
+    private var recipesAdapter: RecipeAdapter? = null
 
-    private var layoutManager: LinearLayoutManager?=null
-
+    private var layoutManager: LinearLayoutManager? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,7 +27,6 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
         setupRecycleView()
         submitLastData()
     }
-
 
     private fun setupRecycleView() {
         recipesAdapter = RecipeAdapter()
@@ -42,7 +39,7 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
         }
     }
 
-    private fun submitLastData(){
+    private fun submitLastData() {
         lifecycleScope.launchWhenCreated {
             viewModel.getListData().collectLatest {
                 recipesAdapter?.submitData(it)
@@ -50,9 +47,7 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
         }
     }
 
-
     override fun getViewModelss(): Class<RecentlyAddedViewModel> {
-        return  RecentlyAddedViewModel::class.java
+        return RecentlyAddedViewModel::class.java
     }
-
 }

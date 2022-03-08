@@ -8,18 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeDetailCommentCardviewBinding
 import com.lesson.foodamy.model.comment_dataclass.Comment
 
-class CommentAdapter() : PagingDataAdapter<Comment,CommentAdapter.CommentViewHolder>(
-    object : DiffUtil.ItemCallback<Comment>(){
+class CommentAdapter() : PagingDataAdapter<Comment, CommentAdapter.CommentViewHolder>(
+    object : DiffUtil.ItemCallback<Comment>() {
         override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean =
-            oldItem.id==newItem.id
+            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean=
-            oldItem==newItem
-
+        override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean =
+            oldItem == newItem
     }
 
-)
-{
+) {
     var deleteClickListener: ((id: Int) -> Unit)? = null
     var editClickListener: ((comment: Comment) -> Unit)? = null
     var userID: Int? = 0
@@ -43,10 +41,9 @@ class CommentAdapter() : PagingDataAdapter<Comment,CommentAdapter.CommentViewHol
         holder.bind(getItem(position)!!)
     }
 
-    inner class CommentViewHolder(val binding: RecipeDetailCommentCardviewBinding):
-        RecyclerView.ViewHolder(binding.root)
-    {
-        fun bind(comment: Comment){
+    inner class CommentViewHolder(val binding: RecipeDetailCommentCardviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(comment: Comment) {
             binding.comment = comment
             binding.currentUserID = userID
             binding.imageButtonDeleteComment.setOnClickListener {
@@ -56,6 +53,5 @@ class CommentAdapter() : PagingDataAdapter<Comment,CommentAdapter.CommentViewHol
                 editClickListener?.invoke(getItem(position)!!)
             }
         }
-
     }
 }

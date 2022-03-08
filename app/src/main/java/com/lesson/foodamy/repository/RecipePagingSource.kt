@@ -6,12 +6,13 @@ import com.lesson.foodamy.model.RecipeType
 import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
 import com.lesson.foodamy.services.RecipeService
 
-class RecipePagingSource constructor(private val recipeService: RecipeService,
-                                     private val recipeType: RecipeType,
-                                     private val categoryID: Int?
+class RecipePagingSource constructor(
+    private val recipeService: RecipeService,
+    private val recipeType: RecipeType,
+    private val categoryID: Int?
 
 ) :
-    PagingSource<Int,RecipeInfo>() {
+    PagingSource<Int, RecipeInfo>() {
     override fun getRefreshKey(state: PagingState<Int, RecipeInfo>): Int? {
         return state.anchorPosition
     }
@@ -20,7 +21,7 @@ class RecipePagingSource constructor(private val recipeService: RecipeService,
         return try {
             val nextPage: Int = params.key ?: FIRST_PAGE_INDEX
 
-            val response = when(recipeType) {
+            val response = when (recipeType) {
                 RecipeType.EDITORS_CHOICE -> recipeService.getEditorsChoice(nextPage)
                 RecipeType.RECENTLY_LAST_ADDED -> {
                     println("recently_added")
@@ -35,21 +36,21 @@ class RecipePagingSource constructor(private val recipeService: RecipeService,
             var nextPageNumber: Int? = null
             var prevPageNumber: Int? = null
 
-            response.body()?.pagination?.let {
-                if (it.currentPage!! < it.lastPage!!){
-                    nextPageNumber = it.currentPage+1
+            response.pagination?.let {
+                if (it.currentPage!! < it.lastPage!!) {
+                    nextPageNumber = it.currentPage + 1
                 }
-                if (it.currentPage>1) {
-                    prevPageNumber = it.currentPage-1
+                if (it.currentPage> 1) {
+                    prevPageNumber = it.currentPage - 1
                 }
             }
 
-            LoadResult.Page(data = response.body()!!.data,
+            LoadResult.Page(
+                data = response.data,
                 prevKey = prevPageNumber,
-                nextKey = nextPageNumber)
-
-        }
-        catch (e: Exception) {
+                nextKey = nextPageNumber
+            )
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }

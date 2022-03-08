@@ -2,11 +2,9 @@ package com.lesson.foodamy.ui.user
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.lesson.foodamy.R
-import com.lesson.foodamy.databinding.FragmentUserBinding
 import com.lesson.foodamy.core.BaseFragment
+import com.lesson.foodamy.databinding.FragmentUserBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,7 +14,6 @@ class UserFragment : BaseFragment<UserViewModel, FragmentUserBinding>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
     }
     override fun getViewModelss(): Class<UserViewModel> {
-        return  UserViewModel::class.java
+        return UserViewModel::class.java
     }
-
 }

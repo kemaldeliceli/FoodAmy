@@ -8,8 +8,8 @@ import com.lesson.foodamy.databinding.FragmentEditCommentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditCommentFragment : BaseFragment<EditCommentViewModel,FragmentEditCommentBinding>
-    (R.layout.fragment_edit_comment){
+class EditCommentFragment : BaseFragment<EditCommentViewModel, FragmentEditCommentBinding>
+(R.layout.fragment_edit_comment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,9 +23,7 @@ class EditCommentFragment : BaseFragment<EditCommentViewModel,FragmentEditCommen
         setCoordinateSnackbar(binding.snackbarCoord)
     }
 
-
     override fun getViewModelss(): Class<EditCommentViewModel> {
         return EditCommentViewModel::class.java
     }
-
 }

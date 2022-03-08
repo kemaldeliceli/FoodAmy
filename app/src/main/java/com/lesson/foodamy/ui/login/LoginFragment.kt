@@ -15,7 +15,6 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(R.layou
         setCoordinateSnackbar(binding.snackbarCoord)
     }
 
-
     override fun getViewModelss(): Class<LoginViewModel> {
         return LoginViewModel::class.java
     }
