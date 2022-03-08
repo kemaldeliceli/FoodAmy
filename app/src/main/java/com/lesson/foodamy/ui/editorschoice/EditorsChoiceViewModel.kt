@@ -17,23 +17,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditorsChoiceViewModel @Inject
-constructor(private val recipeService: RecipeService
+constructor(
+    private val recipeService: RecipeService
 ) : BaseViewModel() {
 
-
     fun getListData(): Flow<PagingData<RecipeInfo>> {
-        return Pager (config = PagingConfig(pageSize = 24, maxSize = 200),
+        return Pager(
+            config = PagingConfig(pageSize = 24, maxSize = 200),
             pagingSourceFactory = {
-                    RecipePagingSource(
-                        recipeService,
-                        RecipeType.EDITORS_CHOICE,
-                        null
-                    )
-            }).flow.cachedIn(viewModelScope)
+                RecipePagingSource(
+                    recipeService,
+                    RecipeType.EDITORS_CHOICE,
+                    null
+                )
+            }
+        ).flow.cachedIn(viewModelScope)
     }
 
-    fun goDetails(id :Int) {
+    fun goDetails(id: Int) {
         navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(id))
     }
-
 }

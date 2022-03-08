@@ -18,21 +18,23 @@ import javax.inject.Inject
 @HiltViewModel
 class RecentlyAddedViewModel @Inject constructor(
     private val recipeService: RecipeService
-) : BaseViewModel(){
-
+) : BaseViewModel() {
 
     fun getListData(): Flow<PagingData<RecipeInfo>> {
-        return Pager (config = PagingConfig(pageSize = 24, maxSize = 72),
-            pagingSourceFactory = {RecipePagingSource(
+        return Pager(
+            config = PagingConfig(pageSize = 24, maxSize = 72),
+            pagingSourceFactory = {
+                RecipePagingSource(
                     recipeService,
                     RecipeType.RECENTLY_LAST_ADDED,
                     null
 
-            )}).flow.cachedIn(viewModelScope)
+                )
+            }
+        ).flow.cachedIn(viewModelScope)
     }
 
-
-    fun goToDetails(id: Int){
+    fun goToDetails(id: Int) {
         navigate(MainFragmentDirections.actionMainFragmentToRecipeDetailFragment2(id))
     }
 }

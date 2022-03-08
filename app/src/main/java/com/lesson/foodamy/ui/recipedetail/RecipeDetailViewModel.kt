@@ -1,24 +1,28 @@
 package com.lesson.foodamy.ui.recipedetail
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
 import com.lesson.foodamy.model.BaseResponse
+import com.lesson.foodamy.model.ResponseComment
+import com.lesson.foodamy.model.ResponseLike
 import com.lesson.foodamy.model.comment_dataclass.Comment
 import com.lesson.foodamy.model.comment_dataclass.Comments
+import com.lesson.foodamy.model.comment_dataclass.ResponseComments
+import com.lesson.foodamy.model.dataclass.BaseException
 import com.lesson.foodamy.model.recipe_detail_info.RecipeDetailInfo
+import com.lesson.foodamy.model.recipe_detail_info.ResponseFollow
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeDetailViewModel @Inject constructor(
     private val recipesAPIRepository: RecipesAPIRepository,
-    ) : BaseViewModel() {
+) : BaseViewModel() {
 
     private var comments: MutableLiveData<Comments> = MutableLiveData()
 
@@ -32,64 +36,69 @@ class RecipeDetailViewModel @Inject constructor(
     val isFollowing: MutableLiveData<Boolean> = MutableLiveData(false)
     val followedCount: MutableLiveData<Int> = MutableLiveData(0)
 
-
-
     fun getRecipeInfoByID() = viewModelScope.launch {
 
-        when(val response = recipesAPIRepository.requestRecipeByID(recipeID.value!!)){
-            is BaseResponse.Error -> {
-                showMessage(response.error.error.toString())
-            }
-            is BaseResponse.Success -> {
-                recipeInfo.value = response.data!!
-                isLiked.postValue(recipeInfo.value!!.isLiked!!)
-                likeCount.postValue(recipeInfo.value!!.likeCount!!)
+        try {
+            when (val response = recipesAPIRepository.requestRecipeByID(recipeID.value!!)) {
 
-                isFollowing.postValue(recipeInfo.value!!.user?.isFollowing!!)
-                followedCount.postValue(recipeInfo.value!!.user?.followedCount!!)
-            }
-            null -> {
-                showMessage(R.string.null_error)
-            }
-        }
-    }
+                is RecipeDetailInfo -> {
+                    recipeInfo.value = response!!
+                    isLiked.postValue(recipeInfo.value!!.isLiked!!)
+                    likeCount.postValue(recipeInfo.value!!.likeCount!!)
 
-
-     fun getCommentsOfRecipe() = viewModelScope.launch {
-
-         when (val response = recipesAPIRepository.requestComments(recipeID.value!!)) {
-            is BaseResponse.Error -> {
-                showMessage(response.error.error.toString())
-            }
-            is BaseResponse.Success -> {
-                comments.value = response.data.data
-                if(comments.value!!.size!=0){
-                    firstComment.value = response.data.data[0]
+                    isFollowing.postValue(recipeInfo.value!!.user?.isFollowing!!)
+                    followedCount.postValue(recipeInfo.value!!.user?.followedCount!!)
+                }
+                null -> {
+                    showMessage(R.string.null_error)
                 }
             }
-            null -> {
+
+        }catch (e:Exception){
+            when(e){
+                is BaseException -> {
+                    showMessage(e.error.toString())
+                }
             }
         }
     }
 
+    fun getCommentsOfRecipe() = viewModelScope.launch {
+
+        try {
+            when (val response = recipesAPIRepository.requestComments(recipeID.value!!)) {
+                is ResponseComments -> {
+                    comments.value = response.data
+                    if (comments.value!!.size != 0) {
+                        firstComment.value = response.data[0]
+                    }
+                }
+                null -> {
+                }
+            }
+
+
+        }catch (e:Exception){
+            showMessage(e.message.toString())
+        }
+    }
 
     fun goToCommentPage() {
-        navigate(RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToCommentFragment(
-            comments.value!!,recipeID.value!!))
+        navigate(
+            RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToCommentFragment(
+                comments.value!!, recipeID.value!!
+            )
+        )
     }
 
     fun likeRecipe() = viewModelScope.launch {
 
-            if (isLiked.value==false) {
-                when (val response =
-                    recipesAPIRepository.requestLikeRecipe(recipeID.value!!)) {
-                    is BaseResponse.Error -> {
-                        if (response.error.code=="auth.token"){
-                            showAlertDialog(R.string.need_login_text,
-                                RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment())
-                        }
-                    }
-                    is BaseResponse.Success -> {
+        if (isLiked.value == false) {
+
+            try {
+                when (recipesAPIRepository.requestLikeRecipe(recipeID.value!!)
+                ) {
+                    is ResponseLike -> {
                         isLiked.postValue(true)
                         likeCount.postValue(likeCount.value?.plus(1))
                     }
@@ -97,14 +106,21 @@ class RecipeDetailViewModel @Inject constructor(
                         showMessage(R.string.null_error)
                     }
                 }
-            }else{
-                when(val response = recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!)){
-                    is BaseResponse.Error -> {
-                        if (response.error.code.equals("auth.token")){
-                            showLoginDialog()
+            }catch (e:Exception){
+                when(e){
+                    is BaseException -> {
+                        if (e.code == 403) {
+                           showLoginDialog()
                         }
                     }
-                    is BaseResponse.Success -> {
+                }
+            }
+
+        } else {
+            try {
+                when (recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!)) {
+
+                    is ResponseLike -> {
                         isLiked.value = false
                         likeCount.postValue(likeCount.value?.minus(1))
                     }
@@ -113,26 +129,34 @@ class RecipeDetailViewModel @Inject constructor(
                     }
                 }
 
+            }catch (e: Exception){
+                when(e){
+                    is BaseException->{
+                        if(e.code==403)
+                            showLoginDialog()
+                    }
+                }
             }
-        }
 
-    private fun showLoginDialog() {
-        showAlertDialog(R.string.need_login_text,
-            RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment())
+        }
     }
 
+    private fun showLoginDialog() {
+        showAlertDialog(
+            R.string.need_login_text,
+            RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment()
+        )
+    }
 
-    fun followUser()=viewModelScope.launch {
+    fun followUser() = viewModelScope.launch {
 
-            if (isFollowing.value==false){
-                when (val response =
-                    recipesAPIRepository.requestFollowUser(recipeInfo.value?.user?.id!!)) {
-                    is BaseResponse.Error -> {
-                        if (response.error.code=="auth.token"){
-                            showLoginDialog()
-                        }
-                    }
-                    is BaseResponse.Success -> {
+        if (isFollowing.value == false) {
+            try {
+                when (
+                        recipesAPIRepository.requestFollowUser(recipeInfo.value?.user?.id!!)
+                ) {
+
+                    is ResponseFollow -> {
                         isFollowing.postValue(true)
                         followedCount.postValue(followedCount.value?.plus(1))
                     }
@@ -140,26 +164,39 @@ class RecipeDetailViewModel @Inject constructor(
                         showMessage(R.string.null_error)
                     }
                 }
-            }else{
-                when (val response =
-                recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!)) {
-                    is BaseResponse.Error -> {
-                        if (response.error.code=="auth.token"){
+            }catch (e:Exception){
+                when(e){
+                    is BaseException ->{
+                        if (e.code==403){
                             showLoginDialog()
+
                         }
                     }
-                    is BaseResponse.Success -> {
+                }
+
+            }
+
+        } else {
+            try {
+                when (recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!)) {
+                    is ResponseFollow -> {
                         isFollowing.postValue(false)
                         followedCount.postValue(followedCount.value?.minus(1))
                     }
                     null -> {
                         showMessage(R.string.null_error)
                     }
-            }
-
+                }
+            }catch (e:Exception){
+                when(e){
+                    is BaseException -> {
+                        if (e.code==403){
+                            showLoginDialog()
+                        }
+                    }
+                }
             }
 
         }
     }
-
-
+}

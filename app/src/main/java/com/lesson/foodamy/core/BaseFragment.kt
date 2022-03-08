@@ -1,6 +1,5 @@
 package com.lesson.foodamy.core
 
-
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
@@ -26,7 +25,8 @@ import com.lesson.foodamy.BR
 import com.lesson.foodamy.R
 
 abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
-    @LayoutRes private val layoutResId: Int) :
+    @LayoutRes private val layoutResId: Int
+) :
 
     Fragment(layoutResId) {
     private lateinit var snackbar: TSnackbar
@@ -51,9 +51,12 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         viewModel.event.observe(viewLifecycleOwner) {
             when (it) {
                 is BaseViewEvent.Navigate -> {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        navigate(it.directions)
-                    }, 300)
+                    Handler(Looper.getMainLooper()).postDelayed(
+                        {
+                            navigate(it.directions)
+                        },
+                        300
+                    )
                 }
                 is BaseViewEvent.ShowMessage -> {
                     when (it.msg) {
@@ -64,7 +67,6 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
                             setSnackbar(it.msg)
                         }
                     }
-
                 }
                 is BaseViewEvent.ShowAlertDialog -> {
                     when (it.msg) {
@@ -80,18 +82,17 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
                     findNavController().popBackStack()
                 }
             }
-
         }
     }
 
     private fun showAlertDialog(msg: String, directions: NavDirections) {
         val dialog = Dialog(requireContext())
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setCancelable(false)
-            dialog.setContentView(R.layout.alert_dialog_layout)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialog_layout)
 
         val body = dialog.findViewById(R.id.warningText) as TextView
-            body.text = msg
+        body.text = msg
 
         val loginButton = dialog.findViewById(R.id.dialog_login_button) as Button
         val cancelButton = dialog.findViewById(R.id.dialog_cancel_button) as Button
@@ -101,8 +102,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         }
         cancelButton.setOnClickListener { dialog.dismiss() }
         dialog.show()
-        }
-
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,7 +110,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        binding.setVariable(BR.viewModel,viewModel)
+        binding.setVariable(BR.viewModel, viewModel)
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -140,7 +140,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         snackbar.show()
     }
 
-    fun navigate(directions:NavDirections){
+    fun navigate(directions: NavDirections) {
         findNavController().navigate(directions)
     }
 }
