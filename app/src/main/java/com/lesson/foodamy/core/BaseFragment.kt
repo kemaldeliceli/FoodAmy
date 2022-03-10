@@ -2,17 +2,17 @@ package com.lesson.foodamy.core
 
 import android.app.Dialog
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -31,6 +31,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
     Fragment(layoutResId) {
     private lateinit var snackbar: TSnackbar
     private lateinit var coordinate: CoordinatorLayout
+    private lateinit var progressBar: ProgressBar
 
     lateinit var viewModel: VM
     lateinit var binding: VDB
@@ -39,7 +40,29 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this).get(getViewModelss())
+        progressBar = requireActivity().findViewById(R.id.main_progress_bar)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
+
+        setLoadingObserver()
+
+
+        binding.setVariable(BR.viewModel, viewModel)
+        binding.lifecycleOwner = this
+        return binding.root
+    }
+
+    private fun setLoadingObserver() {
+        viewModel.loading.observe(viewLifecycleOwner,{
+            progressBar.isVisible = it
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,16 +70,12 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         handleEvent()
     }
 
+
     private fun handleEvent() {
         viewModel.event.observe(viewLifecycleOwner) {
             when (it) {
                 is BaseViewEvent.Navigate -> {
-                    Handler(Looper.getMainLooper()).postDelayed(
-                        {
-                            navigate(it.directions)
-                        },
-                        300
-                    )
+                    navigate(it.directions)
                 }
                 is BaseViewEvent.ShowMessage -> {
                     when (it.msg) {
@@ -78,7 +97,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
                         }
                     }
                 }
-                BaseViewEvent.PopBackStack -> {
+                is BaseViewEvent.PopBackStack -> {
                     findNavController().popBackStack()
                 }
             }
@@ -104,16 +123,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         dialog.show()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        binding.setVariable(BR.viewModel, viewModel)
-        binding.lifecycleOwner = this
-        return binding.root
-    }
+
 
     fun setCoordinateSnackbar(coordinate: CoordinatorLayout) {
         this.coordinate = coordinate
@@ -139,6 +149,7 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
 
         snackbar.show()
     }
+
 
     fun navigate(directions: NavDirections) {
         findNavController().navigate(directions)
