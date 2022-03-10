@@ -14,20 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val loginSharedPreferences: IPrefDefaultManager,
     private val authAPIRepository: AuthAPIRepository,
 ) : BaseViewModel() {
 
     fun logOut() = viewModelScope.launch {
         try {
-            when (authAPIRepository.requestLogout()) {
-                is ResponseLogout -> {
-                    showMessage(R.string.successfull_logout)
-                    loginSharedPreferences.saveLogin(isLogged = false)
-                    loginSharedPreferences.setToken("")
-                    loginSharedPreferences.setUserInfo(null)
-                    navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
-                }
+            val response = authAPIRepository.requestLogout()
+            if(response.code=="auth.logout"){
+                navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
             }
         } catch (e: Exception) {
             when (e) {
