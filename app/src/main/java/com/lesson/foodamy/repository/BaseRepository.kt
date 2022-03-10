@@ -9,7 +9,7 @@ import java.lang.Exception
 
 open class BaseRepository {
 
-    suspend fun <T> sendRequest(response: suspend () -> T): T {
+    suspend fun <T> baseRequest(response: suspend () -> T): T {
         return try {
             response.invoke()
         } catch (e: Exception) {
