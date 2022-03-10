@@ -90,7 +90,6 @@ class RecipeDetailViewModel @Inject constructor(
                     isLiked.value = false
                     likeCount.postValue(likeCount.value?.minus(1))
                 },
-                loginDialog = { showLoginDialog() },
                 loadingVal = false
             )
         }
@@ -104,12 +103,7 @@ class RecipeDetailViewModel @Inject constructor(
                 success = {
                     isFollowing.postValue(true)
                     followedCount.postValue(followedCount.value?.plus(1))
-                },
-                loginDialog = {
-                    showLoginDialog()
-                },
-                loadingVal = false
-
+                }
             )
         } else {
             sendRequest(
@@ -117,9 +111,7 @@ class RecipeDetailViewModel @Inject constructor(
                 success = {
                     isFollowing.postValue(false)
                     followedCount.postValue(followedCount.value?.minus(1))
-                },
-                loginDialog = { showLoginDialog() },
-                loadingVal = false
+                }
             )
         }
     }
