@@ -26,7 +26,8 @@ class EditCommentViewModel @Inject constructor(
 
     fun editComment() = viewModelScope.launch {
         try {
-            when (val response = recipesAPIRepository
+            when (
+                val response = recipesAPIRepository
                     .requestEditComment(recipeID, comment?.id!!, commentText.value.toString())
             ) {
                 is ResponseComment -> {
@@ -36,13 +37,12 @@ class EditCommentViewModel @Inject constructor(
                     showMessage(R.string.null_error)
                 }
             }
-        }catch (e:Exception){
-            when(e){
+        } catch (e: Exception) {
+            when (e) {
                 is BaseException -> {
                     showMessage(e.message.toString())
                 }
             }
         }
-
     }
 }

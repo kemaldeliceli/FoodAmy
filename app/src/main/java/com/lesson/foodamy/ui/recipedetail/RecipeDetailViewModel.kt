@@ -1,22 +1,13 @@
 package com.lesson.foodamy.ui.recipedetail
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.BaseResponse
-import com.lesson.foodamy.model.ResponseComment
-import com.lesson.foodamy.model.ResponseLike
 import com.lesson.foodamy.model.comment_dataclass.Comment
 import com.lesson.foodamy.model.comment_dataclass.Comments
-import com.lesson.foodamy.model.comment_dataclass.ResponseComments
-import com.lesson.foodamy.model.dataclass.BaseException
 import com.lesson.foodamy.model.recipe_detail_info.RecipeDetailInfo
-import com.lesson.foodamy.model.recipe_detail_info.ResponseFollow
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,25 +27,25 @@ class RecipeDetailViewModel @Inject constructor(
     val isFollowing: MutableLiveData<Boolean> = MutableLiveData(false)
     val followedCount: MutableLiveData<Int> = MutableLiveData(0)
 
-    fun getRecipeInfoByID() {
+    fun getRecipeInfoByID(id: Int) {
         sendRequest(
-            request = { recipesAPIRepository.requestRecipeByID(recipeID.value!!) },
+            request = { recipesAPIRepository.requestRecipeByID(id) },
             success = { recipeDetailInfo ->
-                recipeInfo.value = recipeDetailInfo!!
+                recipeInfo.postValue(recipeDetailInfo)
                 isLiked.postValue(recipeInfo.value!!.isLiked!!)
                 likeCount.postValue(recipeInfo.value!!.likeCount!!)
-
                 isFollowing.postValue(recipeInfo.value!!.user?.isFollowing!!)
                 followedCount.postValue(recipeInfo.value!!.user?.followedCount!!)
+
+                getCommentsOfRecipe(id)
             },
             loadingVal = true
         )
     }
 
-    fun getCommentsOfRecipe() {
-
+    private fun getCommentsOfRecipe(id: Int) {
         sendRequest(
-            request = { recipesAPIRepository.requestComments(recipeID.value!!) },
+            request = { recipesAPIRepository.requestComments(id) },
             success = { responseComments ->
                 comments.value = responseComments?.data
                 if (comments.value!!.size != 0) {
@@ -83,12 +74,15 @@ class RecipeDetailViewModel @Inject constructor(
                     isLiked.postValue(true)
                     likeCount.postValue(likeCount.value?.plus(1))
                 },
-                loginDialog = {
-                    showLoginDialog()
-                },
-                loadingVal = false
+                error = {
+                    when (it) {
+                        is AuthException -> {
+                            showLoginDialog()
+                        }
+                        else -> it.message?.let { it1 -> showMessage(it1) }
+                    }
+                }
             )
-
         } else {
             sendRequest(
                 request = { recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!) },
@@ -99,11 +93,8 @@ class RecipeDetailViewModel @Inject constructor(
                 loginDialog = { showLoginDialog() },
                 loadingVal = false
             )
-
         }
-
     }
-
 
     fun followUser() {
 
@@ -120,7 +111,6 @@ class RecipeDetailViewModel @Inject constructor(
                 loadingVal = false
 
             )
-
         } else {
             sendRequest(
                 request = { recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!) },
@@ -131,7 +121,6 @@ class RecipeDetailViewModel @Inject constructor(
                 loginDialog = { showLoginDialog() },
                 loadingVal = false
             )
-
         }
     }
 

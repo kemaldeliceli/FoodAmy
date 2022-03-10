@@ -7,9 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.RecipeType
 import com.lesson.foodamy.model.ResponseLogout
 import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
@@ -70,17 +68,15 @@ class CategoryRecipesViewModel @Inject constructor(
     fun goToLogin() = viewModelScope.launch {
         try {
             when (authAPIRepository.requestLogout()) {
-                is  ResponseLogout -> {
+                is ResponseLogout -> {
                     loginSharedPreferences.saveLogin(isLogged = false)
                     loginSharedPreferences.setToken("")
                     loginSharedPreferences.setUserInfo(null)
                     navigate(CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToLoginFragment())
                 }
             }
-            }catch (e: Exception){
+        } catch (e: Exception) {
             showMessage(e.message.toString())
         }
-
     }
-
 }

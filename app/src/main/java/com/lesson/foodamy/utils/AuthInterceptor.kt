@@ -1,4 +1,4 @@
-package com.lesson.foodamy.di.utils
+package com.lesson.foodamy.utils
 
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import okhttp3.Interceptor

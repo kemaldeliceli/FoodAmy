@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.ResponseUser
 import com.lesson.foodamy.model.dataclass.BaseException
 import com.lesson.foodamy.model.dataclass.RegisterData

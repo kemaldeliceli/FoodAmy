@@ -274,12 +274,9 @@
                 android:textSize="@dimen/size_13sp"
                 android:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/primary_red"
-
-
                 app:layout_constraintTop_toBottomOf="@id/like_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/guideline2"
-
                 android:layout_marginEnd="@dimen/margin_16dp"
                 />
 
@@ -291,11 +288,9 @@
                 android:text="@string/like_lext"
                 android:textColor="@color/primary_raven"
                 android:textSize="@dimen/size_13sp"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/like_count"
                 app:layout_constraintTop_toBottomOf="@id/like_icon"
-
                 android:layout_marginStart="@dimen/margin_8dp"
                 />
 

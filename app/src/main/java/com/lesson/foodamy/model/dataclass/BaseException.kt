@@ -1,5 +1,6 @@
 package com.lesson.foodamy.model.dataclass
 
-import java.lang.Exception
+import androidx.annotation.StringRes
 
-data class BaseException(val code: Int? = null, val error: String? = null): Exception()
+data class BaseException(val code: Int? = null, val error: String? = null) :
+    Exception(message = error)

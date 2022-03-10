@@ -33,9 +33,11 @@ class CommentViewModel @Inject constructor(
 
     fun addComment() = viewModelScope.launch {
         try {
-            when (recipesAPIRepository.requestAddComments(
-                recipeID,
-                commentText.value.toString())
+            when (
+                recipesAPIRepository.requestAddComments(
+                    recipeID,
+                    commentText.value.toString()
+                )
             ) {
 
                 is Comment -> {
@@ -54,7 +56,6 @@ class CommentViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     private fun showLoginDialog() {
@@ -100,11 +101,14 @@ class CommentViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     fun editComment(comment: Comment) {
-        navigate(CommentFragmentDirections.actionCommentFragmentToEditCommentFragment(recipeID,
-            comment))
+        navigate(
+            CommentFragmentDirections.actionCommentFragmentToEditCommentFragment(
+                recipeID,
+                comment
+            )
+        )
     }
 }

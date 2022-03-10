@@ -53,23 +53,21 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
 
         setLoadingObserver()
 
-
         binding.setVariable(BR.viewModel, viewModel)
         binding.lifecycleOwner = this
         return binding.root
     }
 
     private fun setLoadingObserver() {
-        viewModel.loading.observe(viewLifecycleOwner,{
+        viewModel.loading.observe(viewLifecycleOwner) {
             progressBar.isVisible = it
-        })
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleEvent()
     }
-
 
     private fun handleEvent() {
         viewModel.event.observe(viewLifecycleOwner) {
@@ -123,8 +121,6 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         dialog.show()
     }
 
-
-
     fun setCoordinateSnackbar(coordinate: CoordinatorLayout) {
         this.coordinate = coordinate
     }
@@ -149,7 +145,6 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
 
         snackbar.show()
     }
-
 
     fun navigate(directions: NavDirections) {
         findNavController().navigate(directions)

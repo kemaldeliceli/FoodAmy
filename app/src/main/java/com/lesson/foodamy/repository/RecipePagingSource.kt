@@ -24,11 +24,9 @@ class RecipePagingSource constructor(
             val response = when (recipeType) {
                 RecipeType.EDITORS_CHOICE -> recipeService.getEditorsChoice(nextPage)
                 RecipeType.RECENTLY_LAST_ADDED -> {
-                    println("recently_added")
                     recipeService.getLastAdded(nextPage)
                 }
                 RecipeType.CATEGORY_RECIPES_BY_ID -> {
-                    println("category_id $categoryID")
                     recipeService.getCategoryRecipes(categoryID!!)
                 }
             }

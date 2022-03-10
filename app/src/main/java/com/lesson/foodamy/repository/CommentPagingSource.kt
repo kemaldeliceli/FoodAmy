@@ -23,8 +23,8 @@ class CommentPagingSource constructor(
             var nextPageNumber: Int? = null
             var prevPageNumber: Int? = null
 
-            response?.pagination?.let {
-                if (it.current_page!! < it.last_page!!) {
+            response.pagination.let {
+                if (it.current_page < it.last_page) {
                     nextPageNumber = it.current_page + 1
                 }
                 if (it.current_page> 1) {

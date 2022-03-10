@@ -26,28 +26,22 @@ class LoginViewModel @Inject constructor(
     val password: MutableLiveData<String> = MutableLiveData("")
 
     fun login() = viewModelScope.launch {
-        println("login process")
         val authData = AuthData(email.value!!, password.value!!)
         if (isLoginFieldsValid(authData)) {
             try {
                 when (val response = authAPIRepository.requestLogin(authData)) {
-                    is ResponseUser -> {
-                        loginSharedPreferences.setUserInfo(response.user?.toResult()!!)
-                        loginSharedPreferences.saveLogin(isLogged = true)
-                        loginSharedPreferences.setToken(response.token!!)
+                    else -> {
+
                         navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                     }
-
                 }
             } catch (e: Exception) {
-                if (e is BaseException){
+                if (e is BaseException) {
                     showMessage(e.error.toString())
                 }
             }
-
         }
     }
-
 
     fun navigateToSignUp() {
         navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())

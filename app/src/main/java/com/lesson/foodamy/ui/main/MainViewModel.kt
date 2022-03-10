@@ -1,11 +1,8 @@
 package com.lesson.foodamy.ui.main
 
 import androidx.lifecycle.viewModelScope
-import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.ResponseLogout
 import com.lesson.foodamy.model.dataclass.BaseException
-import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.AuthAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,7 +17,7 @@ class MainViewModel @Inject constructor(
     fun logOut() = viewModelScope.launch {
         try {
             val response = authAPIRepository.requestLogout()
-            if(response.code=="auth.logout"){
+            if (response.code == "auth.logout") {
                 navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
             }
         } catch (e: Exception) {
@@ -28,10 +25,7 @@ class MainViewModel @Inject constructor(
                 is BaseException -> {
                     showMessage(e.error.toString())
                 }
-
             }
-
         }
-
     }
 }

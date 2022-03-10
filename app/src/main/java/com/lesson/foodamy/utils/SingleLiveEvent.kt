@@ -1,4 +1,4 @@
-package com.lesson.foodamy
+package com.lesson.foodamy.utils
 
 import android.util.Log
 import androidx.annotation.MainThread
