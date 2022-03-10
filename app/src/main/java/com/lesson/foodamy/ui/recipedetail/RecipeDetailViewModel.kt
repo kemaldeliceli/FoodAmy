@@ -36,51 +36,34 @@ class RecipeDetailViewModel @Inject constructor(
     val isFollowing: MutableLiveData<Boolean> = MutableLiveData(false)
     val followedCount: MutableLiveData<Int> = MutableLiveData(0)
 
-    fun getRecipeInfoByID() = viewModelScope.launch {
+    fun getRecipeInfoByID() {
+        sendRequest(
+            request = { recipesAPIRepository.requestRecipeByID(recipeID.value!!) },
+            success = { recipeDetailInfo ->
+                recipeInfo.value = recipeDetailInfo!!
+                isLiked.postValue(recipeInfo.value!!.isLiked!!)
+                likeCount.postValue(recipeInfo.value!!.likeCount!!)
 
-        try {
-            when (val response = recipesAPIRepository.requestRecipeByID(recipeID.value!!)) {
-
-                is RecipeDetailInfo -> {
-                    recipeInfo.value = response!!
-                    isLiked.postValue(recipeInfo.value!!.isLiked!!)
-                    likeCount.postValue(recipeInfo.value!!.likeCount!!)
-
-                    isFollowing.postValue(recipeInfo.value!!.user?.isFollowing!!)
-                    followedCount.postValue(recipeInfo.value!!.user?.followedCount!!)
-                }
-                null -> {
-                    showMessage(R.string.null_error)
-                }
-            }
-
-        }catch (e:Exception){
-            when(e){
-                is BaseException -> {
-                    showMessage(e.error.toString())
-                }
-            }
-        }
+                isFollowing.postValue(recipeInfo.value!!.user?.isFollowing!!)
+                followedCount.postValue(recipeInfo.value!!.user?.followedCount!!)
+            },
+            loadingVal = true
+        )
     }
 
-    fun getCommentsOfRecipe() = viewModelScope.launch {
+    fun getCommentsOfRecipe() {
 
-        try {
-            when (val response = recipesAPIRepository.requestComments(recipeID.value!!)) {
-                is ResponseComments -> {
-                    comments.value = response.data
-                    if (comments.value!!.size != 0) {
-                        firstComment.value = response.data[0]
-                    }
+        sendRequest(
+            request = { recipesAPIRepository.requestComments(recipeID.value!!) },
+            success = { responseComments ->
+                comments.value = responseComments?.data
+                if (comments.value!!.size != 0) {
+                    firstComment.value = responseComments!!.data[0]
                 }
-                null -> {
-                }
-            }
+            },
+            loadingVal = true
 
-
-        }catch (e:Exception){
-            showMessage(e.message.toString())
-        }
+        )
     }
 
     fun goToCommentPage() {
@@ -91,52 +74,63 @@ class RecipeDetailViewModel @Inject constructor(
         )
     }
 
-    fun likeRecipe() = viewModelScope.launch {
+    fun likeRecipe() {
 
         if (isLiked.value == false) {
-
-            try {
-                when (recipesAPIRepository.requestLikeRecipe(recipeID.value!!)
-                ) {
-                    is ResponseLike -> {
-                        isLiked.postValue(true)
-                        likeCount.postValue(likeCount.value?.plus(1))
-                    }
-                    null -> {
-                        showMessage(R.string.null_error)
-                    }
-                }
-            }catch (e:Exception){
-                when(e){
-                    is BaseException -> {
-                        if (e.code == 403) {
-                           showLoginDialog()
-                        }
-                    }
-                }
-            }
+            sendRequest(
+                request = { recipesAPIRepository.requestLikeRecipe(recipeID.value!!) },
+                success = {
+                    isLiked.postValue(true)
+                    likeCount.postValue(likeCount.value?.plus(1))
+                },
+                loginDialog = {
+                    showLoginDialog()
+                },
+                loadingVal = false
+            )
 
         } else {
-            try {
-                when (recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!)) {
+            sendRequest(
+                request = { recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!) },
+                success = {
+                    isLiked.value = false
+                    likeCount.postValue(likeCount.value?.minus(1))
+                },
+                loginDialog = { showLoginDialog() },
+                loadingVal = false
+            )
 
-                    is ResponseLike -> {
-                        isLiked.value = false
-                        likeCount.postValue(likeCount.value?.minus(1))
-                    }
-                    null -> {
-                        showMessage(R.string.null_error)
-                    }
-                }
+        }
 
-            }catch (e: Exception){
-                when(e){
-                    is BaseException->{
-                        if(e.code==403)
-                            showLoginDialog()
-                    }
-                }
-            }
+    }
+
+
+    fun followUser() {
+
+        if (isFollowing.value == false) {
+            sendRequest(
+                request = { recipesAPIRepository.requestFollowUser(recipeInfo.value?.user?.id!!) },
+                success = {
+                    isFollowing.postValue(true)
+                    followedCount.postValue(followedCount.value?.plus(1))
+                },
+                loginDialog = {
+                    showLoginDialog()
+                },
+                loadingVal = false
+
+            )
+
+        } else {
+            sendRequest(
+                request = { recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!) },
+                success = {
+                    isFollowing.postValue(false)
+                    followedCount.postValue(followedCount.value?.minus(1))
+                },
+                loginDialog = { showLoginDialog() },
+                loadingVal = false
+            )
 
         }
     }
@@ -146,57 +140,5 @@ class RecipeDetailViewModel @Inject constructor(
             R.string.need_login_text,
             RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment()
         )
-    }
-
-    fun followUser() = viewModelScope.launch {
-
-        if (isFollowing.value == false) {
-            try {
-                when (
-                        recipesAPIRepository.requestFollowUser(recipeInfo.value?.user?.id!!)
-                ) {
-
-                    is ResponseFollow -> {
-                        isFollowing.postValue(true)
-                        followedCount.postValue(followedCount.value?.plus(1))
-                    }
-                    null -> {
-                        showMessage(R.string.null_error)
-                    }
-                }
-            }catch (e:Exception){
-                when(e){
-                    is BaseException ->{
-                        if (e.code==403){
-                            showLoginDialog()
-
-                        }
-                    }
-                }
-
-            }
-
-        } else {
-            try {
-                when (recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!)) {
-                    is ResponseFollow -> {
-                        isFollowing.postValue(false)
-                        followedCount.postValue(followedCount.value?.minus(1))
-                    }
-                    null -> {
-                        showMessage(R.string.null_error)
-                    }
-                }
-            }catch (e:Exception){
-                when(e){
-                    is BaseException -> {
-                        if (e.code==403){
-                            showLoginDialog()
-                        }
-                    }
-                }
-            }
-
-        }
     }
 }
