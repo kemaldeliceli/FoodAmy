@@ -3,11 +3,9 @@ package com.lesson.foodamy.utils
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
-import androidx.constraintlayout.widget.Placeholder
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
-import com.lesson.foodamy.R
 
 object BindingUtils {
 
@@ -17,8 +15,8 @@ object BindingUtils {
         view.visibility = if (visible) View.VISIBLE else View.GONE
     }
     @JvmStatic
-    @BindingAdapter("app:imageUrl","app:placeHolder")
-    fun loadImage(view: ImageView, url: String?,placeholder: Drawable) {
+    @BindingAdapter("app:imageUrl", "app:placeHolder")
+    fun loadImage(view: ImageView, url: String?, placeholder: Drawable) {
         when {
             url.isNullOrEmpty() -> {
                 view.setImageDrawable(placeholder)
@@ -30,5 +28,11 @@ object BindingUtils {
             }
         }
     }
-
+    @JvmStatic
+    @BindingAdapter("app:toolBarTitle")
+    fun setToolbarTitle(toolbar: CustomViewTopBar, title: String?) {
+        title?.let {
+            toolbar.setTitle(it)
+        }
+    }
 }

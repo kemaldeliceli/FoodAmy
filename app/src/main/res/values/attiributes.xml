@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomViewTopBar">
+
+        <attr name="pageTitle" format="string"/>
+        <attr name="pageTitleVisibility" format="boolean"/>
+        <attr name="shareIconVisibility" format="boolean"/>
+        <attr name="logOutIconVisibility" format="boolean"/>
+        <attr name="fodamyLogoVisibility" format="boolean"/>
+        <attr name="backButtonVisibility" format="boolean"/>
+
+    </declare-styleable>
+    
+    
+</resources>

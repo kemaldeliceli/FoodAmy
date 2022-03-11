@@ -13,17 +13,16 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class AppModule{
+class AppModule {
 
     @Provides
     @Singleton
-    fun getSharedPref(sharedPreferences: SharedPreferences) : IPrefDefaultManager = SharedPrefManager(sharedPreferences)
+    fun getSharedPref(sharedPreferences: SharedPreferences): IPrefDefaultManager = SharedPrefManager(sharedPreferences)
 
     @Provides
     @Singleton
-    fun providesSharedPreference(application: Application): SharedPreferences{
+    fun providesSharedPreference(application: Application): SharedPreferences {
         val prefName = "FodamyAppPref"
         return application.getSharedPreferences(prefName, Context.MODE_PRIVATE)
     }
-
 }

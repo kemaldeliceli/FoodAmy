@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
-
 @Parcelize
 data class RecipeInfo(
 
@@ -43,9 +42,9 @@ data class Recipe(
     val commentCount: Int?,
     val likeCount: Int?
 
-    ):Parcelable
+) : Parcelable
 
-fun RecipeInfo.toResult(): Recipe{
+fun RecipeInfo.toResult(): Recipe {
     return Recipe(
         this.id,
         this.title,

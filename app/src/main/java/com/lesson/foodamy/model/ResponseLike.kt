@@ -1,3 +1,3 @@
 package com.lesson.foodamy.model
 
-data class ResponseLike(val code :String, val message : String)
+data class ResponseLike(val code: String, val message: String)

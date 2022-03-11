@@ -52,5 +52,4 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(R.layout.f
     override fun getViewModelss(): Class<MainViewModel> {
         return MainViewModel::class.java
     }
-
 }

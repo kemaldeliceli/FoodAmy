@@ -3,8 +3,8 @@ package com.lesson.foodamy.ui.register
 import android.os.Bundle
 import android.view.View
 import com.lesson.foodamy.R
-import com.lesson.foodamy.databinding.FragmentRegisterBinding
 import com.lesson.foodamy.core.BaseFragment
+import com.lesson.foodamy.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,5 +18,4 @@ class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding
     override fun getViewModelss(): Class<RegisterViewModel> {
         return RegisterViewModel::class.java
     }
-
 }

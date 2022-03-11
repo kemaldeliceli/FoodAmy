@@ -30,6 +30,9 @@
             app:destination="@id/mainFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -69,7 +72,7 @@
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_mainFragment_to_recipeDetailFragment2"
             app:destination="@id/recipeDetailFragment2" />
@@ -139,6 +142,9 @@
         <argument
             android:name="categoryName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/editCommentFragment"

@@ -1,74 +1,39 @@
 package com.lesson.foodamy.repository
 
-import com.google.gson.Gson
-import com.lesson.foodamy.model.*
+import com.lesson.foodamy.model.ResponseLogout
+import com.lesson.foodamy.model.ResponseUser
 import com.lesson.foodamy.model.dataclass.AuthData
-import com.lesson.foodamy.model.dataclass.ErrorBody
 import com.lesson.foodamy.model.dataclass.RegisterData
+import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.services.AuthService
-import java.lang.Exception
 
-class AuthApiRepository(private val authService: AuthService) {
+class AuthAPIRepository(private val authService: AuthService,private val prefManager: IPrefDefaultManager) : BaseRepository() {
 
-    suspend fun requestLogin(authData: AuthData): BaseResponse<ResponseUser>? {
-        // Create Retrofit // Service
-        var responseLogin: BaseResponse<ResponseUser>? = null
-
-        try {
+    suspend fun requestLogin(authData: AuthData): ResponseUser =
+        baseRequest{
             val response = authService.getAuth(authData.email, authData.password)
-
-            if (response.isSuccessful) {
-                responseLogin = BaseResponse.Success(response.body()!!)
-            } else {
-                val errorResponse = response.errorBody()?.string()
-                val errorBody = Gson().fromJson<ErrorBody>(errorResponse, ErrorBody::class.java)
-                responseLogin = BaseResponse.Error(errorBody)
+            response.token?.let {
+                prefManager.setToken(it)
             }
-        } catch (e: Exception) {
-            responseLogin = BaseResponse.Error(ErrorBody("408", "Timeout Error"))
+            response
         }
 
-        return responseLogin
-    }
-
-    suspend fun requestRegister(registerData: RegisterData): BaseResponse<ResponseUser>? {
-        var responseRegister: BaseResponse<ResponseUser>? = null
-
-        try {
-            val response =
-                authService.register(registerData.email, registerData.password, registerData.username)
-
-            if (response.isSuccessful) {
-                responseRegister = BaseResponse.Success(response.body()!!)
-            } else {
-                val errorResponse = response.errorBody()?.string()
-                val errorBody = Gson().fromJson(errorResponse, ErrorBody::class.java)
-                responseRegister = BaseResponse.Error(errorBody)
+    suspend fun requestRegister(registerData: RegisterData): ResponseUser =
+        baseRequest{val response = authService.register(
+            registerData.email,
+            registerData.password,
+            registerData.username
+        )
+            response.token?.let {
+                prefManager.setToken(it)
             }
-        } catch (e: Exception) {
-            responseRegister = BaseResponse.Error(ErrorBody("408", "Timeout Error"))
+            response
         }
 
-        return responseRegister
-    }
-    suspend fun requestLogout(): BaseResponse<ResponseLogout>?{
-        var responseLogout: BaseResponse<ResponseLogout>? = null
-
-        try {
-            val response = authService.logOut()
-            if (response.isSuccessful) {
-                responseLogout = BaseResponse.Success(response.body()!!)
-            } else {
-                val errorResponse = response.errorBody()?.string()
-                val errorBody = Gson().fromJson(errorResponse, ErrorBody::class.java)
-                responseLogout = BaseResponse.Error(errorBody)
-            }
-        } catch (e: Exception) {
-            responseLogout = BaseResponse.Error(ErrorBody("408", "Timeout Error"))
-        }
-
-        return responseLogout
-    }
+    suspend fun requestLogout(): ResponseLogout=
+        baseRequest {
+            prefManager.setToken("")
+            prefManager.saveLogin(false)
+            prefManager.setUserInfo(null)
+            authService.logOut() }
 }
-
-
