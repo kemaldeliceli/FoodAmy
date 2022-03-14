@@ -8,6 +8,6 @@ data class Category(
     val name: String? = null,
     val language: String? = null,
     @SerializedName("main_category_id") val mainCategoryId: Int? = null,
-    val image: Image? = Image()
+    val image: Image? = Image(),
 
 )

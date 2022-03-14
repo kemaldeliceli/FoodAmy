@@ -13,6 +13,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
     }
+
     fun setAdapter() {
         binding.viewPager.adapter = HomePageAdapter(fragment = this)
         binding.viewPager.isUserInputEnabled = false

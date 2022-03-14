@@ -23,6 +23,6 @@ data class Recipes(
     @SerializedName("time_of_recipe") var timeOfRecipe: TimeOfRecipe? = TimeOfRecipe(),
     @SerializedName("number_of_person") var numberOfPerson: NumberOfPerson? = NumberOfPerson(),
     @SerializedName("category") var category: Category? = Category(),
-    @SerializedName("images") var images: ArrayList<Images> = arrayListOf()
+    @SerializedName("images") var images: ArrayList<Images> = arrayListOf(),
 
 )

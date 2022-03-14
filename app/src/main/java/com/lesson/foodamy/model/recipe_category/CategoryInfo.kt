@@ -10,6 +10,6 @@ data class CategoryInfo(
     @SerializedName("main_category_id") var mainCategoryId: String? = null,
     @SerializedName("recipe_count") var recipeCount: Int? = null,
     @SerializedName("recipes") var recipes: ArrayList<Recipes> = arrayListOf(),
-    @SerializedName("image") var image: Image? = Image()
+    @SerializedName("image") var image: Image? = Image(),
 
 )

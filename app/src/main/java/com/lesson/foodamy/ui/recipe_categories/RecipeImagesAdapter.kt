@@ -11,7 +11,8 @@ class RecipeImagesAdapter(private val recipes: ArrayList<Recipes>/*, val onClick
 
     var onClickListener: ((id: Int) -> Unit)? = null
 
-    inner class RecipeImagesViewHolder(val binding: MiniRecipeCardviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class RecipeImagesViewHolder(val binding: MiniRecipeCardviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(recipe: Recipes) {
             binding.recipe = recipe

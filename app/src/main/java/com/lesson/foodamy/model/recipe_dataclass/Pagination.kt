@@ -9,6 +9,6 @@ data class Pagination(
     @SerializedName("current_page") val currentPage: Int? = null,
     @SerializedName("last_page") val lastPage: Int? = null,
     @SerializedName("first_item") val firstItem: Int? = null,
-    @SerializedName("last_item") val lastItem: Int? = null
+    @SerializedName("last_item") val lastItem: Int? = null,
 
 )

@@ -7,48 +7,50 @@ import com.lesson.foodamy.model.comment_dataclass.ResponseComments
 import com.lesson.foodamy.model.recipe_detail_info.RecipeDetailInfo
 import com.lesson.foodamy.model.recipe_detail_info.ResponseFollow
 import com.lesson.foodamy.services.RecipeService
+import okhttp3.MediaType
+import okhttp3.RequestBody
 
 class RecipesAPIRepository(
     private val recipeService: RecipeService,
 ) : BaseRepository() {
 
-    suspend fun requestLikeRecipe(recipeID: Int): ResponseLike? =
+    suspend fun requestLikeRecipe(recipeID: Int): ResponseLike =
         baseRequest { recipeService.likeRecipe(recipeID) }
 
-    suspend fun requestDeleteLikeRecipe(recipeID: Int): ResponseLike? =
-        baseRequest{recipeService.deleteLikeRecipe(recipeID)
+    suspend fun requestDeleteLikeRecipe(recipeID: Int): ResponseLike =
+        baseRequest {
+            recipeService.deleteLikeRecipe(recipeID)
         }
-    suspend fun requestFollowUser(followedId: Int): ResponseFollow? =
-        baseRequest{recipeService.followUser(followedId)}
 
-    suspend fun requestDeleteFollowUser(followedId: Int): ResponseFollow? =
-        baseRequest{recipeService.deleteFollowUser(followedId)}
+    suspend fun requestFollowUser(followedId: Int): ResponseFollow =
+        baseRequest { recipeService.followUser(followedId) }
 
-    suspend fun requestComments(recipeID: Int): ResponseComments? =
-        baseRequest{recipeService.getComments(recipeID, 1)}
+    suspend fun requestDeleteFollowUser(followedId: Int): ResponseFollow =
+        baseRequest { recipeService.deleteFollowUser(followedId) }
+
+    suspend fun requestComments(recipeID: Int): ResponseComments =
+        baseRequest { recipeService.getComments(recipeID, 1) }
 
     suspend fun requestAddComments(
         recipeID: Int,
         text: String,
-    ): Comment? =
-        baseRequest{recipeService.addComments(recipeID, text)}
+    ): Comment =
+        baseRequest { recipeService.addComments(recipeID, RequestBody.create(MediaType.parse("text/plain"), text)) }
 
     suspend fun requestDeleteComment(
         recipeID: Int,
         commentID: Int,
-    ): ResponseComment? =
-        baseRequest{recipeService.deleteComment(recipeID, commentID)}
+    ): ResponseComment =
+        baseRequest { recipeService.deleteComment(recipeID, commentID) }
 
     suspend fun requestEditComment(
         recipeID: Int,
         commentID: Int,
         text: String,
-    ): ResponseComment? =
-        baseRequest{recipeService.editComment(recipeID, commentID, text)}
-
+    ): ResponseComment =
+        baseRequest { recipeService.editComment(recipeID, commentID, text) }
 
     suspend fun requestRecipeByID(
         recipeID: Int,
-    ): RecipeDetailInfo? = baseRequest{recipeService.getRecipeByID(recipeID)}
-
+    ): RecipeDetailInfo = baseRequest { recipeService.getRecipeByID(recipeID) }
 }

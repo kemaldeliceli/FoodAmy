@@ -17,7 +17,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getSharedPref(sharedPreferences: SharedPreferences): IPrefDefaultManager = SharedPrefManager(sharedPreferences)
+    fun getSharedPref(sharedPreferences: SharedPreferences): IPrefDefaultManager =
+        SharedPrefManager(sharedPreferences)
 
     @Provides
     @Singleton

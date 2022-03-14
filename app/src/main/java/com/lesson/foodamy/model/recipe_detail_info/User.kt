@@ -23,6 +23,6 @@ data class User(
     @SerializedName("favorites_count") var favoritesCount: Int? = null,
     @SerializedName("likes_count") var likesCount: Int? = null,
     @SerializedName("cover") var cover: String? = null,
-    @SerializedName("image") var image: Image? = Image()
+    @SerializedName("image") var image: Image? = Image(),
 
 )

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeDetailCommentCardviewBinding
 import com.lesson.foodamy.model.comment_dataclass.Comment
 
-class CommentAdapter() : PagingDataAdapter<Comment, CommentAdapter.CommentViewHolder>(
+class CommentAdapter : PagingDataAdapter<Comment, CommentAdapter.CommentViewHolder>(
     object : DiffUtil.ItemCallback<Comment>() {
         override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean =
             oldItem.id == newItem.id

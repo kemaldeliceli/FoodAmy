@@ -1,11 +1,11 @@
 package com.lesson.foodamy.di
 
-import com.lesson.foodamy.di.utils.AuthInterceptor
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.AuthAPIRepository
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import com.lesson.foodamy.services.AuthService
 import com.lesson.foodamy.services.RecipeService
+import com.lesson.foodamy.utils.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,40 +19,40 @@ import javax.inject.Inject
 @Module
 class NetworkModule {
 
-    private val BASE_URL = "https://fodamy.mobillium.com/"
+    companion object {
+        private val BASE_URL = "https://fodamy.mobillium.com/"
+    }
 
     @Provides
-    fun providesOkHTTP(authInterceptor: AuthInterceptor): OkHttpClient {
+    fun providesOkHttp(authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder().addInterceptor(authInterceptor).build()
     }
 
     @Provides
     @Inject
-    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit{
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
     @Provides
     @Inject
-    fun providesAuthApi(retrofit: Retrofit,prefManager:IPrefDefaultManager) : AuthAPIRepository {
+    fun providesAuthApi(retrofit: Retrofit, prefManager: IPrefDefaultManager): AuthAPIRepository {
         return AuthAPIRepository(retrofit.create(AuthService::class.java), prefManager)
     }
 
     @Provides
     @Inject
-    fun providesRecipeService(retrofit: Retrofit) : RecipeService{
+    fun providesRecipeService(retrofit: Retrofit): RecipeService {
         return retrofit.create(RecipeService::class.java)
     }
 
     @Provides
     @Inject
-    fun providesRecipesApi(retrofit: Retrofit): RecipesAPIRepository{
-        return  RecipesAPIRepository(retrofit.create(RecipeService::class.java))
+    fun providesRecipesApi(retrofit: Retrofit): RecipesAPIRepository {
+        return RecipesAPIRepository(retrofit.create(RecipeService::class.java))
     }
-
-
-
 }

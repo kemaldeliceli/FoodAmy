@@ -33,7 +33,7 @@ data class UserInfo(
     val cover: String?,
     val image: String?,
     @SerializedName("top_user") val topUser: String?,
-    @SerializedName("cover_image") val coverImage: String?
+    @SerializedName("cover_image") val coverImage: String?,
 ) : Parcelable
 
 @Parcelize
@@ -51,7 +51,7 @@ data class UserInformation(
     val likesCount: Int?,
     val cover: String?,
     val image: String?,
-    val coverImage: String?
+    val coverImage: String?,
 ) : Parcelable
 
 fun UserInfo.toResult(): UserInformation {

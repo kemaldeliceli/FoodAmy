@@ -30,6 +30,6 @@ data class RecipeDetailInfo(
     @SerializedName("time_of_recipe") var timeOfRecipe: @RawValue TimeOfRecipe? = TimeOfRecipe(),
     @SerializedName("number_of_person") var numberOfPerson: @RawValue NumberOfPerson? = NumberOfPerson(),
     @SerializedName("category") var category: @RawValue Category? = Category(),
-    @SerializedName("images") var images: @RawValue ArrayList<Images> = arrayListOf()
+    @SerializedName("images") var images: @RawValue ArrayList<Images> = arrayListOf(),
 
 ) : Parcelable

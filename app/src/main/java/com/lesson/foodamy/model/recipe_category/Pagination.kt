@@ -9,6 +9,6 @@ data class Pagination(
     @SerializedName("current_page") var currentPage: Int? = null,
     @SerializedName("last_page") var lastPage: Int? = null,
     @SerializedName("first_item") var firstItem: Int? = null,
-    @SerializedName("last_item") var lastItem: Int? = null
+    @SerializedName("last_item") var lastItem: Int? = null,
 
 )

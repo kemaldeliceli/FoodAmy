@@ -8,7 +8,8 @@ import com.lesson.foodamy.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment : BaseFragment<RegisterViewModel, FragmentRegisterBinding>(R.layout.fragment_register) {
+class RegisterFragment :
+    BaseFragment<RegisterViewModel, FragmentRegisterBinding>(R.layout.fragment_register) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
-    @Inject lateinit var loginSharedPref: IPrefDefaultManager
+    @Inject
+    lateinit var loginSharedPref: IPrefDefaultManager
 
     companion object {
         const val DELAY_MILLIS: Long = 3000
@@ -25,7 +26,7 @@ class SplashFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false)

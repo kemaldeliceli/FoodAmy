@@ -8,6 +8,6 @@ data class Image(
     @SerializedName("height") var height: Int? = null,
     @SerializedName("key") var key: String? = null,
     @SerializedName("order") var order: Int? = null,
-    @SerializedName("url") var url: String? = null
+    @SerializedName("url") var url: String? = null,
 
 )
