@@ -7,27 +7,21 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.BaseResponse
 import com.lesson.foodamy.model.RecipeType
-import com.lesson.foodamy.model.ResponseLogout
 import com.lesson.foodamy.model.recipe_dataclass.RecipeInfo
-import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.AuthAPIRepository
 import com.lesson.foodamy.repository.RecipePagingSource
 import com.lesson.foodamy.services.RecipeService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class CategoryRecipesViewModel @Inject constructor(
     private val recipeService: RecipeService,
-    private val authAPIRepository: AuthAPIRepository,
-    private val loginSharedPreferences: IPrefDefaultManager
+    private val authAPIRepository: AuthAPIRepository
 ) :
     BaseViewModel() {
 
@@ -42,22 +36,30 @@ class CategoryRecipesViewModel @Inject constructor(
     var categoryID = -1
 
     fun getListData() {
-        Pager(
-            config = PagingConfig(pageSize = 24, maxSize = 200),
-            pagingSourceFactory = {
-                RecipePagingSource(
-                    recipeService,
-                    RecipeType.CATEGORY_RECIPES_BY_ID,
-                    categoryID
-                )
-            }
-        ).flow.let {
-            viewModelScope.launch {
-                it.cachedIn(viewModelScope).collect {
-                    _responseCategoryRecipes.postValue(it)
+        sendRequest(
+            request = {
+                Pager(
+                    config = PagingConfig(pageSize = 24, maxSize = 200),
+                    pagingSourceFactory = {
+                        RecipePagingSource(
+                            recipeService,
+                            RecipeType.CATEGORY_RECIPES_BY_ID,
+                            categoryID
+                        )
+                    }
+                ).flow
+            },
+            success = { pagingData ->
+                pagingData.let {
+                    viewModelScope.launch {
+                        it.cachedIn(viewModelScope).collect {
+                            _responseCategoryRecipes.postValue(it)
+                        }
+                    }
                 }
-            }
-        }
+            },
+            loadingVal = true
+        )
     }
 
     fun goToDetails(id: Int) {
@@ -67,20 +69,15 @@ class CategoryRecipesViewModel @Inject constructor(
         )
     }
 
-    fun goToLogin() = viewModelScope.launch {
-        try {
-            when (authAPIRepository.requestLogout()) {
-                is  ResponseLogout -> {
-                    loginSharedPreferences.saveLogin(isLogged = false)
-                    loginSharedPreferences.setToken("")
-                    loginSharedPreferences.setUserInfo(null)
-                    navigate(CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToLoginFragment())
-                }
-            }
-            }catch (e: Exception){
-            showMessage(e.message.toString())
-        }
-
+    fun goToLogin() {
+        sendRequest(
+            request = { authAPIRepository.requestLogout() },
+            success = {
+                navigate(
+                    CategoryRecipesFragmentDirections.actionCategoryRecipesFragmentToLoginFragment()
+                )
+            },
+            loadingVal = true
+        )
     }
-
 }

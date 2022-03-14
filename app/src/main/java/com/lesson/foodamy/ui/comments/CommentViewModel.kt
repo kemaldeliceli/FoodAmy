@@ -1,23 +1,21 @@
 package com.lesson.foodamy.ui.comments
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.ResponseComment
 import com.lesson.foodamy.model.comment_dataclass.Comment
-import com.lesson.foodamy.model.dataclass.BaseException
+import com.lesson.foodamy.model.exception.AuthException
 import com.lesson.foodamy.repository.CommentPagingSource
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import com.lesson.foodamy.services.RecipeService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,85 +24,82 @@ class CommentViewModel @Inject constructor(
     private val recipeService: RecipeService,
 ) : BaseViewModel() {
 
-    var comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
-    var recipeID = -1
+    val comments: MutableLiveData<PagingData<Comment>> = MutableLiveData()
+    val commentText = MutableLiveData<String>("")
+    private var recipeId = -1
 
-    var commentText = MutableLiveData<String>()
-
-    fun addComment() = viewModelScope.launch {
-        try {
-            when (recipesAPIRepository.requestAddComments(
-                recipeID,
-                commentText.value.toString())
-            ) {
-
-                is Comment -> {
-                    commentText.value = ""
-                    getListData()
-                }
-                null -> {
-                }
-            }
-        } catch (e: Exception) {
-            when (e) {
-                is BaseException -> {
-                    if (e.code == 403) {
-                        showLoginDialog()
-                    }
-                }
-            }
-        }
-
+    fun setRecipeId(recipeId: Int) {
+        this.recipeId = recipeId
+        getListData()
     }
 
-    private fun showLoginDialog() {
+    fun addComment() {
+        sendRequest(
+            request = {
+                recipesAPIRepository.requestAddComments(
+                    recipeId,
+                    commentText.value.toString()
+                )
+            },
+            success = {
+                commentText.value = ""
+                getListData()
+            },
+            error = { e ->
+                if (e is AuthException) {
+                    e.id?.let { showLoginDialog(it) }
+                }
+            }
+        )
+    }
+
+    private fun showLoginDialog(@StringRes stringId: Int) {
         showAlertDialog(
-            R.string.need_login_text,
+            stringId,
             CommentFragmentDirections.actionCommentFragmentToLoginFragment()
         )
     }
 
     fun getListData() {
-        Pager(
-            config = PagingConfig(pageSize = 24, maxSize = 200),
-            pagingSourceFactory = {
-                CommentPagingSource(
-                    recipeService,
-                    recipeID
-                )
-            }
-        ).flow.let {
-            viewModelScope.launch {
-                it.cachedIn(viewModelScope).collect {
-                    comments.postValue(it)
+        sendRequest(
+            request = {
+                Pager(
+                    config = PagingConfig(pageSize = 24, maxSize = 200),
+                    pagingSourceFactory = {
+                        CommentPagingSource(
+                            recipeService,
+                            recipeId
+                        )
+                    }
+                ).flow
+            },
+            success = { pagingData ->
+                pagingData.let {
+                    viewModelScope.launch {
+                        it.cachedIn(viewModelScope).collect {
+                            comments.postValue(it)
+                        }
+                    }
                 }
-            }
-        }
+            },
+            loadingVal = true
+
+        )
     }
 
-    fun deleteComment(commentID: Int) = viewModelScope.launch {
-        try {
-            when (recipesAPIRepository.requestDeleteComment(recipeID, commentID)) {
-
-                is ResponseComment -> {
-                    getListData()
-                }
-                null -> {
-                    showMessage(R.string.null_error)
-                }
-            }
-        } catch (e: Exception) {
-            when (e) {
-                is BaseException -> {
-                    showMessage(e.error.toString())
-                }
-            }
-        }
-
+    fun deleteComment(commentID: Int) {
+        sendRequest(
+            request = { recipesAPIRepository.requestDeleteComment(recipeId, commentID) },
+            success = { getListData() },
+        )
     }
 
-    fun editComment(comment: Comment) {
-        navigate(CommentFragmentDirections.actionCommentFragmentToEditCommentFragment(recipeID,
-            comment))
+    fun navigateToEditComment(comment: Comment) {
+        navigate(
+            CommentFragmentDirections.actionCommentFragmentToEditCommentFragment(
+                recipeId,
+                comment
+            )
+        )
     }
 }

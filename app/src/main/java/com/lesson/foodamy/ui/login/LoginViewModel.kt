@@ -2,18 +2,12 @@ package com.lesson.foodamy.ui.login
 
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.ResponseUser
 import com.lesson.foodamy.model.dataclass.AuthData
-import com.lesson.foodamy.model.dataclass.BaseException
-import com.lesson.foodamy.model.toResult
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.AuthAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,29 +19,16 @@ class LoginViewModel @Inject constructor(
     val email: MutableLiveData<String> = MutableLiveData("")
     val password: MutableLiveData<String> = MutableLiveData("")
 
-    fun login() = viewModelScope.launch {
-        println("login process")
+    fun login() {
         val authData = AuthData(email.value!!, password.value!!)
         if (isLoginFieldsValid(authData)) {
-            try {
-                when (val response = authAPIRepository.requestLogin(authData)) {
-                    is ResponseUser -> {
-                        loginSharedPreferences.setUserInfo(response.user?.toResult()!!)
-                        loginSharedPreferences.saveLogin(isLogged = true)
-                        loginSharedPreferences.setToken(response.token!!)
-                        navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
-                    }
-
-                }
-            } catch (e: Exception) {
-                if (e is BaseException){
-                    showMessage(e.error.toString())
-                }
-            }
-
+            sendRequest(
+                request = { authAPIRepository.requestLogin(authData) },
+                success = { navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment()) },
+                loadingVal = true,
+            )
         }
     }
-
 
     fun navigateToSignUp() {
         navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())

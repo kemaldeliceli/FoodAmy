@@ -18,41 +18,39 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeCategoriesViewModel @Inject constructor(private val recipeService: RecipeService) : BaseViewModel() {
+class RecipeCategoriesViewModel @Inject constructor(private val recipeService: RecipeService) :
+    BaseViewModel() {
 
-    private val _responseRecipeCategory: MutableLiveData<PagingData<CategoryInfo>> = MutableLiveData()
+    private val _responseRecipeCategory: MutableLiveData<PagingData<CategoryInfo>> =
+        MutableLiveData()
 
     val responseRecipeCategory: LiveData<PagingData<CategoryInfo>>
         get() = _responseRecipeCategory
 
     fun getListData() {
-        Pager(
-            config = PagingConfig(pageSize = 4, maxSize = 200),
-            pagingSourceFactory = {
-                CategoryPagingSource(
-                    recipeService
-                )
-            }
-        ).flow.let {
-            viewModelScope.launch {
-                it.cachedIn(viewModelScope).collect {
-                    _responseRecipeCategory.postValue(it)
+        sendRequest(
+            request = {
+                Pager(
+                    config = PagingConfig(pageSize = 4, maxSize = 200),
+                    pagingSourceFactory = {
+                        CategoryPagingSource(
+                            recipeService
+                        )
+                    }
+                ).flow
+            },
+            success = { pagingData ->
+                pagingData.let {
+                    viewModelScope.launch {
+                        it.cachedIn(viewModelScope).collect {
+                            _responseRecipeCategory.postValue(it)
+                        }
+                    }
                 }
-            }
-        }
+            },
+            loadingVal = true
+        )
     }
-
-    /*fun getRecipeCategories() = viewModelScope.launch {
-        when(val response = recipesAPIRepository.requestRecipeCategories()){
-            is BaseResponse.Error -> {
-                showMessage(response.error.error.toString())
-            }
-            is BaseResponse.Success -> {
-                _responseRecipeCategory.postValue(response.data.data)
-            }
-            null -> {}
-        }
-    }*/
 
     fun goToCategoryRecipes(id: Int, name: String) {
 
