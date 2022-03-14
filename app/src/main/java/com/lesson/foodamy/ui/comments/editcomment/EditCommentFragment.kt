@@ -13,12 +13,9 @@ class EditCommentFragment : BaseFragment<EditCommentViewModel, FragmentEditComme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         arguments?.let {
             val args = EditCommentFragmentArgs.fromBundle(it)
-            viewModel.comment = args.comment
-            viewModel.recipeID = args.recipeID
-            viewModel.commentText.value = args.comment.text
+            viewModel.setComment(args.recipeID, args.comment)
         }
         setCoordinateSnackbar(binding.snackbarCoord)
     }

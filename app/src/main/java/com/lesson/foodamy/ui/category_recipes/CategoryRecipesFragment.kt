@@ -48,6 +48,7 @@ class CategoryRecipesFragment :
             categoryRecipesRecycleview.adapter = recipeAdapter
         }
     }
+
     override fun getViewModelss(): Class<CategoryRecipesViewModel> {
         return CategoryRecipesViewModel::class.java
     }

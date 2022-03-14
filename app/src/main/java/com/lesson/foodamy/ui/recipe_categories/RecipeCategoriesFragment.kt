@@ -19,7 +19,6 @@ class RecipeCategoriesFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        // setObservers()
         viewModel.getListData()
         submitLastData()
     }
@@ -44,13 +43,6 @@ class RecipeCategoriesFragment :
             categoryRecycleView.adapter = recipeCategoriesAdapter
         }
     }
-
-   /* private fun setObservers() {
-        viewModel.responseRecipeCategory.observe(viewLifecycleOwner, { categoryList ->
-            if (categoryList.isNotEmpty()) {
-                recipeCategoriesAdapter?.submitList(categoryList)
-            }})
-    }*/
 
     override fun getViewModelss(): Class<RecipeCategoriesViewModel> {
         return RecipeCategoriesViewModel::class.java
