@@ -6,12 +6,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/onboardingViewPager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/layout_width_0dp"
+            android:layout_height="@dimen/layout_height_0dp"
             android:background="@color/neutral_white"
             app:layout_constraintBottom_toTopOf="@id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toTopOf="@id/nextButton"
             app:tabBackground="@drawable/tab_selector"
             app:tabGravity="center"
-            app:tabIndicatorHeight="0dp" />
+            app:tabIndicatorHeight="@dimen/tab_indicator_height_0dp" />
 
         <Button
             android:id="@+id/nextButton"

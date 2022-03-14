@@ -71,5 +71,9 @@
     <string name="add_comment_text">Yorum Ekle</string>
     <string name="save_text">Kaydet</string>
     <string name="yorumlar">YORUMLAR</string>
+    <string name="no_internet_connection_text">No internet connection</string>
+    <string name="text_cancel">Vazgeç</string>
+    <string name="text_login">Giriş Yap</string>
+    <string name="hint_text_write_something">Bir şey yaz...</string>
 
 </resources>

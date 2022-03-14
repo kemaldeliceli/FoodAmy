@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
                 android:textSize="14sp"
-                android:text="Geri"
+                android:text="@string/back_text"
                 android:textColor="@color/neutral_white"
                 app:layout_constraintStart_toEndOf="@id/back_icon"
                 app:layout_constraintTop_toTopOf="@id/back_icon"

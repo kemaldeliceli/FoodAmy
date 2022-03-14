@@ -6,34 +6,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
         <ProgressBar
             android:id="@+id/main_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:flow_verticalAlign="center"
-            app:flow_horizontalAlign="center"
+            android:elevation="@dimen/elevation_20dp"
             android:textAlignment="center"
-            android:elevation="20dp"
             android:visibility="invisible"
-            />
+            app:flow_horizontalAlign="center"
+            app:flow_verticalAlign="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/food_amy_graph"
+            android:layout_width="@dimen/layout_width_0dp"
+            android:layout_height="@dimen/layout_height_0dp"
+            android:elevation="@dimen/elevation_0dp"
             app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/fragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"/>
+            app:navGraph="@navigation/food_amy_graph" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

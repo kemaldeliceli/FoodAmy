@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--app:cardElevation="0dp"
-  app:cardCornerRadius="30dp"-->
-
-
 <layout
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -264,7 +260,6 @@
 
             android:textSize="@dimen/size_13sp"
 
-            app:layout_constraintTop_toBottomOf="@id/big_food_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
              />
@@ -283,7 +278,7 @@
             android:textSize="@dimen/size_13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/comment_count"
-            app:layout_constraintTop_toBottomOf="@id/big_food_image" />
+             />
         <TextView
             android:id="@+id/like_count"
             android:layout_width="wrap_content"
@@ -301,7 +296,7 @@
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/comment_text"
-            app:layout_constraintTop_toBottomOf="@id/big_food_image"
+
             />
         <TextView
             android:id="@+id/like_text"

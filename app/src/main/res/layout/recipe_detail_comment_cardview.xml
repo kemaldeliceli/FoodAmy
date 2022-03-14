@@ -20,7 +20,7 @@
         app:strokeColor="@android:color/transparent"
         android:shadowColor="@android:color/transparent"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardElevation="0dp"
+        app:cardElevation="@dimen/elevation_0dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,7 @@
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/layout_height_1dp"
                 android:visibility="invisible"
                 app:layout_constraintTop_toTopOf="parent"
                 />
@@ -133,7 +133,7 @@
                 android:layout_marginBottom="@dimen/padding_8dp"
 
                 android:fontFamily="@font/nunito_semibold"
-                android:text="@{String.valueOf(comment.user.following_count)}"
+                android:text="@{String.valueOf(comment.user.followed_count)}"
                 android:textColor="@color/primary_raven"
 
                 android:textSize="@dimen/size_13sp"

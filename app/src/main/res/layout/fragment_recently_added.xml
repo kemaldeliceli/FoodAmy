@@ -23,18 +23,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipesRecycleView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-
+        android:layout_width="@dimen/layout_width_0dp"
+        android:layout_height="@dimen/layout_height_0dp"
         android:background="@drawable/background_rectangle"
         android:visibility="visible"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         />
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -44,7 +40,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="invisible"
-
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
