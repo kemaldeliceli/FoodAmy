@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class ResponseRecipeCategory(
 
     @SerializedName("data") var data: ArrayList<CategoryInfo> = arrayListOf(),
-    @SerializedName("pagination") var pagination: Pagination? = Pagination()
+    @SerializedName("pagination") var pagination: Pagination? = Pagination(),
 
 )

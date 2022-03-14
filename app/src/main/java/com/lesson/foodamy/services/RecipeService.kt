@@ -8,11 +8,11 @@ import com.lesson.foodamy.model.recipe_category.ResponseRecipeCategory
 import com.lesson.foodamy.model.recipe_dataclass.ResponseRecipes
 import com.lesson.foodamy.model.recipe_detail_info.RecipeDetailInfo
 import com.lesson.foodamy.model.recipe_detail_info.ResponseFollow
+import okhttp3.RequestBody
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -34,13 +34,16 @@ interface RecipeService {
     ): RecipeDetailInfo
 
     @GET("/api/recipe/{recipe_id}/comment")
-    suspend fun getComments(@Path("recipe_id") recipeId: Int, @Query("page") page: Int): ResponseComments
+    suspend fun getComments(
+        @Path("recipe_id") recipeId: Int,
+        @Query("page") page: Int,
+    ): ResponseComments
 
     @Multipart
     @POST("/api/recipe/{recipe_id}/comment")
     suspend fun addComments(
         @Path("recipe_id") recipeId: Int,
-        @Part("text") text: String
+        @Part("text") text: RequestBody,
     ): Comment
 
     @DELETE("/api/recipe/{recipe_id}/comment/{comment_id}")
@@ -54,12 +57,12 @@ interface RecipeService {
     suspend fun editComment(
         @Path("recipe_id") recipeId: Int,
         @Path("comment_id") commentId: Int,
-        @Field("text") text: String
+        @Field("text") text: String,
     ): ResponseComment
 
     @POST("/api/recipe/{recipe_id}/like")
     suspend fun likeRecipe(
-        @Path("recipe_id") recipeId: Int
+        @Path("recipe_id") recipeId: Int,
     ): ResponseLike
 
     @DELETE("/api/recipe/{recipe_id}/like")

@@ -11,22 +11,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(private val loginSharedPreferences: IPrefDefaultManager) : BaseViewModel() {
+class UserViewModel @Inject constructor(private val loginSharedPreferences: IPrefDefaultManager) :
+    BaseViewModel() {
 
     val userInfo: MutableLiveData<UserInformation> = MutableLiveData()
     val isLogged: MutableLiveData<Boolean> = MutableLiveData()
 
-    init {
-        getUserInformation()
-        getLoginInformation()
-    }
-
     fun getUserInformation() = viewModelScope.launch {
         userInfo.value = loginSharedPreferences.getUserInfo()
     }
+
     fun getLoginInformation() = viewModelScope.launch {
         isLogged.value = loginSharedPreferences.isLoggedIn()
     }
+
     fun navigateToLogin() {
         navigate(MainFragmentDirections.actionMainFragmentToLoginFragment())
     }

@@ -1,22 +1,14 @@
 package com.lesson.foodamy.ui.recipedetail
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.BaseResponse
-import com.lesson.foodamy.model.ResponseComment
-import com.lesson.foodamy.model.ResponseLike
 import com.lesson.foodamy.model.comment_dataclass.Comment
 import com.lesson.foodamy.model.comment_dataclass.Comments
-import com.lesson.foodamy.model.comment_dataclass.ResponseComments
-import com.lesson.foodamy.model.dataclass.BaseException
+import com.lesson.foodamy.model.exception.AuthException
 import com.lesson.foodamy.model.recipe_detail_info.RecipeDetailInfo
-import com.lesson.foodamy.model.recipe_detail_info.ResponseFollow
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +18,8 @@ class RecipeDetailViewModel @Inject constructor(
 
     private var comments: MutableLiveData<Comments> = MutableLiveData()
 
-    var recipeID: MutableLiveData<Int> = MutableLiveData(5)
+    private var recipeID: Int = -1
+
     val firstComment: MutableLiveData<Comment> = MutableLiveData()
     var recipeInfo: MutableLiveData<RecipeDetailInfo> = MutableLiveData()
 
@@ -34,27 +27,28 @@ class RecipeDetailViewModel @Inject constructor(
     val likeCount: MutableLiveData<Int> = MutableLiveData(0)
 
     val isFollowing: MutableLiveData<Boolean> = MutableLiveData(false)
-    val followedCount: MutableLiveData<Int> = MutableLiveData(0)
+    val followerCount: MutableLiveData<Int> = MutableLiveData(0)
 
-    fun getRecipeInfoByID() {
+    fun getRecipeInfoByID(recipeID: Int) {
+        this.recipeID = recipeID
         sendRequest(
-            request = { recipesAPIRepository.requestRecipeByID(recipeID.value!!) },
+            request = { recipesAPIRepository.requestRecipeByID(recipeID) },
             success = { recipeDetailInfo ->
                 recipeInfo.value = recipeDetailInfo!!
-                isLiked.postValue(recipeInfo.value!!.isLiked!!)
+                isLiked.postValue(recipeDetailInfo.isLiked!!)
+                isFollowing.postValue(recipeDetailInfo.user?.isFollowing!!)
                 likeCount.postValue(recipeInfo.value!!.likeCount!!)
-
-                isFollowing.postValue(recipeInfo.value!!.user?.isFollowing!!)
-                followedCount.postValue(recipeInfo.value!!.user?.followedCount!!)
+                followerCount.postValue(recipeInfo.value!!.user?.followedCount!!)
+                getCommentsOfRecipe()
             },
             loadingVal = true
         )
     }
 
-    fun getCommentsOfRecipe() {
+    private fun getCommentsOfRecipe() {
 
         sendRequest(
-            request = { recipesAPIRepository.requestComments(recipeID.value!!) },
+            request = { recipesAPIRepository.requestComments(recipeID) },
             success = { responseComments ->
                 comments.value = responseComments?.data
                 if (comments.value!!.size != 0) {
@@ -66,44 +60,36 @@ class RecipeDetailViewModel @Inject constructor(
         )
     }
 
-    fun goToCommentPage() {
-        navigate(
-            RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToCommentFragment(
-                comments.value!!, recipeID.value!!
-            )
-        )
-    }
-
     fun likeRecipe() {
 
         if (isLiked.value == false) {
             sendRequest(
-                request = { recipesAPIRepository.requestLikeRecipe(recipeID.value!!) },
+                request = { recipesAPIRepository.requestLikeRecipe(recipeID) },
                 success = {
                     isLiked.postValue(true)
                     likeCount.postValue(likeCount.value?.plus(1))
                 },
-                loginDialog = {
-                    showLoginDialog()
+                error = { e ->
+                    if (e is AuthException) {
+                        e.id?.let { showLoginDialog(it) }
+                    }
                 },
-                loadingVal = false
             )
-
         } else {
             sendRequest(
-                request = { recipesAPIRepository.requestDeleteLikeRecipe(recipeID.value!!) },
+                request = { recipesAPIRepository.requestDeleteLikeRecipe(recipeID) },
                 success = {
                     isLiked.value = false
                     likeCount.postValue(likeCount.value?.minus(1))
                 },
-                loginDialog = { showLoginDialog() },
-                loadingVal = false
+                error = { e ->
+                    if (e is AuthException) {
+                        e.id?.let { showLoginDialog(it) }
+                    }
+                },
             )
-
         }
-
     }
-
 
     fun followUser() {
 
@@ -112,33 +98,43 @@ class RecipeDetailViewModel @Inject constructor(
                 request = { recipesAPIRepository.requestFollowUser(recipeInfo.value?.user?.id!!) },
                 success = {
                     isFollowing.postValue(true)
-                    followedCount.postValue(followedCount.value?.plus(1))
+                    followerCount.postValue(followerCount.value?.plus(1))
                 },
-                loginDialog = {
-                    showLoginDialog()
-                },
-                loadingVal = false
+                error = { e ->
+                    if (e is AuthException) {
+                        e.id?.let { showLoginDialog(it) }
+                    }
+                }
 
             )
-
         } else {
             sendRequest(
                 request = { recipesAPIRepository.requestDeleteFollowUser(recipeInfo.value?.user?.id!!) },
                 success = {
                     isFollowing.postValue(false)
-                    followedCount.postValue(followedCount.value?.minus(1))
+                    followerCount.postValue(followerCount.value?.minus(1))
                 },
-                loginDialog = { showLoginDialog() },
-                loadingVal = false
+                error = { e ->
+                    if (e is AuthException) {
+                        e.id?.let { showLoginDialog(it) }
+                    }
+                },
             )
-
         }
     }
 
-    private fun showLoginDialog() {
+    private fun showLoginDialog(@StringRes id: Int) {
         showAlertDialog(
-            R.string.need_login_text,
+            id,
             RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToLoginFragment()
+        )
+    }
+
+    fun goToCommentPage() {
+        navigate(
+            RecipeDetailFragmentDirections.actionRecipeDetailFragment2ToCommentFragment(
+                comments.value!!, recipeID
+            )
         )
     }
 }

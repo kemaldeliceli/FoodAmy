@@ -7,7 +7,7 @@ import kotlinx.parcelize.RawValue
 @Parcelize
 data class ResponseComments(
     val data: @RawValue Comments,
-    val pagination: @RawValue Pagination
+    val pagination: @RawValue Pagination,
 ) : Parcelable
 
 @Parcelize

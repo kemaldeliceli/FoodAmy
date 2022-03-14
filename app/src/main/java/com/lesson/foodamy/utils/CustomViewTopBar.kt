@@ -13,7 +13,7 @@ class CustomViewTopBar @JvmOverloads
 constructor(
     context: Context,
     attrs: AttributeSet,
-    defStyle: Int = 0
+    defStyle: Int = 0,
 ) :
 
     ConstraintLayout(context, attrs, defStyle) {
@@ -21,6 +21,7 @@ constructor(
     interface BackButtonClick {
         fun onClick()
     }
+
     interface LogoutButtonClick {
         fun onClick()
     }
@@ -28,6 +29,7 @@ constructor(
     var backListener: BackButtonClick? = null
     var logoutListener: LogoutButtonClick? = null
     private var binding: CustomTopBarBinding
+
     init {
         val inflater = LayoutInflater.from(context)
         binding = CustomTopBarBinding.inflate(inflater, this, true)
@@ -57,7 +59,8 @@ constructor(
                     .getBoolean(R.styleable.CustomViewTopBar_fodamyLogoVisibility, false)
             }
             if (attributes.hasValue(R.styleable.CustomViewTopBar_backButtonVisibility)) {
-                val backButtonVisibility = attributes.getBoolean(R.styleable.CustomViewTopBar_backButtonVisibility, false)
+                val backButtonVisibility =
+                    attributes.getBoolean(R.styleable.CustomViewTopBar_backButtonVisibility, false)
 
                 binding.backConstraint.isVisible = backButtonVisibility
                 if (backButtonVisibility) {
@@ -67,7 +70,8 @@ constructor(
                 }
             }
             if (attributes.hasValue(R.styleable.CustomViewTopBar_pageTitleVisibility)) {
-                val pageTitleVisibility = attributes.getBoolean(R.styleable.CustomViewTopBar_pageTitleVisibility, false)
+                val pageTitleVisibility =
+                    attributes.getBoolean(R.styleable.CustomViewTopBar_pageTitleVisibility, false)
                 binding.titleText.isVisible = pageTitleVisibility
             }
             if (attributes.hasValue(R.styleable.CustomViewTopBar_pageTitle)) {
@@ -77,6 +81,7 @@ constructor(
             attributes.recycle()
         }
     }
+
     fun setTitle(title: String?) {
         binding.apply {
             titleText.text = title

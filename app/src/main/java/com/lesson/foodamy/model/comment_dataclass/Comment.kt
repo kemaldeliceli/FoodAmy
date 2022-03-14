@@ -9,5 +9,5 @@ data class Comment(
     val difference: String? = null,
     val id: Int? = null,
     val text: String? = null,
-    val user: @RawValue User
+    val user: @RawValue User,
 ) : Parcelable

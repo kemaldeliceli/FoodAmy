@@ -6,6 +6,6 @@ data class Image(
     val height: Int? = null,
     val key: String? = null,
     val order: Int? = null,
-    val url: String? = null
+    val url: String? = null,
 
 )

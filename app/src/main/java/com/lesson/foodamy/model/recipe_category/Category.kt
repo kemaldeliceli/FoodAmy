@@ -8,6 +8,6 @@ data class Category(
     @SerializedName("name") var name: String? = null,
     @SerializedName("language") var language: String? = null,
     @SerializedName("main_category_id") var mainCategoryId: String? = null,
-    @SerializedName("image") var image: Image? = Image()
+    @SerializedName("image") var image: Image? = Image(),
 
 )

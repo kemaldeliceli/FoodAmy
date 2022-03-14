@@ -27,7 +27,7 @@ data class RecipeInfo(
     @SerializedName("time_of_recipe") val timeOfRecipe: @RawValue TimeOfRecipe? = TimeOfRecipe(),
     @SerializedName("number_of_person") val numberOfPerson: @RawValue NumberOfPerson? = NumberOfPerson(),
     val category: @RawValue Category? = Category(),
-    val images: @RawValue ArrayList<Image> = arrayListOf()
+    val images: @RawValue ArrayList<Image> = arrayListOf(),
 
 ) : Parcelable
 
@@ -40,7 +40,7 @@ data class Recipe(
     val user: @RawValue User?,
     val isEditorChoice: Boolean?,
     val commentCount: Int?,
-    val likeCount: Int?
+    val likeCount: Int?,
 
 ) : Parcelable
 

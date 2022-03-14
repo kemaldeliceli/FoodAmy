@@ -20,5 +20,5 @@ data class User(
     val surname: String,
     val twitter_url: Any,
     val username: String,
-    val youtube_url: Any
+    val youtube_url: Any,
 )

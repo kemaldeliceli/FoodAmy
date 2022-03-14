@@ -7,19 +7,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.R
-import com.lesson.foodamy.model.dataclass.OnboardingItem
+import com.lesson.foodamy.model.dataclass.OnboardItem
 
-class OnboardingItemsAdapter(private var onboardingItems: ArrayList<OnboardingItem>) :
-    RecyclerView.Adapter<OnboardingItemsAdapter.OnBoardingItemViewHolder>() {
+class OnboardItemsAdapter(private var onboardItems: ArrayList<OnboardItem>) :
+    RecyclerView.Adapter<OnboardItemsAdapter.OnBoardingItemViewHolder>() {
     inner class OnBoardingItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var imageOnboarding = view.findViewById<ImageView>(R.id.firstWalkthroughImage)
+        private var imageOnboard = view.findViewById<ImageView>(R.id.firstWalkthroughImage)
         private var descriptionHeader = view.findViewById<TextView>(R.id.descriptionHeader)
         private var description = view.findViewById<TextView>(R.id.description)
 
-        fun bind(onboardingItem: OnboardingItem) {
-            imageOnboarding.setImageResource(onboardingItem.image)
-            descriptionHeader.text = onboardingItem.title
-            description.text = onboardingItem.description
+        fun bind(onboardItem: OnboardItem) {
+            imageOnboard.setImageResource(onboardItem.image)
+            descriptionHeader.text = onboardItem.title
+            description.text = onboardItem.description
         }
     }
 
@@ -34,10 +34,10 @@ class OnboardingItemsAdapter(private var onboardingItems: ArrayList<OnboardingIt
     }
 
     override fun onBindViewHolder(holder: OnBoardingItemViewHolder, position: Int) {
-        holder.bind(onboardingItems[position])
+        holder.bind(onboardItems[position])
     }
 
     override fun getItemCount(): Int {
-        return onboardingItems.size
+        return onboardItems.size
     }
 }

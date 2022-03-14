@@ -5,5 +5,5 @@ data class Image(
     val key: String,
     val order: Int,
     val url: String,
-    val width: Int
+    val width: Int,
 )

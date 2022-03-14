@@ -23,6 +23,6 @@ data class User(
     @SerializedName("favorites_count") val favoritesCount: Int? = null,
     @SerializedName("likes_count") val likesCount: Int? = null,
     val cover: String? = null,
-    val image: Image? = Image()
+    val image: Image? = Image(),
 
 )

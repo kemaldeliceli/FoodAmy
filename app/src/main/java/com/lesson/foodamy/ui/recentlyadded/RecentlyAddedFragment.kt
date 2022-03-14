@@ -2,17 +2,16 @@ package com.lesson.foodamy.ui.recentlyadded
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseFragment
 import com.lesson.foodamy.databinding.FragmentRecentlyAddedBinding
 import com.lesson.foodamy.ui.main.RecipeAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecentlyAddedBinding>(R.layout.fragment_recently_added) {
+class RecentlyAddedFragment :
+    BaseFragment<RecentlyAddedViewModel, FragmentRecentlyAddedBinding>(R.layout.fragment_recently_added) {
 
     private var recipesAdapter: RecipeAdapter? = null
 
@@ -25,6 +24,7 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
 
         setCoordinateSnackbar(binding.snackbarCoord)
         setupRecycleView()
+        viewModel.getListData()
         submitLastData()
     }
 
@@ -40,10 +40,8 @@ class RecentlyAddedFragment : BaseFragment<RecentlyAddedViewModel, FragmentRecen
     }
 
     private fun submitLastData() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.getListData().collectLatest {
-                recipesAdapter?.submitData(it)
-            }
+        viewModel.responseRecentlyAdded.observe(viewLifecycleOwner) {
+            recipesAdapter?.submitData(viewLifecycleOwner.lifecycle, it)
         }
     }
 

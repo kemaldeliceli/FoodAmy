@@ -1,48 +1,36 @@
 package com.lesson.foodamy.ui.comments.editcomment
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
-import com.lesson.foodamy.model.ResponseComment
 import com.lesson.foodamy.model.comment_dataclass.Comment
-import com.lesson.foodamy.model.dataclass.BaseException
-import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.RecipesAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class EditCommentViewModel @Inject constructor(
-    private val recipesAPIRepository: RecipesAPIRepository,
-    private val sharedPreferences: IPrefDefaultManager
+    private val recipesAPIRepository: RecipesAPIRepository
 ) : BaseViewModel() {
-    var recipeID = 0
-    var comment: Comment? = null
+    private var recipeId = 0
+    private var commentId = 0
 
-    var commentText = MutableLiveData<String>()
+    val commentText = MutableLiveData<String>()
 
-    fun editComment() = viewModelScope.launch {
-        try {
-            when (val response = recipesAPIRepository
-                    .requestEditComment(recipeID, comment?.id!!, commentText.value.toString())
-            ) {
-                is ResponseComment -> {
-                    showMessage(response.message)
-                }
-                null -> {
-                    showMessage(R.string.null_error)
-                }
-            }
-        }catch (e:Exception){
-            when(e){
-                is BaseException -> {
-                    showMessage(e.message.toString())
-                }
-            }
-        }
+    fun setComment(recipeId: Int, comment: Comment) {
+        this.recipeId = recipeId
+        this.commentId = comment.id!!
+        this.commentText.postValue(comment.text)
+    }
 
+    fun editComment() {
+        sendRequest(
+            request = {
+                recipesAPIRepository
+                    .requestEditComment(recipeId, commentId, commentText.value.toString())
+            },
+            success = { showMessage(it.message) },
+            error = { showMessage(R.string.null_error) }
+        )
     }
 }

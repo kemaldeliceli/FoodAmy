@@ -25,7 +25,7 @@ import com.lesson.foodamy.BR
 import com.lesson.foodamy.R
 
 abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
-    @LayoutRes private val layoutResId: Int
+    @LayoutRes private val layoutResId: Int,
 ) :
 
     Fragment(layoutResId) {
@@ -47,12 +47,11 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
 
         setLoadingObserver()
-
 
         binding.setVariable(BR.viewModel, viewModel)
         binding.lifecycleOwner = this
@@ -60,16 +59,18 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
     }
 
     private fun setLoadingObserver() {
-        viewModel.loading.observe(viewLifecycleOwner,{
-            progressBar.isVisible = it
-        })
+        viewModel.loading.observe(
+            viewLifecycleOwner,
+            {
+                progressBar.isVisible = it
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleEvent()
     }
-
 
     private fun handleEvent() {
         viewModel.event.observe(viewLifecycleOwner) {
@@ -123,8 +124,6 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
         dialog.show()
     }
 
-
-
     fun setCoordinateSnackbar(coordinate: CoordinatorLayout) {
         this.coordinate = coordinate
     }
@@ -149,7 +148,6 @@ abstract class BaseFragment<VM : BaseViewModel, VDB : ViewDataBinding>(
 
         snackbar.show()
     }
-
 
     fun navigate(directions: NavDirections) {
         findNavController().navigate(directions)

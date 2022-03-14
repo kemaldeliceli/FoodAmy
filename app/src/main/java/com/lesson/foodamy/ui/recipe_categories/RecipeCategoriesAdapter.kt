@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lesson.foodamy.databinding.RecipeCategoryCardviewBinding
 import com.lesson.foodamy.model.recipe_category.CategoryInfo
 
-class RecipeCategoriesAdapter() : PagingDataAdapter<CategoryInfo, RecipeCategoriesAdapter
+class RecipeCategoriesAdapter : PagingDataAdapter<CategoryInfo, RecipeCategoriesAdapter
     .RecipeCategoriesViewHolder>(
     object : DiffUtil.ItemCallback<CategoryInfo>() {
         override fun areItemsTheSame(oldItem: CategoryInfo, newItem: CategoryInfo): Boolean =

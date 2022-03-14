@@ -9,7 +9,7 @@ import com.lesson.foodamy.services.RecipeService
 class RecipePagingSource constructor(
     private val recipeService: RecipeService,
     private val recipeType: RecipeType,
-    private val categoryID: Int?
+    private val categoryID: Int?,
 
 ) :
     PagingSource<Int, RecipeInfo>() {
@@ -24,11 +24,9 @@ class RecipePagingSource constructor(
             val response = when (recipeType) {
                 RecipeType.EDITORS_CHOICE -> recipeService.getEditorsChoice(nextPage)
                 RecipeType.RECENTLY_LAST_ADDED -> {
-                    println("recently_added")
                     recipeService.getLastAdded(nextPage)
                 }
                 RecipeType.CATEGORY_RECIPES_BY_ID -> {
-                    println("category_id $categoryID")
                     recipeService.getCategoryRecipes(categoryID!!)
                 }
             }
@@ -40,7 +38,7 @@ class RecipePagingSource constructor(
                 if (it.currentPage!! < it.lastPage!!) {
                     nextPageNumber = it.currentPage + 1
                 }
-                if (it.currentPage> 1) {
+                if (it.currentPage > 1) {
                     prevPageNumber = it.currentPage - 1
                 }
             }
@@ -54,6 +52,7 @@ class RecipePagingSource constructor(
             LoadResult.Error(e)
         }
     }
+
     companion object {
         private const val FIRST_PAGE_INDEX = 1
     }
