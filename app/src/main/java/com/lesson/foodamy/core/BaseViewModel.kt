@@ -61,7 +61,6 @@ open class BaseViewModel : ViewModel() {
         when (e) {
             is BaseException -> {
                 if (e.code == 403) {
-                    showMessage(e.error.toString())
                     AuthException(id = R.string.need_login_text)
                 } else {
                     showMessage(e.error.toString())

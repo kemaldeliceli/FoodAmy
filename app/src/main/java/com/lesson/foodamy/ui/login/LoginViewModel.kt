@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lesson.foodamy.R
 import com.lesson.foodamy.core.BaseViewModel
 import com.lesson.foodamy.model.dataclass.AuthData
+import com.lesson.foodamy.model.exception.AuthException
 import com.lesson.foodamy.preferences.IPrefDefaultManager
 import com.lesson.foodamy.repository.AuthAPIRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,11 @@ class LoginViewModel @Inject constructor(
             sendRequest(
                 request = { authAPIRepository.requestLogin(authData) },
                 success = { navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment()) },
+                error= {ex->
+                    if (ex is AuthException){
+                        showMessage(ex.id!!)
+                    }
+                },
                 loadingVal = true,
             )
         }
