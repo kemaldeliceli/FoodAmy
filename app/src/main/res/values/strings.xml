@@ -1,3 +1,79 @@
 <resources>
     <string name="app_name">FoodAmy</string>
+
+    <!--Intro Screen Texts-->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_1">Welcome to Fodamy Network!</string>
+    <string name="title_2">Finding recipes were not that easy.</string>
+    <string name="title_3">Add new recipe.</string>
+    <string name="title_4">"Share recipes with others."</string>
+
+    <string name="description_1">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="description_2">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="description_3">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+    <string name="description_4">Fodamy is the best place to find your favorite recipes in all around the word.</string>
+
+    <string name="start_text">Start!</string>
+    <string name="next_text">Next</string>
+
+    <!--Login Screem Texts -->
+    <string name="username_text">Username</string>
+    <string name="email_text">E-mail</string>
+    <string name="password_text">Password</string>
+    <string name="login_text">Login</string>
+    <string name="no_account_text">Don\'t you have account ?</string>
+    <string name="have_account_text">Do you have account ?</string>
+
+    <string name="sign_up_text">Sign Up</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="empty_email_blank">E-mail field cannot be empty</string>
+    <string name="empty_password_blank">Password field cannot be empty</string>
+    <string name="wrong_format_email">Wrong e-mail format</string>
+    <string name="empty_username_blank">Username blank cannot be empty</string>
+    <string name="timeout_error">Timeout Error</string>
+
+    <!--Preferences File Name-->
+    <string name="preferences_file_name">FoodAmyAppPreferences</string>
+    <string name="go_to_main">Go To Main</string>
+    <string name="welcome_to_fodamy_network">Welcome to Fodamy Network!</string>
+    <string name="fodamy_is_the_best_place">Fodamy is the best place to find your \n favorite recipes in all around the word.</string>
+    <string name="ilerle">İlerle</string>
+    <string name="user">User</string>
+    <string name="name">Name:  </string>
+    <string name="following">Following</string>
+    <string name="followed">Followed</string>
+    <string name="favourites">Favourites</string>
+    <string name="likes">Likes</string>
+    <string name="recipes">Recipe</string>
+    <string name="follower">Follower</string>
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+    <string name="editors_choice">EDITORS\' CHOICE</string>
+    <string name="recently_added">RECENTLY ADDED</string>
+    <string name="username">username</string>
+    <string name="_0">0</string>
+    <string name="recipe_name">recipe name</string>
+    <string name="recipe_category">recipe category</string>
+    <string name="not_logged_text">You are not logged in, you can go to the login page.</string>
+    <string name="success_register_process">Registration is successful</string>
+    <string name="successfull_logout">Successfull Logout</string>
+    <string name="need_login_text">Giriş Yapmanız Gereklidir</string>
+    <string name="see_all_text">TÜMÜNÜ GÖR</string>
+    <string name="null_error">Null Error</string>
+    <string name="back_text">Geri</string>
+    <string name="comment_text">Yorum</string>
+    <string name="like_lext">Beğeni</string>
+    <string name="follow_text">Takip Et</string>
+    <string name="following_text">Takip Ediliyor</string>
+    <string name="ingredients_text">Malzemeler</string>
+    <string name="food_making_text">Yapılışı</string>
+    <string name="comments_text">Yorumlar</string>
+    <string name="add_comment_text">Yorum Ekle</string>
+    <string name="save_text">Kaydet</string>
+    <string name="yorumlar">YORUMLAR</string>
+    <string name="no_internet_connection_text">No internet connection</string>
+    <string name="text_cancel">Vazgeç</string>
+    <string name="text_login">Giriş Yap</string>
+    <string name="hint_text_write_something">Bir şey yaz...</string>
+
 </resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/fodamy_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/margin_16dp"
+            android:layout_marginVertical="@dimen/margin_8dp"
+            android:src="@drawable/fodamy_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageButton
+            android:id="@+id/logout_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/logout_icon"
+            app:layout_constraintBaseline_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/backConstraint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/back_icon"
+                android:layout_width="@dimen/layout_width_11dp"
+                android:layout_height="@dimen/layout_height_18dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/back_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/neutral_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/back_text"
+                android:textColor="@color/neutral_white"
+                android:textSize="@dimen/text_size_14sp"
+                app:layout_constraintBottom_toBottomOf="@id/back_icon"
+                app:layout_constraintStart_toEndOf="@id/back_icon"
+                app:layout_constraintTop_toTopOf="@id/back_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/share_icon"
+            android:layout_width="@dimen/layout_width_18dp"
+            android:layout_height="@dimen/layout_height_18dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@color/neutral_white"
+            android:backgroundTintMode="src_in"
+            android:scaleType="fitCenter"
+            android:src="@drawable/share_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/neutral_white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title_text"
+            android:layout_width="@dimen/layout_width_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_4dp"
+            android:fontFamily="@font/nunito_bold"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/neutral_white"
+            app:autoSizeMaxTextSize="@dimen/size_20sp"
+            app:autoSizeMinTextSize="@dimen/size_13sp"
+            app:autoSizeStepGranularity="@dimen/auto_size_1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/share_icon"
+            app:layout_constraintStart_toEndOf="@id/backConstraint"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

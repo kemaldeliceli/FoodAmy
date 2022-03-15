@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lesson.foodamy.ui.login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.login.LoginFragment">
+
+
+
+        <Button
+            android:id="@+id/go_to_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBaseline_toTopOf="parent"
+            android:visibility="invisible"
+            android:onClick="@{()->viewModel.navigateToMain()}"
+            />
+
+        <TextView
+            android:id="@+id/loginText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_text"
+            android:textColor="@color/primary_cinder"
+            android:textSize="@dimen/size_24sp"
+            app:layout_constraintBottom_toTopOf="@+id/userEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            app:updateVisibility="@{true}"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:hint="@string/email_text"
+            android:outlineProvider="bounds"
+            app:boxBackgroundColor="@color/primary_background"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary_red"
+            app:hintTextColor="@color/primary_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline1"
+            app:startIconDrawable="@drawable/mail_icon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userEmailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.email}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:hint="@string/password_text"
+            app:boxBackgroundColor="@color/primary_background"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/primary_red"
+            app:endIconMode="password_toggle"
+            app:hintTextColor="@color/primary_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userEmail"
+            app:startIconDrawable="@drawable/password_icon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:backgroundTint="@color/primary_red"
+            android:text="@string/login_text"
+            android:onClick="@{()->viewModel.login()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userPassword" />
+
+
+
+        <TextView
+            android:id="@+id/forgotPasswordText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:text="@string/forgot_password"
+            android:textAlignment="textEnd"
+
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+
+
+        <TextView
+            android:id="@+id/haveAccountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_account_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/guideline3" />
+
+        <TextView
+            android:id="@+id/signUpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up_text"
+            android:textColor="@color/primary_red"
+            android:layout_marginStart="@dimen/margin_2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            android:onClick="@{() -> viewModel.navigateToSignUp()}"
+            />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/snackbar_coord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2003035" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.4514364" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

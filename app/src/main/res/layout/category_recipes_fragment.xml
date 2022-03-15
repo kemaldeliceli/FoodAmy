@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lesson.foodamy.ui.category_recipes.CategoryRecipesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.category_recipes.CategoryRecipesFragment">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/snackbar_coord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary_red"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/backConstraint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()-> viewModel.popBackStack()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/back_icon"
+                    android:layout_width="@dimen/layout_width_11dp"
+                    android:layout_height="@dimen/layout_height_18dp"
+                    android:layout_marginStart="@dimen/margin_16dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/back_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/neutral_white" />
+
+                <TextView
+                    android:id="@+id/text_view_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/back_text"
+                    android:textColor="@color/neutral_white"
+                    app:layout_constraintBottom_toBottomOf="@id/back_icon"
+                    app:layout_constraintStart_toEndOf="@id/back_icon"
+                    app:layout_constraintTop_toTopOf="@id/back_icon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageButton
+                android:id="@+id/share_icon"
+                android:layout_width="@dimen/layout_width_18dp"
+                android:layout_height="@dimen/layout_height_18dp"
+                android:layout_marginEnd="@dimen/margin_16dp"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/neutral_white"
+                android:backgroundTintMode="src_in"
+                android:onClick="@{()->viewModel.goToLogin()}"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logout_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/neutral_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@{viewModel.categoryName}"
+                android:textAllCaps="true"
+                android:textColor="@color/neutral_white"
+                android:textSize="@dimen/size_20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/share_icon"
+                app:layout_constraintStart_toEndOf="@id/backConstraint"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_recipes_recycleview"
+            android:layout_width="@dimen/layout_width_0dp"
+            android:layout_height="@dimen/layout_height_0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_bar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

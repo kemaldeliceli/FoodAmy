@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="comment"
+            type="com.lesson.foodamy.model.comment_dataclass.Comment" />
+        <variable
+            name="currentUserID"
+            type="Integer" />
+
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        app:strokeColor="@android:color/transparent"
+        android:shadowColor="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="@dimen/elevation_0dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@color/neutral_white"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            >
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_1dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/userImage"
+                android:layout_width="@dimen/layout_width_40dp"
+                android:layout_height="@dimen/layout_height_40dp"
+
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+
+                android:scaleType="centerCrop"
+                app:imageUrl="@{comment.user.image.url}"
+                app:placeHolder="@{@drawable/no_user_image}"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:shapeAppearanceOverlay="@style/CircularImage" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+
+                android:fontFamily="@font/nunito_bold"
+                android:text="@{comment.user.username}"
+                android:textColor="@color/primary_cinder"
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintBottom_toTopOf="@id/recipe_count"
+                app:layout_constraintStart_toEndOf="@id/userImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recipes_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_2dp"
+
+                android:layout_marginBottom="@dimen/padding_8dp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@string/recipes"
+
+                android:textColor="@color/primary_raven"
+                android:textSize="@dimen/size_13sp"
+
+
+                app:layout_constraintStart_toEndOf="@id/recipe_count"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <TextView
+                android:id="@+id/recipe_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_4dp"
+                android:layout_marginBottom="@dimen/padding_8dp"
+
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@{String.valueOf(comment.user.recipe_count)}"
+                android:textColor="@color/primary_raven"
+
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintStart_toEndOf="@id/userImage"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <TextView
+                android:id="@+id/follower_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_2dp"
+                android:layout_marginBottom="@dimen/padding_8dp"
+
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@string/follower"
+                android:textColor="@color/primary_raven"
+
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintStart_toEndOf="@id/follower_count"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <TextView
+                android:id="@+id/follower_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/margin_2dp"
+                android:layout_marginBottom="@dimen/padding_8dp"
+
+                android:fontFamily="@font/nunito_semibold"
+                android:text="@{String.valueOf(comment.user.followed_count)}"
+                android:textColor="@color/primary_raven"
+
+                android:textSize="@dimen/size_13sp"
+
+                app:layout_constraintStart_toEndOf="@id/recipes_text"
+                app:layout_constraintTop_toBottomOf="@id/username" />
+
+            <TextView
+                android:id="@+id/difference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:fontFamily="@font/nunito_semibold"
+                android:textColor="@color/primary_raven"
+                app:layout_constraintTop_toBottomOf="@id/userImage"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:text="@{comment.difference}"
+                />
+            <TextView
+                android:id="@+id/description_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_15sp"
+
+                app:layout_constraintTop_toBottomOf="@id/difference"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+
+
+                android:layout_marginVertical="@dimen/margin_8dp"
+                android:layout_marginHorizontal="@dimen/margin_16dp"
+                android:text="@{comment.text}"
+                android:textColor="@color/primary_cinder"
+                android:fontFamily="@font/nunito_semibold"
+
+                />
+
+            <ImageButton
+                android:id="@+id/image_button_edit_comment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="@{comment.user.id==currentUserID ? View.VISIBLE : View.INVISIBLE}"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_button_delete_comment"
+                app:tint="@color/primary_raven"
+
+                android:backgroundTint="@color/white"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                />
+
+            <ImageButton
+                android:id="@+id/image_button_delete_comment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="@{comment.user.id==currentUserID ? View.VISIBLE : View.INVISIBLE}"
+                android:src="@drawable/ic_baseline_delete_outline_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/primary_red"
+
+                android:backgroundTint="@color/white"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

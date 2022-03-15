@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/food_amy_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.lesson.foodamy.ui.intro.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro">
+        <action
+            android:id="@+id/action_introFragment_to_mainFragment2"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/introFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.lesson.foodamy.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.lesson.foodamy.ui.splash.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splashFragment_to_introFragment"
+            app:destination="@id/introFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment2"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.lesson.foodamy.ui.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.lesson.foodamy.ui.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_mainFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+        <action
+            android:id="@+id/action_mainFragment_to_categoryRecipesFragment"
+            app:destination="@id/categoryRecipesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment2"
+        android:name="com.lesson.foodamy.ui.recipedetail.RecipeDetailFragment"
+        android:label="RecipeDetailFragment" >
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_recentlyAddedFragment"
+            app:destination="@id/recentlyAddedFragment" />
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_commentFragment"
+            app:destination="@id/commentFragment" />
+        <argument
+            android:name="recipeID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_recipeDetailFragment2_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentlyAddedFragment"
+        android:name="com.lesson.foodamy.ui.recentlyadded.RecentlyAddedFragment"
+        android:label="RecentlyAddedFragment" >
+        <action
+            android:id="@+id/action_recentlyAddedFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentFragment"
+        android:name="com.lesson.foodamy.ui.comments.CommentFragment"
+        android:label="CommentFragment" >
+        <action
+            android:id="@+id/action_commentFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+        <argument
+            android:name="comments"
+            app:argType="com.lesson.foodamy.model.comment_dataclass.Comments" />
+        <argument
+            android:name="recipeID"
+            app:argType="integer"
+            />
+        <action
+            android:id="@+id/action_commentFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_commentFragment_to_editCommentFragment"
+            app:destination="@id/editCommentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryRecipesFragment"
+        android:name="com.lesson.foodamy.ui.category_recipes.CategoryRecipesFragment"
+        android:label="CategoryRecipesFragment" >
+        <argument
+            android:name="categoryID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_recipeDetailFragment2"
+            app:destination="@id/recipeDetailFragment2" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_categoryRecipesFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCommentFragment"
+        android:name="com.lesson.foodamy.ui.comments.editcomment.EditCommentFragment"
+        android:label="EditCommentFragment" >
+        <argument
+            android:name="recipeID"
+            app:argType="integer" />
+        <argument
+            android:name="comment"
+            app:argType="com.lesson.foodamy.model.comment_dataclass.Comment" />
+        <action
+            android:id="@+id/action_editCommentFragment_to_commentFragment"
+            app:destination="@id/commentFragment" />
+    </fragment>
+</navigation>

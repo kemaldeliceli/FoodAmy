@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.lesson.foodamy.ui.comments.editcomment.EditCommentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.comments.editcomment.EditCommentFragment">
+
+        <com.lesson.foodamy.utils.CustomViewTopBar
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/padding_8dp"
+            app:backButtonVisibility="true"
+            app:backListener="@{() -> viewModel.popBackStack()}"
+            app:fodamyLogoVisibility="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:logOutIconVisibility="false"
+            app:pageTitle="@string/yorumlar"
+            app:pageTitleVisibility="true"
+            app:shareIconVisibility="false" />
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/snackbarCoord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/elevation_2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_layout" />
+
+
+            <EditText
+                android:id="@+id/edit_text_comment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_0dp"
+                android:layout_marginHorizontal="@dimen/margin_16dp"
+                android:layout_marginVertical="@dimen/margin_16dp"
+                android:autoSizeTextType="uniform"
+                android:fitsSystemWindows="false"
+                android:background="@drawable/stroke_rectangle"
+                android:backgroundTint="@color/neutral_zircon"
+                android:gravity="top"
+                android:padding="@dimen/padding_8dp"
+                android:text="@={viewModel.commentText}"
+                app:layout_constraintBottom_toTopOf="@id/save_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top_layout" />
+
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_16dp"
+                android:fontFamily="@font/nunito_bold"
+                android:onClick="@{() -> viewModel.editComment()}"
+                android:text="@string/save_text"
+                android:textSize="@dimen/size_13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
